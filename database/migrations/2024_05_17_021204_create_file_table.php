@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('file', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('title')->unique();
             $table->year('year');

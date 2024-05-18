@@ -17,7 +17,9 @@ use App\Http\Controllers\StudentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/register', function(){
+    return view('/register');
+});
 Route::get('/home', [ViewController::class, 'index'])->name('home'); // for display when the authentication is functioning
 Route::get('/', function(){return view('home');});
 //->name('admin.register')->middleware('auth:admin')
@@ -60,4 +62,4 @@ Route::get('/student/dashboard/upload',[ViewController::class, 'studentUpload'])
 Route::get('/student/dashboard/profile/{student}',[ViewController::class, 'studentprofileView'])->name('student.studentprofile')->middleware('auth:student'); // to display the stuident profile details
 
 Route::put('/student/dashboard/profile/edit/{student}', [ViewController::class, 'studentProfile'])->name('student.update')->middleware('auth:student'); // for edit profile
-Route::post('/student/dashboard/upload/file', [FileController::class, 'fileUpload'])->name('student.fileupload')->middleware('auth:student'); // for edit profile
+Route::post('/student/dashboard/upload/file', [FileController::class, 'fileUpload']); // for edit profile

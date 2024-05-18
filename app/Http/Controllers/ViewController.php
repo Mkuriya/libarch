@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use App\Models\Admin;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -13,7 +14,8 @@ class ViewController extends Controller
         return view('archive.upload');
     }
     public function adminArchiveList(){
-        return view('archive.list');
+        $data = File::all();
+        return view('archive.list', ['file' => $data]);
     }
     public function studentprofileView(Student $student){
         return view('accounts.studentprofile', ['student' => $student]);

@@ -76,7 +76,7 @@
                                             <form action="/admin/dashboard/admin/delete/{{$item->id}}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                                                <button onclick="return confirm('Permanent Delete?');" class="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
                                                     Delete
                                                 </button>
                                             </form>

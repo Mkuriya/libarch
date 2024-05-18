@@ -6,18 +6,38 @@
         </div>
     <hr>
     <div class="grid grid-cols-1 sm:grid-cols-7 md:grid-cols-7 gap-x-6 gap-y-10">
-      {{--@foreach ($collection as $item) --}} 
-        <a href="https://www.kindacode.com"
+        {{--@foreach ($file as $item)
+        <a href=""
             class="mt-2 flex flex-col bg-white drop-shadow hover:drop-shadow-lg hover:opacity-70 rounded-md">
-            <img src=" https://www.kindacode.com/wp-content/uploads/2022/07/kindacode-example.png" alt="Fiction Product"
-                class="h-20 object-cover rounded-tl-md rounded-tr-md">
+            <img src="{{$item['banner']}}" alt="Fiction Product"
+                class="h-30 object-contain rounded-tl-md rounded-tr-md">
 
             <div class="px-2 py-2">
-                <h1 class="font-semibold">Title</h1>
-                <p class="text-sm">Year</p>
+                <h1 class="font-semibold">{{$item['title']}}</h1>
+                <p class="text-sm">{{$item['year']}}</p>
+                <p class="text-sm">{{$item->student->firstname}}</p>
             </div>
         </a>
-        {{-- @endforeach--}}
+        @endforeach--}}
+    @foreach ($file as $item)
+    @if($item->year <= 2020)
+        <a href=""
+            class="mt-2 flex flex-col bg-white drop-shadow hover:drop-shadow-lg hover:opacity-70 rounded-md">
+            <img src="{{$item['banner']}}" alt="Fiction Product"
+                class="h-30 object-contain rounded-tl-md rounded-tr-md">
+
+            <div class="px-2 py-2">
+                <h1 class="font-semibold">{{$item['title']}}</h1>
+                <p class="text-sm">{{$item['year']}}</p>
+                <p class="text-sm">{{$item->student->firstname}}</p>
+            </div>
+        </a>
+ 
+   @else
+       
+   @endif
+        @endforeach
+
 
     </div>
     </div>
