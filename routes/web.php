@@ -2,6 +2,7 @@
 
 use App\Models\Admin;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
@@ -59,3 +60,4 @@ Route::get('/student/dashboard/upload',[ViewController::class, 'studentUpload'])
 Route::get('/student/dashboard/profile/{student}',[ViewController::class, 'studentprofileView'])->name('student.studentprofile')->middleware('auth:student'); // to display the stuident profile details
 
 Route::put('/student/dashboard/profile/edit/{student}', [ViewController::class, 'studentProfile'])->name('student.update')->middleware('auth:student'); // for edit profile
+Route::post('/student/dashboard/upload/file', [FileController::class, 'fileUpload'])->name('student.fileupload')->middleware('auth:student'); // for edit profile
