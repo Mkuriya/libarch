@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Storage;
 
 class ViewController extends Controller
 {
+    public function pending(){
+        $data = File::all();
+        return view('archive.pending', ['file' => $data]);
+    }
+
     public function studentUpload(){
         return view('archive.upload');
     }

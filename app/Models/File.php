@@ -17,6 +17,7 @@ class File extends Model
         'banner',
         'document',
         'student_id',
+        'status',
     ];
     public function student(){
         return $this->belongsTo(Student::class, 'student_id');

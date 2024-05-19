@@ -16,7 +16,7 @@
       <hr>
       <a class="hover:text-amber-500"><form action="/student/logout" method="POST">
         @csrf
-        <button class="text-l w-full text-left">Logout</button>
+        <button class="text-l w-full text-left" onclick="return confirm('Are you sure want to logout?');">Logout</button>
     </form></a>
   </div>
 

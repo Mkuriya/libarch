@@ -24,6 +24,7 @@
         </div>
         <div>
             <input type="hidden" value="{{auth()->guard('student')->user()->id}}" name="student_id">
+            <input type="hidden" value="0" name="status">
         </div>
    
 

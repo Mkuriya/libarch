@@ -44,45 +44,50 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 @foreach ($admin as $item)
-                                <tr>
-                                    <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                        <div class="inline-flex items-center gap-x-3">
-                                        
-                                            <span>{{$item->lastname}}, {{$item->firstname}} {{$item->middlename}}</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{$item->gender}}</td>
-                                    <td class="px-4 py-4 text-sm ext-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            <h2 class="text-sm font-normal">{{$item->email}}</h2>
-                                        
-                                    </td>
-                                    <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                        <div class="flex items-center gap-x-2">
-                                            <img class="object-cover w-10 h-10 " src="{{ asset($item->photo) }}" alt="">
-                                        </div>
-                                    </td>
-                                    <td class="px-1 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center gap-x-6">
-                                            <a href="/admin/dashboard/admin/view/{{$item->id}}"title="View Admin">
-                                                <button class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                    View
-                                                </button>
-                                            </a>
-                                            <a href="/admin/dashboard/admin/edit/{{$item->id}}"   title="Edit Admin">
-                                                <button class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                    Update
-                                                </button>
-                                            </a>
-                                            <form action="/admin/dashboard/admin/delete/{{$item->id}}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button onclick="return confirm('Permanent Delete?');" class="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @if ($item->id != 1)
+                                    <tr>
+                                        <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                            <div class="inline-flex items-center gap-x-3">
+                                            
+                                                <span>{{$item->lastname}}, {{$item->firstname}} {{$item->middlename}}</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{$item->gender}}</td>
+                                        <td class="px-4 py-4 text-sm ext-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <h2 class="text-sm font-normal">{{$item->email}}</h2>
+                                            
+                                        </td>
+                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                            <div class="flex items-center gap-x-2">
+                                                <img class="object-cover w-10 h-10 " src="{{ asset($item->photo) }}" alt="">
+                                            </div>
+                                        </td>
+                                        <td class="px-1 py-4 text-sm whitespace-nowrap">
+                                            <div class="flex items-center gap-x-6">
+                                                <a href="/admin/dashboard/admin/view/{{$item->id}}"title="View Admin">
+                                                    <button class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                                        View
+                                                    </button>
+                                                </a>
+                                                <a href="/admin/dashboard/admin/edit/{{$item->id}}"   title="Edit Admin">
+                                                    <button class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                                        Update
+                                                    </button>
+                                                </a>
+                                                <form action="/admin/dashboard/admin/delete/{{$item->id}}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button onclick="return confirm('Permanent Delete?');" class="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @else
+                                  
+                                @endif
+                                
                                 @endforeach
                             </tbody>
                         </table>

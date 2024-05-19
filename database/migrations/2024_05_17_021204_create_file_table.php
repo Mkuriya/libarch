@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('banner', 300);
             $table->string('document', 300);
             $table->foreignid('student_id')->constrained();
-
+            $table->integer('status');
             $table->timestamps();
         });
     }

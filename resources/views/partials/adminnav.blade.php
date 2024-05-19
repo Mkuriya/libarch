@@ -27,9 +27,13 @@
       <span class="text-2xl pl-5 text-white">
         <a href="/admin/dashboard">Libarch</a>
       </span>
-        <span class="cursor-pointer text-2xl absolute right-0 mr-8 pt-1 " onclick="openMenu()"> 
-            <img src="/img/Profile(1).jpg" height="30" width="30" class="rounded-full">
-        </span>
+      <span class="cursor-pointer text-2xl absolute right-0 mr-8 pt-1" onclick="openMenu()">
+        @if (auth()->guard('admin')->check() && auth()->guard('admin')->user()->photo)
+            <img src="{{ auth()->guard('admin')->user()->photo }}" height="30" width="30" class="rounded-full">
+        @else
+            <h1>{{auth()->guard('admin')->user()->firstname}}</h1>
+        @endif
+    </span>
   </main>
 
   <!-- Javascript code -->
