@@ -56,7 +56,7 @@ Route::put('/admin/dashboard/student/edit/{student}', [ViewController::class, 's
 
 Route::get('/admin/dashboard/archive', [ViewController::class, 'adminArchiveList']);
 
-Route::put('/admin/dashboard/archive/pending/status/{file}', [FileController::class, 'fileUpdate']); // for edit profile
+//Route::put('/admin/dashboard/archive/pending/status/{file}', [FileController::class, 'fileUpdate']); // for edit profile
 
 
 Route::put('/admin/dashboard/profile/edit/{admin}', [ViewController::class, 'adminProfile'])->name('admin.update')->middleware('auth:admin'); // for edit profile
@@ -66,4 +66,6 @@ Route::get('/student/dashboard/profile/{student}',[ViewController::class, 'stude
 
 Route::put('/student/dashboard/profile/edit/{student}', [ViewController::class, 'studentProfile'])->name('student.update')->middleware('auth:student'); // for edit profile
 Route::post('/student/dashboard/upload/file', [FileController::class, 'fileUpload']); // for edit profile
-Route::get('/admin/dashboard/archive/pending', [ViewController::class, 'pending']); 
+Route::get('/admin/dashboard/archive/pending', [ViewController::class, 'pending']); // for display the pending list
+Route::get('/admin/dashboard/archive/pending/edit/{file}', [FileController::class, 'fileUpdate']);
+Route::put('/admin/dashboard/archive/pending/edit/{file}', [FileController::class, 'fileUpdateStatus']);

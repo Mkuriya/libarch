@@ -7,14 +7,19 @@ use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
-    public function fileUpdate(File $file, Request $request){
+    public function fileUpdate(File $file){
+        return view('archive.edit', ['file' => $file]);
+    }
+
+    public function fileUpdateStatus(File $file, Request $request){
         $data = $request->validate([
-            'status' => 'required'
+            'status' => ['required'],
+           
         ]);
         $data['status'] = strip_tags($data['status']);
         $file->update($data);
         return redirect('/admin/dashboard/archive');
-    } 
+    }
     
     public function fileUpload(Request $request){
         $validated = $request->validate([

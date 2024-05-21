@@ -22,17 +22,20 @@
     <div class="grid grid-cols-1 sm:grid-cols-7 md:grid-cols-7 gap-x-6 gap-y-10">
     @foreach ($file as $item)
         @if($item->status == 1)
-            <a href=""
-                class="mt-2 flex flex-col bg-white drop-shadow hover:drop-shadow-lg hover:opacity-70 rounded-md">
-                <img src="{{$item['banner']}}" alt="Fiction Product"
-                    class="h-30 object-contain rounded-tl-md rounded-tr-md">
-
+        <div class="mt-3 ">
+           
+            <a href=""class="flex flex-col bg-white drop-shadow hover:drop-shadow-lg hover:opacity-70 rounded-md">
+                
+                <div class=" border-4 border-gray-500 ">
+                    <img class="object-contain h-48 w-96 " src="{{$item['banner']}}">
+                  </div>
                 <div class="px-2 py-2">
                     <h1 class="font-semibold">{{$item['title']}}</h1>
                     <p class="text-sm">{{$item['year']}}</p>
                     <p class="text-sm">{{$item->student->firstname}}</p>
                 </div>
-            </a>
+            </a> 
+        </div>
         @else
             
         @endif
