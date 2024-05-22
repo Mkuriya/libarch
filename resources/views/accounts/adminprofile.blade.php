@@ -55,7 +55,7 @@
             <div class=" col-span-2">
                 <label class="block text-sm font-medium text-white"> Image </label>
               <div>
-                <input type="file" name="photo" id="file" class="sr-only mt-1 flex justify-center px-4 pt-3 pb-4 border-2 border-gray-300 border-dashed rounded-md" />
+                <input disabled type="file" name="photo" id="file" class="sr-only mt-1 flex justify-center px-4 pt-3 pb-4 border-2 border-gray-300 border-dashed rounded-md" />
                 <label for="file"class="relative flex min-h-[150px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] text-center">
                     <div>
                         <img src="{{ asset($admin->photo) }}" />

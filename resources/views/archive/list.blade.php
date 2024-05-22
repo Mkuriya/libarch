@@ -24,7 +24,7 @@
         @if($item->status == 1)
         <div class="mt-3 ">
            
-            <a href=""class="flex flex-col bg-white drop-shadow hover:drop-shadow-lg hover:opacity-70 rounded-md">
+            <a href="/admin/dashboard/archive/view/{{$item->id}}"class="flex flex-col bg-white drop-shadow hover:drop-shadow-lg hover:opacity-70 rounded-md">
                 
                 <div class=" border-4 border-gray-500 ">
                     <img class="object-contain h-48 w-96 " src="{{$item['banner']}}">

@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
+    public function fileView(File $file){
+        return view('archive.view', ['file' => $file]);
+    }
+ 
     public function fileUpdate(File $file){
         return view('archive.edit', ['file' => $file]);
     }

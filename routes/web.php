@@ -69,3 +69,5 @@ Route::post('/student/dashboard/upload/file', [FileController::class, 'fileUploa
 Route::get('/admin/dashboard/archive/pending', [ViewController::class, 'pending']); // for display the pending list
 Route::get('/admin/dashboard/archive/pending/edit/{file}', [FileController::class, 'fileUpdate']);
 Route::put('/admin/dashboard/archive/pending/edit/{file}', [FileController::class, 'fileUpdateStatus']);
+
+Route::get('/admin/dashboard/archive/view/{file}', [FileController::class, 'fileView']);

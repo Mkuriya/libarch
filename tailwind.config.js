@@ -17,6 +17,7 @@ module.exports = {
         'whitebg' : '#701d0b',
         'thbg' : '#4FC3A1',
         'thodd' : '#324960',
+        'back' : 'rgba(0,0,0,0.2)',
       },
     },
   },
