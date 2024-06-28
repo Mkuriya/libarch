@@ -9,6 +9,29 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+<<<<<<< Updated upstream
+=======
+    /*public function updatePassword(Admin $admin, Request $request){
+        $request->validate([
+            'oldpassword' => 'required',
+            'newpassword' => 'required',
+            'confirm_password' => 'required|same:newpassword',
+        ]);
+
+        $admin = Auth::user();
+
+        if (!Hash::check($request->input('oldpassword'), $admin->password)) {
+            return back()->withErrors(['oldpassword' => 'The current password is incorrect.']);
+        }
+
+        $admin->password = Hash::make($request->input('newpassword'));
+        $admin->save();
+
+        return redirect()->route('home')->with('success', 'Password updated successfully!');
+    
+    } hays*/
+
+>>>>>>> Stashed changes
     public function register(){
         return view('admin.register');
     }
