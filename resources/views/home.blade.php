@@ -17,7 +17,7 @@
                     <div>
                         <div class="group relative rounded-lg border border-black focus-within:border-black px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-black">
                             <div class="flex justify-between">
-                                <label class="text-xs font-medium text-muted-foreground group-focus-within:text-black text-black">Username</label>
+                                <label class="text-xs font-medium text-muted-foreground group-focus-within:text-black text-black">Email</label>
                             </div>
                             <input type="text" name="username" placeholder="Enter you email" disabled
                             class="block w-full border-0 bg-transparent p-0 text-sm file:my-1 file:rounded-full file:border-0

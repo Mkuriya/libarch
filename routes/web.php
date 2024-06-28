@@ -30,7 +30,7 @@ Route::post('/admin/register', [AdminController::class, 'adminRegister']); //for
 Route::post('/admin/loginprocess', [AdminController::class, 'adminLogin']); //for login process
 Route::post('/admin/logout', [AdminController::class, 'adminLogout']); //for logout process
 
-Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard')->middleware('auth:admin'); //for display the dashboard
+//Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard')->middleware('auth:admin'); //for display the dashboard
 Route::get('/admin/dashboard/student/register', [AdminController::class, 'adminDashboardStudent'])->name('student.register')->middleware('auth:admin'); //for display the dashboard
 
 Route::get('/student/login', [StudentController::class, 'login']); // to display the student login 
@@ -61,9 +61,19 @@ Route::put('/admin/dashboard/archive/pending/status/{file}', [FileController::cl
 
 Route::put('/admin/dashboard/profile/edit/{admin}', [ViewController::class, 'adminProfile'])->name('admin.update')->middleware('auth:admin'); // for edit profile
 Route::get('/admin/dashboard/profile/{admin}',[ViewController::class, 'adminprofileView'])->name('admin.adminprofile')->middleware('auth:admin'); // for display the profile
+
+
+Route::get('/admin/dashboard/profile/changepassword/{admin}',[ViewController::class, 'adminPassword']); // for display the change adminpassword
+
+
 Route::get('/student/dashboard/upload',[ViewController::class, 'studentUpload'])->name('student.studentUpload')->middleware('auth:student'); // for display the upload form
 Route::get('/student/dashboard/profile/{student}',[ViewController::class, 'studentprofileView'])->name('student.studentprofile')->middleware('auth:student'); // to display the stuident profile details
 
 Route::put('/student/dashboard/profile/edit/{student}', [ViewController::class, 'studentProfile'])->name('student.update')->middleware('auth:student'); // for edit profile
 Route::post('/student/dashboard/upload/file', [FileController::class, 'fileUpload']); // for edit profile
 Route::get('/admin/dashboard/archive/pending', [ViewController::class, 'pending']); 
+
+Route::controller(AdminController::class)->group(function(){
+    Route::get('/admin/dashboard','adminDashboard')->name('admin.dashboard');
+    Route::post('//admin/dashboard/profile/changepassword/update','updatePassword');
+});

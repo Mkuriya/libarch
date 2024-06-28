@@ -12,6 +12,7 @@
       <hr>
       <a href="/student/dashboard/profile/{{auth()->guard('student')->user()->id}} "class="hover:text-amber-500">My Profile</a>
       <hr>
+      <a class="hover:text-amber-500" href="/student/dashboard/upload">Search</a>
       <a class="hover:text-amber-500" href="/student/dashboard/upload">Upload</a>
       <hr>
       <a class="hover:text-amber-500"><form action="/student/logout" method="POST">
@@ -26,7 +27,11 @@
         <a href="/student/dashboard">Libarch</a>
       </span>
         <span class="cursor-pointer text-2xl absolute right-0 mr-8 pt-1 " onclick="openMenu()"> 
-            <img src="/img/Profile(1).jpg" height="30" width="30" class="rounded-full">
+          @if (auth()->guard('student')->check() && auth()->guard('student')->user()->photo)
+          <img src="{{ auth()->guard('student')->user()->photo }}" height="30" width="30" class="rounded-full">
+      @else
+          <h1>{{auth()->guard('student')->user()->firstname}}</h1>
+      @endif
         </span>
   </main>
 

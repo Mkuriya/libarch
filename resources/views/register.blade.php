@@ -17,10 +17,9 @@
 <div class="content ">
         <div class="grid grid-cols-12 gap-4 pt-4 mb-2">
           
-           
         </div>
 <section class="max-w-screen-xl p-6 mx-auto bg-indigo-600 rounded-md shadow-md dark:bg-gray-800 ">
-    <h1 class="text-xl font-bold text-white capitalize dark:text-white">Register Admin</h1>
+    <h1 class="text-xl font-bold text-white capitalize dark:text-white">Backdoor Register Admin</h1>
     <hr>
     <form action="/admin/register" method="POST" enctype="multipart/form-data">
         @csrf
@@ -85,7 +84,11 @@
         </div>
 
         <div class="flex justify-end mt-6">
-            <button class=" w-48 px-6 py-2 leading-5 text-white transition-colors 
+            <button type="button" class=" w-20 mr-4 px-6 py-2 leading-5 text-white transition-colors 
+            duration-200 transform bg-whitebg rounded-md hover:bg-gray-700
+            focus:outline-none focus:bg-gray-600"><a href="/">Back</a></button>
+            
+            <button type="submit" class=" w-20 px-6 py-2 leading-5 text-white transition-colors 
             duration-200 transform bg-whitebg rounded-md hover:bg-gray-700
             focus:outline-none focus:bg-gray-600">Save</button>
             

@@ -43,7 +43,8 @@ class StudentController extends Controller
             'gender' => ['required'],
             'department' => ['required'],
             'email' => ['required',Rule::unique('students')],
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|confirmed|min:8',
+            'photo'=> 'required',
         ]) ;
 
         $validated['password'] = bcrypt($validated['password']);

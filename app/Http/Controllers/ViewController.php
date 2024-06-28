@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Storage;
 
 class ViewController extends Controller
 {
+    public function adminPassword(Admin $admin){
+        return view('admin.changepassword', ['admin' => $admin]);
+    }
     public function pending(){
         $data = File::all();
         return view('archive.pending', ['file' => $data]);

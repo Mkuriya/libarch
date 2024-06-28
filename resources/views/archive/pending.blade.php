@@ -2,6 +2,9 @@
 <div class="content px-10">
     <div class="text-xl font-bold text-white capitalize dark:text-white px-2 py-4 grid grid-cols-12 gap-6 mb-4 sm:grid-cols-12">
         <p class="absolute left-12"><a href="/admin/dashboard/archive">Archive List</a></p>
+        <a href="/admin/dashboard/archive/pending"><button class="absolute right-12 bg-whitebg hover:bg-gray-600 rounded-full px-8">Pending List</button></a>
+        <a href="/admin/dashboard/archive/pending"><button class="absolute  right-60 bg-whitebg hover:bg-gray-600 rounded-full px-8">Decline List</button></a>
+        
     </div>
     <hr>
     <br>
