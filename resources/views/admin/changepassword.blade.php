@@ -18,13 +18,21 @@
   @endif
     <form action="/admin/dashboard/profile/changepassword/update" method="POST">
         @csrf
+        <div class="bg-red-400 w-30">
+          @if(session('status'))
+            <div class="alert" role="alert">{{session('status')}}</div>    
+          @elseif(session('error'))
+            <div class="bg-sky-500" role="alert">{{session('error')}}</div>
+          @endif
+              
+        </div>
         <div class="mt-4">
             <label class="text-white dark:text-gray-200 pl-2" for="lastname">Old Password</label>
-            <input value="{{--$admin->password--}}" name="oldpassword" id="oldpassword" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+            <input name="old_password" id="old_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
         </div>
         <div class="mt-4">
             <label class="text-white dark:text-gray-200 pl-2" for="lastname">New Password</label>
-            <input  name="newpassword" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+            <input  name="new_password" id="new_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
         </div>
         <div class="mt-4"> 
             <label class="text-white dark:text-gray-200 pl-2" for="lastname">Confirm Password</label>

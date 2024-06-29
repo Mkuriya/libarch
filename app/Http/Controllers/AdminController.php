@@ -10,25 +10,23 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    /*public function updatePassword(Admin $admin, Request $request){
+    public function updatePassword( Request $request){
+     
         $request->validate([
-            'oldpassword' => 'required',
-            'newpassword' => 'required',
-            'confirm_password' => 'required|same:newpassword',
-        ]);
-
-        $admin = Auth::user();
-
-        if (!Hash::check($request->input('oldpassword'), $admin->password)) {
-            return back()->withErrors(['oldpassword' => 'The current password is incorrect.']);
-        }
-
-        $admin->password = Hash::make($request->input('newpassword'));
-        $admin->save();
-
-        return redirect()->route('home')->with('success', 'Password updated successfully!');
-    
-    } */
+        'old_password'=> 'required',
+        'new_password'=> 'required',
+      ]);
+      
+      
+      if(!Hash::check($request->old_password, auth()->guard('admin')->user()->password)){
+        return back()->with("error", "Old Password Doesn't Match");
+      }
+     Admin::whereId(auth()->guard('admin')->user()->id)->update([
+        'password' => Hash::make($request->new_password)
+     ]);
+     return back()->with("status", "Password Success Update");
+      
+    } 
 
     public function register(){
         return view('admin.register');

@@ -22,7 +22,7 @@ Route::get('/register', function(){
 });
 Route::get('/home', [ViewController::class, 'index'])->name('home'); // for display when the authentication is functioning
 Route::get('/', function(){return view('home');});
-//->name('admin.register')->middleware('auth:admin')
+
 Route::get('/admin/dashboard/admin/register', [AdminController::class, 'register']); // to display the admin register 
 Route::get('/admin/login', [AdminController::class, 'login']); // to display the admin login 
 
@@ -33,12 +33,14 @@ Route::post('/admin/logout', [AdminController::class, 'adminLogout']); //for log
 //Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard')->middleware('auth:admin'); //for display the dashboard
 Route::get('/admin/dashboard/student/register', [AdminController::class, 'adminDashboardStudent'])->name('student.register')->middleware('auth:admin'); //for display the dashboard
 
+
+
 Route::get('/student/login', [StudentController::class, 'login']); // to display the student login 
 Route::post('/student/loginprocess', [StudentController::class, 'loginProcess']); // to process the student login 
 Route::post('/admin/dashboard/studentregister', [StudentController::class, 'studentRegister'])->name('admin.studentregister')->middleware('auth:admin'); //for registration process
 Route::post('/student/logout', [StudentController::class, 'studentLogout']); //for logout process
-
 Route::get('/student/dashboard', [StudentController::class, 'studentDashboard'])->name('student.dashboard')->middleware('auth:student'); //for student dashboard with auth
+
 
 Route::get('/admin/dashboard/admin',[ViewController::class, 'adminList'])->name('admin.admin')->middleware('auth:admin'); //to display the admin list
 Route::get('/admin/dashboard/student',[ViewController::class, 'studentlist'])->name('admin.student')->middleware('auth:admin'); // to display the student list
@@ -53,7 +55,6 @@ Route::get('/admin/dashboard/student/view/{student}',[ViewController::class, 'st
 Route::get('/admin/dashboard/student/edit/{student}',[ViewController::class, 'studentEdit']); // for display the edit page 
 Route::delete('/admin/dashboard/student/delete/{student}', [ViewController::class, 'studentDelete']); //to delete the data from database
 Route::put('/admin/dashboard/student/edit/{student}', [ViewController::class, 'studentUpdate']); //to update the data from database
-
 Route::get('/admin/dashboard/archive', [ViewController::class, 'adminArchiveList']);
 
 Route::put('/admin/dashboard/archive/pending/status/{file}', [FileController::class, 'fileUpdate']); // for edit profile
@@ -73,7 +74,27 @@ Route::put('/student/dashboard/profile/edit/{student}', [ViewController::class, 
 Route::post('/student/dashboard/upload/file', [FileController::class, 'fileUpload']); // for edit profile
 Route::get('/admin/dashboard/archive/pending', [ViewController::class, 'pending']); 
 
+
+
+
+
 Route::controller(AdminController::class)->group(function(){
     Route::get('/admin/dashboard','adminDashboard')->name('admin.dashboard');
-    Route::post('//admin/dashboard/profile/changepassword/update','updatePassword');
+    Route::post('/admin/dashboard/profile/changepassword/update','updatePassword')->name('adminchangepassword');
 });
+Route::controller(StudentController::class)->group(function(){
+
+});
+Route::controller(FileController::class)->group(function(){
+
+});
+Route::controller(ViewController::class)->group(function(){
+
+});
+
+
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
