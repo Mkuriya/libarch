@@ -12,7 +12,8 @@
       <hr>
       <a href="/student/dashboard/profile/{{auth()->guard('student')->user()->id}} "class="hover:text-amber-500">My Profile</a>
       <hr>
-      <a class="hover:text-amber-500" href="/student/dashboard/upload">Search</a>
+      <a class="hover:text-amber-500" href="/student/dashboard/archivelist">Archive List</a>
+      <a class="hover:text-amber-500" href="/student/dashboard/search">Search</a>
       <a class="hover:text-amber-500" href="/student/dashboard/upload">Upload</a>
       <hr>
       <a class="hover:text-amber-500"><form action="/student/logout" method="POST">

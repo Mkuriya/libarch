@@ -19,33 +19,33 @@
         <br>
         <div>
             <label for="" class="text-white dark:text-gray-200">Abstract</label>
-            <textarea name="abstract" id="" cols="50" rows="10" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+            <textarea name="abstract" id="" cols="0" rows="6" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
           
         </div>
         <div>
             <input type="hidden" value="{{auth()->guard('student')->user()->id}}" name="student_id">
             <input type="hidden" value="0" name="status">
         </div>
-   
-
-        <div>
-            <label for="" class="text-white dark:text-gray-200">Book Cover</label>
-            <input type="file" name="banner" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-        </div>
-        <div>
-            <label for="" class="text-white dark:text-gray-200">File (PDF ONLY)</label>
-            <input type="file" name="document" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+        <div class="mt-2">
+            <label for="" class="text-white dark:text-gray-200 ">File (PDF ONLY)</label>
+            <input type="file" name="document" class="block w-full mt-2 px-2 py-2 bg-gray-800 border border-gray-600 rounded-md
+             text-white  file:py-1 file:px-2 file:rounded-full file:border-0 file:text-sm file:font-semibold
+             file:bg-transparent file:text-white hover:file:bg-gray-700 hover:bg-gray-700">
         </div>
 
     
-        <div class="flex justify-start mt-6">
-            <button class=" px-16 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">Save</button>
-         </div>
+        <div class="flex justify-end  py-4">
+            <button type="submit" class=" px-16 py-2 leading-5 text-white transition-colors duration-200 transform bg-whitebg rounded-md
+             hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Save
+            </button>
+             <a href="/student/dashboard">
+                <button type="button" class="ml-10 px-16 py-2 leading-5 text-white transition-colors duration-200 transform bg-whitebg rounded-md 
+                hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Back
+                </button>
+            </a>
+        </div>
     </form>
-    <div class="flex justify-end mt-6 ">
-        <a href="/student/dashboard"><button class="relative bottom-16 px-16 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 
-        rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">Cancel</button></a>
-    </div>
+    
 </section>
 
 {{--

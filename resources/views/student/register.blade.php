@@ -82,10 +82,14 @@
             </div>
 
             <div class="flex justify-end mt-6">
-                <button type="button" class=" w-20 px-6 py-2 leading-5 text-white transition-colors 
-                duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600"><a href="/admin/dashboard/student">Back</a></button>
-                <button type="submit" class=" w-20 ml-4 px-6 py-2 leading-5 text-white transition-colors 
+                <button type="submit" class=" w-20  px-6 py-2 leading-5 text-white transition-colors 
                 duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Save</button>
+                <a href="/admin/dashboard/student">
+                    <button type="button" class="ml-4 w-20 px-6 py-2 leading-5 text-white transition-colors 
+                duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600">
+                Back</button>
+                </a>
+               
             </div>
         </form>
     </section>

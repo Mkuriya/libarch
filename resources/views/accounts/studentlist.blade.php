@@ -73,7 +73,7 @@
                                                 </button>
                                             </a>
                                             <a href="/admin/dashboard/student/edit/{{$item->id}}"   title="Edit Admin">
-                                                <button onclick="return confirm('Update teh data?');" class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                                <button onclick="return confirm('Update the data?');" class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
                                                     Update
                                                 </button>
                                             </a>

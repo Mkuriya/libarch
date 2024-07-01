@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Storage;
 
 class ViewController extends Controller
 {
+    public function studentArchiveList(){
+        return view('archive.archivelist');
+    }
+    public function fileSearch(){
+        return view('archive.search');
+    }
+
     public function adminPassword(Admin $admin){
         return view('admin.changepassword', ['admin' => $admin]);
     }
