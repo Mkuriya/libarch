@@ -22,15 +22,10 @@ class FileController extends Controller
             "year" => 'required|max:4',
             "members" => 'required',
             "abstract" => 'required',
-            "banner" => 'required|mimes:png,jpg,jpeg|max:2048',
             'document' => 'required|mimes:pdf|max:2048',
             'student_id' => 'required',
             'status' => 'required',
         ]);
-      
-        $imageName = time().$request->file('banner')->getClientOriginalName();
-        $path = $request->file('banner')->storeAs('images', $imageName, 'public'); 
-        $validated["banner"] = '/storage/'.$path;
 
         $fileName = time().$request->file('document')->getClientOriginalName();
         $paths = $request->file('document')->storeAs('document', $fileName, 'public'); 

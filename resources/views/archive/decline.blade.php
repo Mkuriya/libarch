@@ -6,10 +6,10 @@
                 <a class="inline-block rounded py-1 px-3  text-white " href="/admin/dashboard/archive">Archive List</a>
             </li>
             <li class="mr-3">
-                <a class="inline-block rounded py-1 px-3  text-white border-b border-b-4 border-white" href="/admin/dashboard/archive/pending">Pending List</a>
+                <a class="inline-block rounded py-1 px-3  text-white " href="/admin/dashboard/archive/pending">Pending List</a>
             </li>
             <li class="mr-3">
-                <a class="inline-block rounded py-1 px-3  text-white " href="/admin/dashboard/archive/decline">Decline List</a>
+                <a class="inline-block rounded py-1 px-3  text-white border-b border-b-4 border-white" href="/admin/dashboard/archive/decline">Decline List</a>
             </li>
         </ul>
     </div>
@@ -51,7 +51,7 @@
                          </thead>
                          <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                             @foreach ($file as $item)
-                                @if ($item->status == 0)
+                                @if ($item->status == 2)
                                     <tr>
                                         <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                             <div class="inline-flex items-center gap-x-3">
@@ -66,24 +66,24 @@
                                                 <h2 class="text-sm font-normal">{{$item->student->firstname}}</h2>
                                             
                                         </td>
-                                    
-                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            <div class="flex items-center gap-x-2">
-                                                @if ($item->student->department == "Marketing & Entrepreneurship")
-                                                    <h1 class="text-red-400">Marketing & Entrepreneurship</h1>
-                                                @elseif($item->student->department == "Engineering")
-                                                    <p class="text-sky-800">Engineering</p>
-                                                @elseif($item->student->department == "Information Technology")
-                                                    <p class="text-purple-800">Information Technology</p>
-                                                @elseif($item->student->department == "Tourism")
-                                                    <p class="text-gray-800">Tourism</p>
-                                                @elseif($item->student->department == "Education")
-                                                    <p class="text-sky-300">Education</p>
-                                                @elseif($item->student->department == "Psychology")
-                                                    <p class="text-sky-300">Psychology</p>
-                                                @endif
-                                            </div>
+                                        <td class="px-4 py-4 text-sm ext-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                            @if ($item->student->department == "Marketing & Entrepreneurship")
+                                                <h1 class="text-yellow-300">Marketing & Entrepreneurship</h1>
+                                            @elseif($item->student->department == "Engineering")
+                                                <p class="text-black">Engineering</p>
+                                            @elseif($item->student->department == "Information Technology")
+                                                <p class="text-gray-300">Information Technology</p>
+                                            @elseif($item->student->department == "Tourism")
+                                                <p class="text-purple-300">Tourism</p>
+                                            @elseif($item->student->department == "Education")
+                                                <p class="text-sky-200">Education</p>
+                                            @elseif($item->student->department == "Psychology")
+                                                <p class="text-green-300">Psychology</p>
+                                            @endif
+                                        
+                                            
                                         </td>
+                                    
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                             <div class="flex items-center gap-x-2">
                                             @if($item->status == 0)

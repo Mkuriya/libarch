@@ -6,20 +6,45 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
+    public function updatePassword( Request $request){
+        $request->validate([
+        'old_password'=> 'required',
+        'new_password'=> 'required',
+    ]);
+    if(!Hash::check($request->old_password, auth()->guard('student')->user()->password)){
+        return back()->with("error", "Old Password Doesn't Match");
+    }
+    Student::whereId(auth()->guard('student')->user()->id)->update([
+        'password' => Hash::make($request->new_password)
+    ]);
+    return back()->with("status", "Password Success Update");
+    
+}
+    
+    public function studentProfile(Student $student, Request $request){
+        $datas = $request->validate([
+            'firstname' => ['required'],
+            'lastname' => ['required'],
+            'middlename' => [''],
+            'gender' => ['required'],
+            'email' => ['required'],
+        ]);
+        $datas['firstname'] = strip_tags($datas['firstname']);
+        $datas['lastname'] = strip_tags($datas['lastname']);
+        $datas['middlename'] = strip_tags($datas['middlename']);
+        $datas['gender'] = strip_tags($datas['gender']);
+        $datas['email'] = strip_tags($datas['email']);    
+        $student->update($datas);
+        return redirect('/student/dashboard');
+    }
+   
     public function studentLogout(){
         Auth::guard('student')->logout();
         return redirect('/student/login');
-    }
-
-    public function studentDashboard(){
-        return view('student.dashboard');
-    }
-
-    public function login(){
-        return view('student.login');
     }
     public function loginProcess(Request $request){
         $input = $request->all();

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->year('year');
             $table->text('members');
             $table->longtext('abstract');
-            $table->string('banner', 300);
             $table->string('document', 300);
             $table->foreignid('student_id')->constrained();
             $table->integer('status');

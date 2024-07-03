@@ -10,13 +10,27 @@ use Illuminate\Support\Facades\Storage;
 
 class ViewController extends Controller
 {
+    public function decline(){
+        $files = File::all();
+        return view('archive.decline', ['file' => $files]);
+    }
+    public function studentLogin(){
+        return view('student.login');
+    }
+    public function studentDashboard(){
+        return view('student.dashboard');
+    }
     public function studentArchiveList(){
-        return view('archive.archivelist');
+        $data = File::all();
+        return view('archive.archivelist',['file' => $data]);
     }
     public function fileSearch(){
         return view('archive.search');
     }
 
+    public function studentPassword(Student $student){
+        return view('student.changepassword', ['student' => $student]);
+    }
     public function adminPassword(Admin $admin){
         return view('admin.changepassword', ['admin' => $admin]);
     }
@@ -39,45 +53,8 @@ class ViewController extends Controller
         return view('accounts.adminprofile', ['admin' => $admin]);
     }
     
-    public function studentProfile(Student $student, Request $request){
-        $datas = $request->validate([
-            'firstname' => ['required'],
-            'lastname' => ['required'],
-            'middlename' => [''],
-            'gender' => ['required'],
-            'email' => ['required'],
-        ]);
-        $datas['firstname'] = strip_tags($datas['firstname']);
-        $datas['lastname'] = strip_tags($datas['lastname']);
-        $datas['middlename'] = strip_tags($datas['middlename']);
-        $datas['gender'] = strip_tags($datas['gender']);
-        $datas['email'] = strip_tags($datas['email']);    
-        $student->update($datas);
-        return redirect('/student/dashboard');
-    }
-    public function studentUpdate(Student $student, Request $request){
-        $datas = $request->validate([
-            'firstname' => ['required'],
-            'lastname' => ['required'],
-            'middlename' => [''],
-            'gender' => ['required'],
-            'email' => ['required'],
-            'department' => ['required'],
-        ]);
-        $datas['firstname'] = strip_tags($datas['firstname']);
-        $datas['lastname'] = strip_tags($datas['lastname']);
-        $datas['middlename'] = strip_tags($datas['middlename']);
-        $datas['gender'] = strip_tags($datas['gender']);
-        $datas['email'] = strip_tags($datas['email']);
-        $datas['department'] = strip_tags($datas['department']);     
-        $student->update($datas);
-        return redirect('/admin/dashboard/student');
-    }
 
-    public function studentDelete(Student $student){
-        $student->delete();
-        return redirect('/admin/dashboard/student');
-    }
+  
     public function studentEdit(Student $student){
         return view('accounts.editstudent', ['student' => $student]);
     }
@@ -90,50 +67,31 @@ class ViewController extends Controller
     }
 
     //for admin
-    public function adminDelete(Admin $admin){
-        
-        $admin->delete();
-        return redirect('/admin/dashboard/admin');
+    public function adminReset(){
+        return view('accounts.resetadmin');
     }
-
+  
+    public function adminDashboard(){
+        $totalUpload = File::where('status', 1)->count();
+        $totalPending = File::where('status', 0)->count();
+        
+        $totalStudent = Student::count();
+        return view('admin.dashboard',compact('totalUpload', 'totalStudent', 'totalPending' ));
+    }
+    public function register(){
+        return view('admin.register');
+    }
+    public function adminLogin(){
+        return view('admin.login');
+    }
+    public function adminDashboardStudent(){
+        return view('student.register');
+    }
     public function adminlist(){
         $data = Admin::all();
         return view('accounts.adminlist',['admin' => $data]);
     }
-    public function adminProfile(Admin $admin, Request $request){
-        $data = $request->validate([
-            'firstname' => ['required'],
-            'lastname' => ['required'],
-            'middlename' => [''],
-            'gender' => ['required'],
-            'email' => ['required'],
-        ]);
-        $data['firstname'] = strip_tags($data['firstname']);
-        $data['lastname'] = strip_tags($data['lastname']);
-        $data['middlename'] = strip_tags($data['middlename']);
-        $data['gender'] = strip_tags($data['gender']);
-        $data['email'] = strip_tags($data['email']);
-            
-        $admin->update($data);
-        return redirect('/admin/dashboard');
-    }
-    public function adminUpdate(Admin $admin, Request $request){
-        $data = $request->validate([
-            'firstname' => ['required'],
-            'lastname' => ['required'],
-            'middlename' => [''],
-            'gender' => ['required'],
-            'email' => ['required'],
-        ]);
-        $data['firstname'] = strip_tags($data['firstname']);
-        $data['lastname'] = strip_tags($data['lastname']);
-        $data['middlename'] = strip_tags($data['middlename']);
-        $data['gender'] = strip_tags($data['gender']);
-        $data['email'] = strip_tags($data['email']);
-            
-        $admin->update($data);
-        return redirect('/admin/dashboard/admin');
-    }
+   
 
     public function adminEdit(Admin $admin){
         return view('accounts.editadmin', ['admin' => $admin]);

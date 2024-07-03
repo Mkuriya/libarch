@@ -14,7 +14,6 @@ class File extends Model
         'year',
         'members',
         'abstract',
-        'banner',
         'document',
         'student_id',
         'status',

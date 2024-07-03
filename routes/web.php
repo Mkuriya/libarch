@@ -22,33 +22,36 @@ Route::get('/register', function(){return view('/register');});// for display wh
 
 
 Route::controller(AdminController::class)->group(function(){
-    Route::get('/admin/dashboard','adminDashboard')->name('admin.dashboard'); //for display the admin dashboard
-    Route::get('/admin/dashboard/admin/register','register'); // to display the admin register 
-    Route::get('/admin/login','login'); // to display the admin login 
-    Route::get('/admin/dashboard/student/register','adminDashboardStudent')->name('student.register')->middleware('auth:admin'); //for display the dashboard
-    
-    Route::post('/admin/dashboard/profile/changepassword/update','updatePassword')->name('adminchangepassword');
+    Route::post('/admin/dashboard/admin/reset', 'resetPassword');
+    Route::post('/admin/dashboard/profile/changepassword/update','updatePassword')->name('adminchangepassword'); //for changepassword process
     Route::post('/admin/register','adminRegister'); //for registration process
     Route::post('/admin/loginprocess','adminLogin'); //for login process
     Route::post('/admin/logout','adminLogout'); //for logout process
+    Route::put('/admin/dashboard/profile/edit/{admin}','adminProfile')->name('admin.update')->middleware('auth:admin'); // for edit profile
+    Route::put('/admin/dashboard/admin/edit/{admin}',  'adminUpdate')->name('admin.update')->middleware('auth:admin'); //to update the data from database
+    Route::put('/admin/dashboard/student/edit/{student}',  'studentUpdate'); //to update the data from database
+
+    Route::delete('/admin/dashboard/admin/delete/{admin}',  'adminDelete')->name('admin.delete')->middleware('auth:admin'); //to delete the data from database
+    Route::delete('/admin/dashboard/student/delete/{student}',  'studentDelete'); //to delete the data from database
+    
 
 });
 
 Route::controller(StudentController::class)->group(function(){
     
-    Route::get('/student/login','login'); // to display the student login  
-    Route::get('/student/dashboard','studentDashboard')->name('student.dashboard')->middleware('auth:student'); //for student dashboard with auth
-
+    Route::post('/student/dashboard/profile/changepassword/update','updatePassword')->name('studentchangepassword'); //for changepassword process
+    
     Route::post('/student/loginprocess','loginProcess'); // to process the student login 
     Route::post('/admin/dashboard/studentregister','studentRegister')->name('admin.studentregister')->middleware('auth:admin'); //for registration process
     Route::post('/student/logout','studentLogout'); //for logout process
+    Route::put('/student/dashboard/profile/edit/{student}', 'studentProfile')->name('update')->middleware('auth:student'); // for edit profile
    
-
 });
 
 Route::controller(FileController::class)->group(function(){
 
     Route::put('/admin/dashboard/archive/pending/status/{file}', 'fileUpdate'); // for edit profile
+    Route::post('/student/dashboard/upload/file','fileUpload'); // for edit profile
 });
 
 Route::controller(ViewController::class)->group(function(){
@@ -59,6 +62,10 @@ Route::controller(ViewController::class)->group(function(){
     Route::get('/student/dashboard/student/profile/{student}', 'studentprofileView')->name('admin.studentprofile')->middleware('auth:student'); // to display the admin profile details
     Route::get('/student/dashboard/profile/{student}', 'studentprofileView')->name('studentprofile')->middleware('auth:student'); // to display the stuident profile details
     Route::get('/student/dashboard/upload', 'studentUpload')->name('student.studentUpload')->middleware('auth:student'); // for display the upload form
+    Route::get('/student/dashboard/profile/changepassword/{student}', 'studentPassword'); // for display the change studentpassword
+    Route::get('/student/login','studentLogin'); // to display the student login  
+    Route::get('/student/dashboard','studentDashboard')->name('student.dashboard')->middleware('auth:student'); //for student dashboard with auth
+    
     Route::get('/admin/dashboard/archive/pending', 'pending'); //for display the pending list in admin
     Route::get('/admin/dashboard/profile/changepassword/{admin}', 'adminPassword'); // for display the change adminpassword
     Route::get('/admin/dashboard/profile/{admin}','adminprofileView')->name('admin.adminprofile')->middleware('auth:admin'); // for display the profile
@@ -70,19 +77,13 @@ Route::controller(ViewController::class)->group(function(){
     Route::get('/admin/dashboard/student/view/{student}', 'studentView')->name('studentview'); // to display the student details
     Route::get('/admin/dashboard/student/edit/{student}', 'studentEdit'); // for display the edit page 
     Route::get('/admin/dashboard/archive',  'adminArchiveList'); //for display the archive list/table
-        
-    Route::post('/student/dashboard/upload/file','fileUpload'); // for edit profile
-    Route::put('/student/dashboard/profile/edit/{student}', 'studentProfile')->name('update')->middleware('auth:student'); // for edit profile
-    Route::put('/admin/dashboard/profile/edit/{admin}','adminProfile')->name('admin.update')->middleware('auth:admin'); // for edit profile
-    Route::put('/admin/dashboard/admin/edit/{admin}',  'adminUpdate')->name('admin.update')->middleware('auth:admin'); //to update the data from database
-    Route::put('/admin/dashboard/student/edit/{student}',  'studentUpdate'); //to update the data from database
+    Route::get('/admin/dashboard','adminDashboard')->name('admin.dashboard'); //for display the admin dashboard
+    Route::get('/admin/dashboard/admin/register','register'); // to display the admin register 
+    Route::get('/admin/login','adminLogin'); // to display the admin login 
+    Route::get('/admin/dashboard/student/register','adminDashboardStudent')->name('student.register')->middleware('auth:admin'); //for display the dashboard
+    Route::get('/admin/dashboard/archive/decline', 'decline')->name('decline');
 
-    Route::delete('/admin/dashboard/admin/delete/{admin}',  'adminDelete')->name('admin.delete')->middleware('auth:admin'); //to delete the data from database
-    Route::delete('/admin/dashboard/student/delete/{student}',  'studentDelete'); //to delete the data from database
-   
-
-
-
+    Route::get('/admin/dashboard/admin/reset/{admin}', 'adminReset')->name('resetadmin');
 });
 
 
