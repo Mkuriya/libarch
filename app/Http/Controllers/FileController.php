@@ -3,10 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
+    public function search(Request $request){
+
+        $search = $request->search;
+        $student=Student::where(function($query) use ($search){
+            $query->where('lastname','like', "%$search%")
+            ->orWhere('firstname', 'like', "%$search%");
+        })
+        
+        ->get();
+         return view('accounts.studentlist', compact('student', 'search'));
+    }
+
     public function fileUpdate(File $file, Request $request){
         $data = $request->validate([
             'status' => 'required'

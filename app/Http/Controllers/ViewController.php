@@ -61,11 +61,29 @@ class ViewController extends Controller
     public function studentView(Student $student){
         return view('accounts.viewstudent', ['student' => $student]);
     }
-    public function studentlist(){
-        $datas = Student::all();
+    public function studentlist(Request $request)
+    {
+        $query = Student::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('firstname', 'LIKE', "%{$search}%")
+                  ->orWhere('lastname', 'LIKE', "%{$search}%")
+                  ->orWhere('middlename', 'LIKE', "%{$search}%")
+                  ->orWhere('email', 'LIKE', "%{$search}%")
+                  ->orWhere('department', 'LIKE', "%{$search}%");
+        }
+
+        $students = $query->paginate(2)->appends($request->except('page'));
+
+        return view('accounts.studentlist', compact('students'));
+    }
+  /*  public function studentlist(){
+
+        $datas = Student::paginate(2);
         return view('accounts.studentlist', ['student' => $datas    ]);
     }
-
+*/
     //for admin
     public function adminReset(){
         return view('accounts.resetadmin');
