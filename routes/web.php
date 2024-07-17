@@ -80,6 +80,9 @@ Route::controller(ViewController::class)->group(function(){
     Route::get('/admin/dashboard/archive/decline', 'decline')->name('decline');
 
     Route::get('/admin/dashboard/admin/reset/{admin}', 'adminReset')->name('resetadmin');
+
+    Route::get('/student/dashboard/archivelist/document/{file}', 'viewDoc');
+    Route::get('/admin/dashboard/archive/view/{file}', 'viewDocument');
 });
 
 
@@ -88,7 +91,7 @@ Route::controller(FileController::class)->group(function(){
     Route::put('/admin/dashboard/archive/pending/status/{file}', 'fileUpdate'); // for edit profile
     Route::post('/student/dashboard/upload/file','fileUpload'); // for edit profile
 
-    Route::get('/search', 'search')->name('search');
 });
 
 Auth::routes();
+

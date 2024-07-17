@@ -47,8 +47,10 @@
                                             
                                         </td>
                                     
-                                        <td class="px-1 py-4 text-sm whitespace-nowrap"> <!-- for update botton-->
-                                            <button class="hover:border-indigo-500 text-white hover:text-indigo-500 font-bold py-2 px-4 rounded-full">View</button>
+                                        <td class="px-1 py-4 text-sm whitespace-nowrap"> <!-- for viewer botton-->
+                                            <a href="/student/dashboard/archivelist/document/{{$item->id}}">
+                                                <button class="hover:border-indigo-500 text-white hover:text-indigo-500 font-bold py-2 px-4 rounded-full">View</button>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endif
@@ -59,4 +61,5 @@
              </div>
          </div>
      </div>
+</div>
 @include('partials.footer')

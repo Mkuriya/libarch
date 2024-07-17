@@ -10,9 +10,33 @@ use Illuminate\Support\Facades\Storage;
 
 class ViewController extends Controller
 {
-    public function decline(){
-        $files = File::all();
-        return view('archive.decline', ['file' => $files]);
+    public function viewDocument(File $file){
+        return view('archive.view', ['file' => $file]);
+    }
+    public function viewDoc(File $file){
+        return view('archive.viewer', ['file' => $file]);
+    }
+
+    public function decline(Request $request){
+        $query = File::query();
+        
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%")
+                  ->orWhere('year', 'LIKE', "%{$search}%");
+            });
+        }
+    
+        $status = $request->input('status');
+        
+        if ($status == 0) {
+            $query->where('status', 2);
+        }
+    
+        $files = $query->paginate(2)->appends($request->except('page'));
+    
+        return view('archive.decline', compact('files'));
     }
     public function studentLogin(){
         return view('student.login');
@@ -34,18 +58,54 @@ class ViewController extends Controller
     public function adminPassword(Admin $admin){
         return view('admin.changepassword', ['admin' => $admin]);
     }
-    public function pending(){
-        $data = File::all();
-        return view('archive.pending', ['file' => $data]);
+    public function pending(Request $request){
+        $query = File::query();
+        
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%")
+                  ->orWhere('year', 'LIKE', "%{$search}%");
+            });
+        }
+    
+        $status = $request->input('status');
+        
+        if ($status == 0) {
+            $query->where('status', 0);
+        }
+    
+        $files = $query->paginate(1)->appends($request->except('page'));
+    
+        return view('archive.pending', compact('files'));
+        
     }
 
     public function studentUpload(){
         return view('archive.upload');
     }
-    public function adminArchiveList(){
-        $data = File::all();
-        return view('archive.list', ['file' => $data]);
+    public function adminArchiveList(Request $request){
+        $query = File::query();
+        
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%")
+                  ->orWhere('year', 'LIKE', "%{$search}%");
+            });
+        }
+    
+        $status = $request->input('status');
+        
+        if ($status == 0) {
+            $query->where('status', 1);
+        }
+    
+        $files = $query->paginate(2)->appends($request->except('page'));
+    
+        return view('archive.list', compact('files'));
     }
+    
     public function studentprofileView(Student $student){
         return view('accounts.studentprofile', ['student' => $student]);
     }
@@ -54,36 +114,27 @@ class ViewController extends Controller
     }
     
 
-  
     public function studentEdit(Student $student){
         return view('accounts.editstudent', ['student' => $student]);
     }
     public function studentView(Student $student){
         return view('accounts.viewstudent', ['student' => $student]);
     }
-    public function studentlist(Request $request)
-    {
+    public function studentlist(Request $request){
         $query = Student::query();
-
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where('firstname', 'LIKE', "%{$search}%")
                   ->orWhere('lastname', 'LIKE', "%{$search}%")
                   ->orWhere('middlename', 'LIKE', "%{$search}%")
                   ->orWhere('email', 'LIKE', "%{$search}%")
+                  ->orWhere('gender', 'LIKE', "%{$search}%")
                   ->orWhere('department', 'LIKE', "%{$search}%");
         }
-
         $students = $query->paginate(2)->appends($request->except('page'));
-
         return view('accounts.studentlist', compact('students'));
     }
-  /*  public function studentlist(){
-
-        $datas = Student::paginate(2);
-        return view('accounts.studentlist', ['student' => $datas    ]);
-    }
-*/
+ 
     //for admin
     public function adminReset(){
         return view('accounts.resetadmin');
@@ -105,9 +156,17 @@ class ViewController extends Controller
     public function adminDashboardStudent(){
         return view('student.register');
     }
-    public function adminlist(){
-        $data = Admin::all();
-        return view('accounts.adminlist',['admin' => $data]);
+    public function adminlist(Request $request){
+        $query = Admin::query();
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('firstname', 'LIKE', "%{$search}%")
+                  ->orWhere('lastname', 'LIKE', "%{$search}%")
+                  ->orWhere('middlename', 'LIKE', "%{$search}%")
+                  ->orWhere('email', 'LIKE', "%{$search}%");
+        }
+        $admins = $query->paginate(2)->appends($request->except('page'));
+        return view('accounts.adminlist', compact('admins'));
     }
    
 
