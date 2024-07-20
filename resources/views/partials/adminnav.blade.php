@@ -29,10 +29,11 @@
       </span>
       <span class="cursor-pointer text-2xl absolute right-0 mr-8 pt-1" onclick="openMenu()">
         @if (auth()->guard('admin')->check() && auth()->guard('admin')->user()->photo)
-            <img src="{{ auth()->guard('admin')->user()->photo }}" height="30" width="30" class="rounded-full">
+          <img src="{{ asset('storage/' . auth()->guard('admin')->user()->photo) }}" class="rounded-full h-8 w-8 object-cover">
         @else
-            <h1>{{auth()->guard('admin')->user()->firstname}}</h1>
+          <h1>{{ auth()->guard('admin')->user()->firstname }}</h1>
         @endif
+    
     </span>
   </main>
 

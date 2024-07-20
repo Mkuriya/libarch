@@ -56,7 +56,6 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 @foreach ($admins as $item)
-                                    @if ($item->id != 1)
                                         <tr>
                                             <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                 <div class="inline-flex items-center gap-x-3">
@@ -71,7 +70,7 @@
                                             </td>
                                             <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 <div class="flex items-center gap-x-2">
-                                                    <img class="object-cover w-10 h-10 " src="{{ asset($item->photo) }}" alt="">
+                                                    <img class="object-cover w-10 h-10 " src="{{ asset('storage/' . $item->photo) }}" alt="">
                                                 </div>
                                             </td>
                                             <td class="px-1 py-4 text-sm whitespace-nowrap">
@@ -96,7 +95,6 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    @endif
                                 @endforeach
                             </tbody>
                         </table>

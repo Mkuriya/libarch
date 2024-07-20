@@ -10,14 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ViewController extends Controller
 {
-    public function viewDocument(File $file){
-        return view('archive.view', ['file' => $file]);
-    }
-    public function viewDoc(File $file){
-        return view('archive.viewer', ['file' => $file]);
-    }
-
-    public function decline(Request $request){
+    public function adminArchiveList(Request $request){
         $query = File::query();
         
         if ($request->has('search')) {
@@ -28,36 +21,45 @@ class ViewController extends Controller
             });
         }
     
-        $status = $request->input('status');
-        
-        if ($status == 0) {
-            $query->where('status', 2);
+        if ($request->input('status') == 0) {
+            $query->where('status', 1);
         }
+    
+        // Add sorting
+        $query->orderBy('title', 'asc'); // or 'year', 'student->firstname', etc.
+    
+        // Paginate
     
         $files = $query->paginate(2)->appends($request->except('page'));
     
-        return view('archive.decline', compact('files'));
+        return view('archive.list', compact('files'));
     }
-    public function studentLogin(){
-        return view('student.login');
+    
+    public function studentArchiveList(Request $request) {
+        $query = File::query();
+    
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%")
+                  ->orWhere('year', 'LIKE', "%{$search}%")
+                  ->orWhere('abstract', 'LIKE', "%{$search}%");
+            });
+        }
+    
+        if ($request->input('status') == 0) {
+            $query->where('status', 1);
+        }
+    
+        // Add sorting
+        $query->orderBy('title', 'asc'); // or 'year', 'student->firstname', etc.
+    
+        // Paginate and append query parameters except 'page'
+        $files = $query->paginate(2)->appends($request->except('page'));
+    
+        return view('archive.archivelist', compact('files'));
     }
-    public function studentDashboard(){
-        return view('student.dashboard');
-    }
-    public function studentArchiveList(){
-        $data = File::all();
-        return view('archive.archivelist',['file' => $data]);
-    }
-    public function fileSearch(){
-        return view('archive.search');
-    }
-
-    public function studentPassword(Student $student){
-        return view('student.changepassword', ['student' => $student]);
-    }
-    public function adminPassword(Admin $admin){
-        return view('admin.changepassword', ['admin' => $admin]);
-    }
+    
     public function pending(Request $request){
         $query = File::query();
         
@@ -80,11 +82,7 @@ class ViewController extends Controller
         return view('archive.pending', compact('files'));
         
     }
-
-    public function studentUpload(){
-        return view('archive.upload');
-    }
-    public function adminArchiveList(Request $request){
+    public function decline(Request $request){
         $query = File::query();
         
         if ($request->has('search')) {
@@ -95,15 +93,44 @@ class ViewController extends Controller
             });
         }
     
-        $status = $request->input('status');
-        
-        if ($status == 0) {
-            $query->where('status', 1);
+        if ($request->input('status') == 0) {
+            $query->where('status', 2);
         }
     
+        // Add sorting
+        $query->orderBy('title', 'asc'); // or 'year', 'student->firstname', etc.
+    
+        // Paginate
         $files = $query->paginate(2)->appends($request->except('page'));
     
-        return view('archive.list', compact('files'));
+        return view('archive.decline', compact('files'));
+    }
+    public function viewDocument(File $file){
+        return view('archive.view', ['file' => $file]);
+    }
+    public function viewDoc(File $file){
+        return view('archive.viewer', ['file' => $file]);
+    }
+    public function studentLogin(){
+        return view('student.login');
+    }
+    public function studentDashboard(){
+        return view('student.dashboard');
+    }
+        
+    public function fileSearch(){
+        return view('archive.search');
+    }
+
+    public function studentPassword(Student $student){
+        return view('student.changepassword', ['student' => $student]);
+    }
+    public function adminPassword(Admin $admin){
+        return view('admin.changepassword', ['admin' => $admin]);
+    }
+    
+    public function studentUpload(){
+        return view('archive.upload');
     }
     
     public function studentprofileView(Student $student){
@@ -113,7 +140,6 @@ class ViewController extends Controller
         return view('accounts.adminprofile', ['admin' => $admin]);
     }
     
-
     public function studentEdit(Student $student){
         return view('accounts.editstudent', ['student' => $student]);
     }
@@ -158,18 +184,25 @@ class ViewController extends Controller
     }
     public function adminlist(Request $request){
         $query = Admin::query();
+    
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where('firstname', 'LIKE', "%{$search}%")
+            $query->where(function ($q) use ($search) {
+                $q->where('firstname', 'LIKE', "%{$search}%")
                   ->orWhere('lastname', 'LIKE', "%{$search}%")
                   ->orWhere('middlename', 'LIKE', "%{$search}%")
                   ->orWhere('email', 'LIKE', "%{$search}%");
+            });
         }
+    
+        // Hide a specific account by its ID (e.g., ID = 123)
+        $query->where('id', '!=', 1); // Adjust 'id' to match your database schema
+    
+        // Paginate
         $admins = $query->paginate(2)->appends($request->except('page'));
+    
         return view('accounts.adminlist', compact('admins'));
     }
-   
-
     public function adminEdit(Admin $admin){
         return view('accounts.editadmin', ['admin' => $admin]);
     }
@@ -177,7 +210,6 @@ class ViewController extends Controller
         return view('accounts.viewadmin', ['admin' => $admin]);
     }
 
-    //
     public function index()
     {
         return view('home');

@@ -46,8 +46,19 @@
                                 class="outline-none focus:outline focus:outline-sky-300">
                             <span class="text-xs">Remember me</span>
                         </label> --}}
-                        <a class="text-sm font-medium text-black underline" href="/">Forgot
-                            password?</a>
+                        <a class="text-sm font-medium text-black underline" href="#" onclick="openModal(event)">Forgot password?</a>
+
+                        <!-- Modal -->
+                        <div id="myModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+                            <div class="bg-white p-6 rounded-lg shadow-lg w-1/3 relative">
+                                <h2 class="text-xl font-semibold mb-4">Congrats! You’ve just joined the elite group of people who forget their passwords. We meet in the ‘Forgot Password’ section of life.</h2>
+                                <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-4 flex items-center justify-center gap-x-2">
                         <button class="font-semibold hover:bg-black hover:text-white hover:ring hover:ring-black border-black transition 
@@ -62,7 +73,16 @@
     </div>
 </div>
 
+<script>
+    function openModal(event) {
+    event.preventDefault();
+    document.getElementById('myModal').classList.remove('hidden');
+}
 
+function closeModal() {
+    document.getElementById('myModal').classList.add('hidden');
+}
+</script>
 
 {{-- 
 <div class="bg-gray-500 h-2/3 w-96 grid place-items-center ">

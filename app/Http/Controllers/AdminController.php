@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -45,11 +46,12 @@ class AdminController extends Controller
         $datas = $request->validate([
             'firstname' => ['required'],
             'lastname' => ['required'],
-            'middlename' => [''],
+            'middlename' => ['nullable'],
             'gender' => ['required'],
-            'email' => ['required'],
+            'email' => ['required', 'email'],
             'department' => ['required'],
-            'password' => 'required|confirmed|min:8', // Add validation for password
+            'password' => 'nullable|confirmed|min:8', // Validate password
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
         ]);
     
         // Sanitize input
@@ -67,29 +69,24 @@ class AdminController extends Controller
             unset($datas['password']); // Remove password key if not provided to avoid overwriting with null
         }
     
+        // Check if a photo is uploaded
+        if ($request->hasFile('photo')) {
+            // Delete the old photo if it exists
+            if ($student->photo) {
+                Storage::disk('public')->delete($student->photo);
+            }
+            
+            // Store new photo
+            $photoPath = $request->file('photo')->store('images', 'public'); // Store photo in 'images' directory in the 'public' disk
+            $datas['photo'] = $photoPath; // Update photo path in data
+        }
+    
+        // Update student with sanitized and validated data
         $student->update($datas);
     
         return redirect('/admin/dashboard/student');
     }
-    /*public function studentUpdate(Student $student, Request $request){
-        $datas = $request->validate([
-            'firstname' => ['required'],
-            'lastname' => ['required'],
-            'middlename' => [''],
-            'gender' => ['required'],
-            'email' => ['required'],
-            'department' => ['required'],
-        ]);
-        $datas['firstname'] = strip_tags($datas['firstname']);
-        $datas['lastname'] = strip_tags($datas['lastname']);
-        $datas['middlename'] = strip_tags($datas['middlename']);
-        $datas['gender'] = strip_tags($datas['gender']);
-        $datas['email'] = strip_tags($datas['email']);
-        $datas['department'] = strip_tags($datas['department']);     
-        $student->update($datas);
-        return redirect('/admin/dashboard/student');
-    }*/
-
+    
     public function adminLogin(Request $request){
         $input = $request->all();
         $this->validate($request,[
@@ -106,25 +103,32 @@ class AdminController extends Controller
     }
 
     public function adminRegister(Request $request){
-        $validated = $request->validate([
-            'firstname' => ['required'],
-            'lastname' => ['required'],
-            'middlename' => [''],
-            'gender' => ['required'],
-            'email' => ['required',Rule::unique('admins')],
-            'password' => 'required|confirmed|min:8',
-            'photo' => [''],
-        ]) ;
-
-        $validated['password'] = bcrypt($validated['password']);
-        $fileName = time().$request->file('photo')->getClientOriginalName();
-        $path = $request->file('photo')->storeAs('images', $fileName, 'public'); 
-        $validated["photo"] = '/storage/'.$path;
-        $admin = Admin::create($validated);
+            $request->validate([
+                'lastname' => 'required|string|max:255',
+                'firstname' => 'required|string|max:255',
+                'middlename' => 'nullable|string|max:255',
+                'email' => 'required|string|email|max:255',
+                'gender' => 'required|string|in:Male,Female',
+                'password' => 'required|string|confirmed|min:8',
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
         
-        auth()->login($admin);
-        return redirect('/admin/dashboard');
-    }
+            $imagePath = $request->file('photo') ? $request->file('photo')->store('profile_images', 'public') : '/img/profile.jpg';
+        
+            // Create user with the image path
+            Admin::create([
+                'lastname' => $request->lastname,
+                'firstname' => $request->firstname,
+                'middlename' => $request->middlename,
+                'email' => $request->email,
+                'gender' => $request->gender,
+                'password' => bcrypt($request->password),
+                'photo' => $imagePath,
+            ]);
+        
+            return redirect('/admin/dashboard/admin')->with('success', 'User registered successfully');
+        }
+       
     public function adminProfile(Admin $admin, Request $request){
         $data = $request->validate([
             'firstname' => ['required'],
@@ -132,38 +136,68 @@ class AdminController extends Controller
             'middlename' => [''],
             'gender' => ['required'],
             'email' => ['required'],
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
         ]);
         $data['firstname'] = strip_tags($data['firstname']);
         $data['lastname'] = strip_tags($data['lastname']);
         $data['middlename'] = strip_tags($data['middlename']);
         $data['gender'] = strip_tags($data['gender']);
         $data['email'] = strip_tags($data['email']);
+        if ($request->hasFile('photo')) {
+            // Delete the old photo if it exists
+            if ($admin->photo) {
+                Storage::disk('public')->delete($admin->photo);
+            }
             
+            // Store new photo
+            $photoPath = $request->file('photo')->store('images', 'public'); // Store photo in 'images' directory in the 'public' disk
+            $data['photo'] = $photoPath; // Update photo path in data
+        }
         $admin->update($data);
         return redirect('/admin/dashboard');
     }
     
-    public function adminUpdate(Admin $admin, Request $request){
+    public function adminUpdate(Admin $admin, Request $request) {
         $data = $request->validate([
             'firstname' => ['required'],
             'lastname' => ['required'],
-            'middlename' => [''],
+            'middlename' => ['nullable'],
             'gender' => ['required'],
-            'email' => ['required'],
-            'password' => 'required|confirmed|min:8', // Add validation for password
+            'email' => ['required', 'email'],
+            'password' => 'nullable|confirmed|min:8', // Password is nullable for updates
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
         ]);
+    
+        // Strip tags to prevent XSS
         $data['firstname'] = strip_tags($data['firstname']);
         $data['lastname'] = strip_tags($data['lastname']);
         $data['middlename'] = strip_tags($data['middlename']);
         $data['gender'] = strip_tags($data['gender']);
         $data['email'] = strip_tags($data['email']);
-             // Check if password is provided and hash it
+    
+        // Check if password is provided and hash it
         if (!empty($data['password'])) {
             $data['password'] = bcrypt($data['password']);
         } else {
             unset($data['password']); // Remove password key if not provided to avoid overwriting with null
         }
+    
+        // Check if a photo is uploaded
+        if ($request->hasFile('photo')) {
+            // Delete the old photo if it exists
+            if ($admin->photo) {
+                Storage::disk('public')->delete($admin->photo);
+            }
+            
+            // Store new photo
+            $photoPath = $request->file('photo')->store('images', 'public'); // Store photo in 'images' directory in the 'public' disk
+            $data['photo'] = $photoPath; // Update photo path in data
+        }
+    
         $admin->update($data);
+    
         return redirect('/admin/dashboard/admin');
     }
+    
+    
 }

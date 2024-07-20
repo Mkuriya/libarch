@@ -7,7 +7,7 @@
 <section class="max-w-screen-xl p-6 mx-auto bg-indigo-600 rounded-md shadow-md dark:bg-gray-800 ">
     <h1 class="text-xl font-bold text-white capitalize dark:text-white">Update Student</h1>
     <hr>
-    <form action="/admin/dashboard/student/edit/{{$student->id}}" method="POST">
+    <form action="/admin/dashboard/student/edit/{{$student->id}}" method="POST" enctype="multipart/form-data">
 
         @csrf
         @method('PUT') 
@@ -67,16 +67,16 @@
                     @error('password') <span class="text-red-400"> {{$message}}</span>@enderror
                 </div>
             </div>
-            <div class=" col-span-2">
-                <label class="block text-sm font-medium text-white"> Image </label>
-              <div>
-                <input disabled type="file" name="photo" id="file" class="sr-only mt-1 flex justify-center px-4 pt-3 pb-4 border-2 border-gray-300 border-dashed rounded-md" />
-                <label for="file"class="relative flex min-h-[150px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] text-center">
-                    <div>
-                        <img src="{{ asset($student->photo) }}" />
-                    </div>
-                </label>
-              </div>
+            <div class="col-span-2">
+                <label class="block text-sm font-medium text-white">Image</label>
+                <div>
+                    <input type="file" name="photo" id="file" class="sr-only mt-1 flex justify-center px-4 pt-3 pb-4 border-2 border-red-300 border-dashed rounded-md" onchange="previewImage(event)" />
+                    <label for="file" class="relative flex min-h-[150px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] text-center">
+                        <div id="imagePreviewContainer">
+                            <img id="imagePreview" src="{{ asset('storage/' . $student->photo) }}" class="rounded-md object-cover h-48 w-96" />
+                        </div>
+                    </label>
+                </div>
             </div>
         </div>
         <div class="flex justify-end mt-6">
@@ -89,11 +89,22 @@
             focus:outline-none focus:bg-gray-600">Back</button></a>
             
         </div>
-
-        
     </form>
-    
 </section>
 </div>
 
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const reader = new FileReader();
+        
+        reader.onload = function() {
+            const dataURL = reader.result;
+            const imagePreview = document.getElementById('imagePreview');
+            imagePreview.src = dataURL;
+        };
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+</script>
 @extends('partials.footer')

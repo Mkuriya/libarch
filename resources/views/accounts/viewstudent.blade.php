@@ -39,7 +39,7 @@
             <div class="col-span-1 ">
                 <label class="block text-sm font-medium text-white"> Image </label>
                 <div class="w-96 relative flex min-h-[150px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] text-center">
-                   <img src="{{ asset($student->photo) }}" class="h-96 w-96 " />
+                   <img src="{{  asset('storage/' . $student->photo) }}" class="object-cover h-96 w-96 " />
                 
                 </div>
             </div>

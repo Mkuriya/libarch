@@ -65,7 +65,7 @@
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{ $student->department }}</td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{ $student->email }}</td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            <img class="object-cover w-10 h-10 rounded-full" src="{{ asset($student->photo) }}" alt="Student image" />
+                                            <img class="object-cover w-10 h-10 rounded-full" src="{{  asset('storage/' . $student->photo)}}" alt="Student image" />
                                         </td>
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
                                             <div class="flex items-center gap-x-6">

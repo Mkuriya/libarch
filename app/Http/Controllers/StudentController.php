@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -25,22 +26,41 @@ class StudentController extends Controller
     
 }
     
-    public function studentProfile(Student $student, Request $request){
-        $datas = $request->validate([
-            'firstname' => ['required'],
-            'lastname' => ['required'],
-            'middlename' => [''],
-            'gender' => ['required'],
-            'email' => ['required'],
-        ]);
-        $datas['firstname'] = strip_tags($datas['firstname']);
-        $datas['lastname'] = strip_tags($datas['lastname']);
-        $datas['middlename'] = strip_tags($datas['middlename']);
-        $datas['gender'] = strip_tags($datas['gender']);
-        $datas['email'] = strip_tags($datas['email']);    
-        $student->update($datas);
-        return redirect('/student/dashboard');
+public function studentProfile(Student $student, Request $request){
+    $datas = $request->validate([
+        'firstname' => ['required'],
+        'lastname' => ['required'],
+        'middlename' => ['nullable'],
+        'gender' => ['required'],
+        'email' => ['required', 'email'],
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
+    ]);
+
+    // Sanitize input
+    $datas['firstname'] = strip_tags($datas['firstname']);
+    $datas['lastname'] = strip_tags($datas['lastname']);
+    $datas['middlename'] = strip_tags($datas['middlename']);
+    $datas['gender'] = strip_tags($datas['gender']);
+    $datas['email'] = strip_tags($datas['email']); 
+
+    // Check if a photo is uploaded
+    if ($request->hasFile('photo')) {
+        // Delete the old photo if it exists
+        if ($student->photo) {
+            Storage::disk('public')->delete($student->photo);
+        }
+        
+        // Store new photo
+        $photoPath = $request->file('photo')->store('images', 'public'); // Store photo in 'images' directory in the 'public' disk
+        $datas['photo'] = $photoPath; // Update photo path in data
     }
+
+    // Update student with sanitized and validated data
+    $student->update($datas);
+
+    return redirect('/student/dashboard');
+}
+
    
     public function studentLogout(){
         Auth::guard('student')->logout();
