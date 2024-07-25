@@ -8,25 +8,25 @@
             <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-12">     
                 <div class="col-span-5">
                     <label class="text-white dark:text-gray-200 pl-2" for="lastname">Last Name</label>
-                    <input name="lastname" readonly value="{{$student->lastname}}" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
+                    <input name="lastname" disabled value="{{$student->lastname}}" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
                 </div>
                 <div class="col-span-5">
                     <label class="text-white dark:text-gray-200 pl-2" for="firstname">First Name</label>
-                    <input name="firstname"readonly value="{{$student->firstname}}" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
+                    <input name="firstname"disabled value="{{$student->firstname}}" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
                 </div>
                 <div class="col-span-2">
                     <label class="text-white dark:text-gray-200" for="middlename">Middle Name</label>
-                    <input name="middlename" readonly value="{{$student->middlename}}" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
+                    <input name="middlename" disabled value="{{$student->middlename}}" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
                 </div>
             </div>
             <div class="grid grid-cols-5 gap-6 mt-4 sm:grid-cols-12">
                 <div class="col-span-5">
                     <label class="text-white dark:text-gray-200" for="gender">Gender</label>
-                    <input name="email" readonly value="{{$student->gender}}" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
+                    <input name="email" disabled value="{{$student->gender}}" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
                 </div>
                 <div class="col-span-5">
                     <label class="text-white dark:text-gray-200" for="department">Department</label>
-                    <input name="email" readonly value="{{$student->department}}" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
+                    <input name="email" disabled value="{{$student->department}}" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
                 </div>
                 <div class="col-span-2">
                     <label class="text-white dark:text-gray-200" for="department">Image</label>
@@ -37,11 +37,11 @@
                 <div class="grid-row-2 col-span-10">
                     <div class="col-span-4">
                         <label class="text-white dark:text-gray-200" for="studentnumber">Student Number</label>
-                        <input name="studentnumber" readonly value="{{$student->studentnumber}}" class="hide-arrows block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white  no-spinner">
+                        <input name="studentnumber" disabled value="{{$student->studentnumber}}" class="hide-arrows block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white  no-spinner">
                     </div>
                     <div class="col-span-4 mt-2">
                         <label class="text-white dark:text-gray-200" for="email">Email</label>
-                        <input name="email" readonly value="{{$student->email}}" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
+                        <input name="email" disabled value="{{$student->email}}" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white ">
                     </div> 
                 </div>
                 <div class=" col-span-2  h-20 mt-20">

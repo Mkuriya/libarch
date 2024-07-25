@@ -147,18 +147,35 @@ class ViewController extends Controller
     public function studentView(Student $student){
         return view('accounts.viewstudent', ['student' => $student]);
     }
+    public function filterstudentlist(Request $request){
+        $query = Student::query();
+
+        // Apply search filter
+        if ($request->has('search') && !empty($request->input('search'))) {
+            $searchTerm = $request->input('search');
+            $query->where(function($query) use ($searchTerm) {
+                $query->where('lastname', 'like', '%' . $searchTerm . '%')
+                      ->orWhere('firstname', 'like', '%' . $searchTerm . '%')
+                      ->orWhere('middlename', 'like', '%' . $searchTerm . '%')
+                      ->orWhere('studentnumber', 'like', '%' . $searchTerm . '%');
+            });
+        }
+        // Apply gender filter
+        if ($request->has('gender') && !empty($request->input('gender'))) {
+            $query->where('gender', $request->input('gender'));
+        }
+
+        // Apply department filter
+        if ($request->has('department') && !empty($request->input('department'))) {
+            $query->where('department', $request->input('department'));
+        }
+
+        $students = $query->orderBy('lastname', 'asc')->paginate(7)->appends($request->except('page'));
+        return view('accounts.filterstudentlist', compact('students'));
+    }
     public function studentlist(Request $request){
         $query = Student::query();
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where('firstname', 'LIKE', "%{$search}%")
-                  ->orWhere('lastname', 'LIKE', "%{$search}%")
-                  ->orWhere('middlename', 'LIKE', "%{$search}%")
-                  ->orWhere('email', 'LIKE', "%{$search}%")
-                  ->orWhere('gender', 'LIKE', "%{$search}%")
-                  ->orWhere('department', 'LIKE', "%{$search}%")
-                  ->orWhere('studentnumber', 'LIKE', "%{$search}%");
-        }
+        
         $students = $query->orderBy('lastname', 'asc')->paginate(7)->appends($request->except('page'));
         return view('accounts.studentlist', compact('students'));
     }
@@ -201,7 +218,7 @@ class ViewController extends Controller
         $query->whereNotIn('id', [1, Auth::id()]); // Adjust 'id' to match your database schema
     
         // Paginate
-        $admins = $query->paginate(2)->appends($request->except('page'));
+        $admins = $query->orderBy('lastname', 'asc')->paginate(5)->appends($request->except('page'));
     
         return view('accounts.adminlist', compact('admins'));
     }

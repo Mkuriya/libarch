@@ -9,8 +9,8 @@
                 <h3 class="text-3xl font-semibold leading-6 tracking-tighter text-center">LOGIN</h3>
             </div>
             <div class="grid grid-cols-2 gap-4 ">
-                <a href="/student/login" class="no-underline text-white"><div class="text-center  bg-muted-dark rounded-full text-l mx-3 py-2 hover:bg-muted-dark hover:text-white">Student</div></a>
-                <a href="/admin/login" class="no-underline text-black"><div class="text-center bg-gray-200 rounded-full text-l mx-3 py-2 hover:bg-muted-dark hover:text-white">Admin</div></a>
+                <a href="/student/login" class="no-underline text-white"><div class="text-center  bg-whitebg rounded-full text-l mx-3 py-2 hover:bg-gray-700 hover:text-white">Student</div></a>
+                <a href="/admin/login" class="no-underline text-black"><div class="text-center bg-gray-200 rounded-full text-l mx-3 py-2 hover:bg-gray-700 hover:text-white">Admin</div></a>
               </div>
             <div class="p-6 pt-0 mt-4">
                 <form action="/student/loginprocess" method="POST">
@@ -61,10 +61,10 @@
                         </div>
                     </div>
                     <div class="mt-4 flex items-center justify-center gap-x-2">
-                        <button class="font-semibold hover:bg-black hover:text-white hover:ring hover:ring-black border-black transition 
+                        <button class="font-semibold hover:bg-gray-700  border-black transition 
                         duration-300 inline-flex items-center justify-center rounded-md text-sm focus-visible:outline-none 
                         focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 
-                        bg-white text-black h-10 px-4 py-2 w-48 "
+                        bg-whitebg text-white h-10 px-4 py-2 w-48 "
                             type="submit">Log in</button>
                     </div>
                 </form>

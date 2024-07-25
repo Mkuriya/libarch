@@ -9,7 +9,7 @@
       
         <div class="mt-4">
             <label class="text-white dark:text-gray-200 pl-2" for="lastname">Old Password</label>
-            <input name="old_password" id="old_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+            <input name="old_password" id="old_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
             @error('old_password')
               <span class="text-red-400">
                 {{$message}}
@@ -18,11 +18,11 @@
         </div>
         <div class="mt-4">
             <label class="text-white dark:text-gray-200 pl-2" for="lastname">New Password</label>
-            <input  name="new_password" id="new_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+            <input  name="new_password" id="new_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
         </div>
         <div class="mt-4"> 
             <label class="text-white dark:text-gray-200 pl-2" for="lastname">Confirm Password</label>
-            <input  name="confirm_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+            <input  name="confirm_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
         </div>
         <div class="grid-row-2 col-span-10 mt-12">
             <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-12">   

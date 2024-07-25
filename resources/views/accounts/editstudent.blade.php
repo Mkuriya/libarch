@@ -15,33 +15,40 @@
             
                 <div class="col-span-5">
                     <label class="text-white dark:text-gray-200 pl-2" for="lastname">Last Name</label>
-                    <input value="{{$student->lastname}}" name="lastname" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                    <input value="{{$student->lastname}}" name="lastname" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                 </div>
                 <div class="col-span-5">
                     <label class="text-white dark:text-gray-200 pl-2" for="firstname">First Name</label>
-                    <input value="{{$student->firstname}}" name="firstname" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                    <input value="{{$student->firstname}}" name="firstname" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                 </div>
                 <div class="col-span-2">
                     <label class="text-white dark:text-gray-200" for="middlename">Middle Name</label>
-                    <input value="{{$student->middlename}}" name="middlename" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                    <input value="{{$student->middlename}}" name="middlename" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                 </div>
         </div>
         <div class="grid grid-cols-5 gap-6 mt-4 sm:grid-cols-12">
             <div class="col-span-4">
-                <label class="text-white dark:text-gray-200" for="studentnumber">Student Number</label>
-                <input name="studentnumber" value="{{$student->studentnumber}}" id="studentnumber" maxlength="10" type="number" class="hide-arrows block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring no-spinner">
-                <span class="text-red-600">@error('email'){{$message}}@enderror</span>
+                <div class="flex items-center">
+                    <label class="text-white dark:text-gray-200" for="studentnumber">Student Number</label>
+                    <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">(Cannot be edited)</span>
+                </div>
+                <input name="studentnumber" value="{{$student->studentnumber}}" disabled id="studentnumber" maxlength="10" type="number" class="hide-arrows block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white no-spinner">
+                <span class="text-red-600">@error('studentnumber'){{$message}}@enderror</span>
             </div>
             <div class="col-span-4">
-                <label class="text-white dark:text-gray-200" for="email">Email</label>
-                <input name="email" id="email" value="{{$student->email}}" readonly type="email" placeholder="@dhvsu.edu.ph" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                <span class="text-red-600"> @error('email'){{$message}}@enderror</span>
-            </div> 
+                <div class="flex items-center">
+                    <label class="text-white dark:text-gray-200" for="email">Email</label>
+                    <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">(Cannot be edited)</span>
+                </div>
+                <input name="email" id="email" value="{{$student->email}}" disabled type="email" placeholder="@dhvsu.edu.ph" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white">
+                <span class="text-red-600">@error('email'){{$message}}@enderror</span>
+            </div>
+            
             
             
             <div class="col-span-2">
                 <label class="text-white dark:text-gray-200" for="email">Department</label>
-                <select name="department" class="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <select name="department" class="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                    <option value="Marketing & Entrepreneurship" {{$student->department == 'Marketing & Entrepreneurship' ? 'selected' : ''}}>Marketing & Entrepreneurship</option>
                     <option value="Engineering" {{$student->department == 'Engineering' ? 'selected' : ''}}>Engineering</option>
                     <option value="Information Technology" {{$student->department == 'Information Technology' ? 'selected' : ''}}>Information Technology</option>
@@ -53,7 +60,7 @@
             
             <div class="col-span-2">
                 <label class="text-white dark:text-gray-200" for="gender">Gender</label>
-                <select name="gender" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <select name="gender" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                     <option value="Female" {{$student->gender == 'Female' ? 'selected' : ''}}>Female</option>
                     <option value="Male" {{$student->gender == 'Male' ? 'selected' : ''}}>Male</option>
                 </select>
@@ -63,13 +70,13 @@
             <div class="grid-row-2 col-span-10">
                 <div>
                     <label class="text-white dark:text-gray-200" for="password">New Password</label>
-                    <input name="password" id="password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                    <input name="password" id="password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                     @error('password') <span class="text-red-400"> {{$message}}</span>@enderror
                 </div>
                     <br>
                 <div>
                     <label class="text-white dark:text-gray-200" for="passwordConfirmation">Password Confirmation</label>
-                    <input name="password_confirmation" id="password_confirmation" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                    <input name="password_confirmation" id="password_confirmation" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                     
                     @error('password') <span class="text-red-400"> {{$message}}</span>@enderror
                 </div>

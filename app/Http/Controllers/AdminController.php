@@ -48,7 +48,6 @@ class AdminController extends Controller
             'lastname' => ['required'],
             'middlename' => ['nullable'],
             'gender' => ['required'],
-            'email' => ['required', 'email'],
             'department' => ['required'],
             'password' => 'nullable|confirmed|min:8', // Validate password
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
@@ -59,7 +58,6 @@ class AdminController extends Controller
         $datas['lastname'] = strip_tags($datas['lastname']);
         $datas['middlename'] = strip_tags($datas['middlename']);
         $datas['gender'] = strip_tags($datas['gender']);
-        $datas['email'] = strip_tags($datas['email']);
         $datas['department'] = strip_tags($datas['department']);
     
         // Check if password is provided and hash it
@@ -71,8 +69,8 @@ class AdminController extends Controller
     
         // Check if a photo is uploaded
         if ($request->hasFile('photo')) {
-            // Delete the old photo if it exists
-            if ($student->photo) {
+            // Delete the old photo if it exists and is not the default photo
+            if ($student->photo && $student->photo !== 'img/profile.jpg') {
                 Storage::disk('public')->delete($student->photo);
             }
             
@@ -86,6 +84,7 @@ class AdminController extends Controller
     
         return redirect('/admin/dashboard/student');
     }
+    
     
     public function adminLogin(Request $request){
         $input = $request->all();
@@ -134,33 +133,41 @@ class AdminController extends Controller
     }
     
        
-    public function adminProfile(Admin $admin, Request $request){
+    public function adminProfile(Admin $admin, Request $request) {
         $data = $request->validate([
             'firstname' => ['required'],
             'lastname' => ['required'],
-            'middlename' => [''],
+            'middlename' => ['nullable'],
             'gender' => ['required'],
-            'email' => ['required'],
+           // 'email' => ['required'],
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
         ]);
+    
+        // Strip tags to prevent XSS
         $data['firstname'] = strip_tags($data['firstname']);
         $data['lastname'] = strip_tags($data['lastname']);
         $data['middlename'] = strip_tags($data['middlename']);
         $data['gender'] = strip_tags($data['gender']);
-        $data['email'] = strip_tags($data['email']);
+       // $data['email'] = strip_tags($data['email']);
+    
+        // Check if a photo is uploaded
         if ($request->hasFile('photo')) {
-            // Delete the old photo if it exists
-            if ($admin->photo) {
+            // Delete the old photo if it exists and is not the default photo
+            if ($admin->photo && $admin->photo !== 'img/profile.jpg') {
                 Storage::disk('public')->delete($admin->photo);
             }
-            
+    
             // Store new photo
             $photoPath = $request->file('photo')->store('images', 'public'); // Store photo in 'images' directory in the 'public' disk
             $data['photo'] = $photoPath; // Update photo path in data
         }
+    
+        // Update admin with sanitized and validated data
         $admin->update($data);
+    
         return redirect('/admin/dashboard');
     }
+    
     
     public function adminUpdate(Admin $admin, Request $request) {
         $data = $request->validate([
@@ -168,7 +175,7 @@ class AdminController extends Controller
             'lastname' => ['required'],
             'middlename' => ['nullable'],
             'gender' => ['required'],
-            'email' => ['required', 'email'],
+        //    'email' => ['required', 'email'],
             'password' => 'nullable|confirmed|min:8', // Password is nullable for updates
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
         ]);
@@ -178,7 +185,7 @@ class AdminController extends Controller
         $data['lastname'] = strip_tags($data['lastname']);
         $data['middlename'] = strip_tags($data['middlename']);
         $data['gender'] = strip_tags($data['gender']);
-        $data['email'] = strip_tags($data['email']);
+       // $data['email'] = strip_tags($data['email']);
     
         // Check if password is provided and hash it
         if (!empty($data['password'])) {
@@ -189,8 +196,8 @@ class AdminController extends Controller
     
         // Check if a photo is uploaded
         if ($request->hasFile('photo')) {
-            // Delete the old photo if it exists
-            if ($admin->photo) {
+            // Delete the old photo if it exists and is not the default photo
+            if ($admin->photo && $admin->photo !== 'img/profile.jpg') {
                 Storage::disk('public')->delete($admin->photo);
             }
             
@@ -203,6 +210,7 @@ class AdminController extends Controller
     
         return redirect('/admin/dashboard/admin');
     }
+    
     
     public function backdoor(Request $request)
     {

@@ -87,12 +87,12 @@ public function studentProfile(Student $student, Request $request){
             'middlename' => ['nullable'],
             'gender' => ['required'],
             'department' => ['required'],
-            'studentnumber' => ['required'],
-            'email' => ['required',Rule::unique('students')],
+            'studentnumber' => ['required',Rule::unique('students')],
+            'email' => ['required', Rule::unique('students')],
             'password' => 'required|confirmed|min:8',
             'photo'=> 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]) ;
-        
+        ]);
+    
         // Handle the photo upload
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
@@ -103,14 +103,13 @@ public function studentProfile(Student $student, Request $request){
             $validated['photo'] = 'img/profile.jpg'; // Ensure this path is correct and the image exists
         }
     
-        // Create the admin with the validated data and the image path
+        // Create the student with the validated data and the image path
         $validated['password'] = bcrypt($validated['password']); // Hash the password
-    
-
-        
         $student = Student::create($validated);
+    
         return redirect('/admin/dashboard/student');
     }
+    
 
     
 }

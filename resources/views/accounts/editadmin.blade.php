@@ -12,26 +12,28 @@
         <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-12">   
             <div class="col-span-5">
                 <label class="text-white dark:text-gray-200 pl-2" for="lastname">Last Name</label>
-                <input value="{{$admin->lastname}}" name="lastname" id="lastname" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <input value="{{$admin->lastname}}" name="lastname" id="lastname" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
             </div>
             <div class="col-span-5">
                 <label class="text-white dark:text-gray-200 pl-2" for="firstname">First Name</label>
-                <input value="{{$admin->firstname}}" name="firstname" id="firstname" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <input value="{{$admin->firstname}}" name="firstname" id="firstname" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
             </div>
             <div class="col-span-2">
                 <label class="text-white dark:text-gray-200" for="middlename">Middle Name</label>
-                <input value="{{$admin->middlename}}" name="middlename" id="middlename" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <input value="{{$admin->middlename}}" name="middlename" id="middlename" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
             </div>
         </div>
         <div class="grid grid-cols-5 gap-6 mt-4 sm:grid-cols-12">
             <div class="col-span-10">
                 <label class="text-white dark:text-gray-200" for="email">Email</label>
-                <input value="{{$admin->email}}" name="email" id="email" type="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-            </div> 
+                <input value="{{$admin->email}}" readonly name="email" id="email" type="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
+                <span class="block mt-2 text-sm text-gray-500 dark:text-gray-400">This email cannot be edited</span>
+            </div>
+             
             
             <div class="col-span-2">
                 <label class="text-white dark:text-gray-200" for="gender">Gender</label>
-                <select name="gender" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <select name="gender" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                     <option value="Female" {{$admin->gender == 'Female' ? 'selected' : ''}}>Female</option>
                     <option value="Male" {{$admin->gender == 'Male' ? 'selected' : ''}}>Male</option>
                 </select>
@@ -41,13 +43,13 @@
             <div class="grid-row-2 col-span-10">
                 <div>
                     <label class="text-white dark:text-gray-200" for="password">Password</label>
-                    <input name="password" id="password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                    <input name="password" id="password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                     @error('password'){{$message}}@enderror
                 </div>
                 <br>
                 <div>
                     <label class="text-white dark:text-gray-200" for="password_confirmation">Password Confirmation</label>
-                    <input name="password_confirmation" id="password_confirmation" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                    <input name="password_confirmation" id="password_confirmation" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                     @error('password'){{$message}}@enderror
                 </div>
             </div>

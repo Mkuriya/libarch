@@ -84,6 +84,9 @@ Route::controller(ViewController::class)->group(function(){
 
     Route::get('/student/dashboard/archivelist/document/{file}', 'viewDoc'); // pdf view in student 
     Route::get('/admin/dashboard/archive/view/{file}', 'viewDocument'); // pdf view in admin 
+    Route::get('/admin/dashboard/student/filter', 'filterstudentlist'); // to display the student list
+    
+    
 });
 
 
