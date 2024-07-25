@@ -9,7 +9,7 @@
                 <li class="mr-3">
                     <a class="inline-block rounded py-1.5 px-3  text-white " href="/admin/dashboard/archive/pending">Pending List</a>
                 </li>
-                <li class="mr-3">
+                <li class="">
                     <a class="inline-block rounded py-1.5 px-3  text-white " href="/admin/dashboard/archive/decline">Decline List</a>
                 </li>
             </ul>

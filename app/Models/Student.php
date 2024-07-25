@@ -18,6 +18,7 @@ class Student extends Authenticatable
         'middlename',
         'gender',
         'department',
+        'studentnumber',
         'email',
         'password',
         'photo',

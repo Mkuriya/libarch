@@ -39,6 +39,9 @@
                                         </div>
                                     </th>
                                     <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        Student Number
+                                    </th>
+                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Gender
                                     </th>
                                     <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -61,11 +64,12 @@
                                         <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                             {{ $student->lastname }}, {{ $student->firstname }} {{ $student->middlename }}
                                         </td>
+                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{ $student->studentnumber }}</td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{ $student->gender }}</td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{ $student->department }}</td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{ $student->email }}</td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            <img class="object-cover w-10 h-10 rounded-full" src="{{  asset('storage/' . $student->photo)}}" alt="Student image" />
+                                            <img class="object-cover w-10 h-10 " src="{{  asset('storage/' . $student->photo)}}" alt="Student image" />
                                         </td>
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
                                             <div class="flex items-center gap-x-6">

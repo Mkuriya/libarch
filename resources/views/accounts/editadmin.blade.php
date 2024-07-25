@@ -57,7 +57,7 @@
                     <input type="file" name="photo" id="file" class="sr-only mt-1 flex justify-center px-4 pt-3 pb-4 border-2 border-gray-300 border-dashed rounded-md" onchange="previewImage(event)" />
                     <label for="file" class="relative flex min-h-[150px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] text-center">
                         <div id="imagePreviewContainer">
-                            <img id="imagePreview" src="{{ asset('storage/' . $admin->photo) }}" class="rounded-md object-cover h-48 w-96" />
+                            <img id="imagePreview" src="{{asset('storage/' . $admin->photo) }}" class="rounded-md object-cover h-48 w-96" />
                         </div>
                     </label>
                 </div>

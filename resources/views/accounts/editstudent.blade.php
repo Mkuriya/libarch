@@ -27,10 +27,17 @@
                 </div>
         </div>
         <div class="grid grid-cols-5 gap-6 mt-4 sm:grid-cols-12">
-            <div class="col-span-8">
+            <div class="col-span-4">
+                <label class="text-white dark:text-gray-200" for="studentnumber">Student Number</label>
+                <input name="studentnumber" value="{{$student->studentnumber}}" id="studentnumber" maxlength="10" type="number" class="hide-arrows block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring no-spinner">
+                <span class="text-red-600">@error('email'){{$message}}@enderror</span>
+            </div>
+            <div class="col-span-4">
                 <label class="text-white dark:text-gray-200" for="email">Email</label>
-                <input value="{{$student->email}}" name="email" id="password" type="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <input name="email" id="email" value="{{$student->email}}" readonly type="email" placeholder="@dhvsu.edu.ph" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <span class="text-red-600"> @error('email'){{$message}}@enderror</span>
             </div> 
+            
             
             <div class="col-span-2">
                 <label class="text-white dark:text-gray-200" for="email">Department</label>
@@ -92,8 +99,17 @@
     </form>
 </section>
 </div>
-
 <script>
+     document.getElementById('studentnumber').addEventListener('input', function (event) {
+        if (this.value.length > 10) {
+            this.value = this.value.slice(0, 10);
+        }
+    });
+    document.getElementById('studentnumber').addEventListener('input', function() {
+        var studentNumber = this.value;
+        var email = studentNumber + '@dhvsu.edu.ph';
+        document.getElementById('email').value = email;
+    });
     function previewImage(event) {
         const input = event.target;
         const reader = new FileReader();

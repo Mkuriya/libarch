@@ -84,18 +84,30 @@ public function studentProfile(Student $student, Request $request){
         $validated = $request->validate([
             'firstname' => ['required'],
             'lastname' => ['required'],
-            'middlename' => [''],
+            'middlename' => ['nullable'],
             'gender' => ['required'],
             'department' => ['required'],
+            'studentnumber' => ['required'],
             'email' => ['required',Rule::unique('students')],
             'password' => 'required|confirmed|min:8',
-            'photo'=> 'required',
+            'photo'=> 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]) ;
+        
+        // Handle the photo upload
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $path = $file->store('images', 'public');
+            $validated['photo'] = $path;
+        } else {
+            // Set the default image path if no photo is uploaded
+            $validated['photo'] = 'img/profile.jpg'; // Ensure this path is correct and the image exists
+        }
+    
+        // Create the admin with the validated data and the image path
+        $validated['password'] = bcrypt($validated['password']); // Hash the password
+    
 
-        $validated['password'] = bcrypt($validated['password']);
-        $fileName = time().$request->file('photo')->getClientOriginalName();
-        $path = $request->file('photo')->storeAs('images', $fileName, 'public'); 
-        $validated["photo"] = '/storage/'.$path;
+        
         $student = Student::create($validated);
         return redirect('/admin/dashboard/student');
     }

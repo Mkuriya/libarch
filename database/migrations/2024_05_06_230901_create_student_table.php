@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('middlename');
             $table->string('gender');
             $table->string('department');
+            $table->string('studentnumber');
             $table->string('email');
             $table->string('password');
             $table->string('photo', 300);

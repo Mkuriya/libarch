@@ -67,7 +67,7 @@
                     </label>
                     <span class="text-red-600">@error('photo'){{$message}}@enderror</span>
                     <label for="file" class="mt-2 relative flex min-h-[150px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] text-center">
-                        <img id="preview_img" class="h-[170px] w-[180px] object-cover" src="/img/Profile.jpg" alt="Current profile photo" />
+                        <img id="preview_img" class="h-[170px] w-[180px] object-cover" src="/img/profile.jpg" alt="Current profile photo" />
                     </label>
                 </div>
             </div>
