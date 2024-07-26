@@ -1,4 +1,17 @@
 @include('partials.studentnav')
+@if (session('success'))
+    <div id="modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-6 rounded shadow-lg max-w-md w-full">
+            <div class="text-right">
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">&times;</button>
+            </div>
+            <div>
+                <p>{{ session('success') }}</p>
+            </div>
+        </div>
+    </div>
+    <div id="modal-overlay" class="fixed inset-0 bg-black opacity-50 z-40 hidden"></div>
+@endif
 <div class="bg-red-300">
     <p class="absolute w-[951px] h-[132px] not-italic font-semibold text-4xl leading-[44px] text-center text-white  left-64 top-[200px]">
       Welcome! How can I assist you today? Whether you have a question, need some information, or just want to chat, I'm here to help.
@@ -34,6 +47,28 @@
     </div>
   </div>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+      const modal = document.getElementById('modal');
+      const overlay = document.getElementById('modal-overlay');
+      const closeModal = document.getElementById('close-modal');
+  
+      if (modal) {
+          modal.classList.remove('hidden');
+          overlay.classList.remove('hidden');
+  
+          closeModal.addEventListener('click', () => {
+              modal.classList.add('hidden');
+              overlay.classList.add('hidden');
+          });
+  
+          overlay.addEventListener('click', () => {
+              modal.classList.add('hidden');
+              overlay.classList.add('hidden');
+          });
+      }
+  });
+  </script>
 @extends('partials.footer')
     {{--}}
 for student dashboard

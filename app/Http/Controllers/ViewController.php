@@ -11,6 +11,31 @@ use Illuminate\Support\Facades\Storage;
 
 class ViewController extends Controller
 {
+    public function archivelistfilter(Request $request) {
+        $query = File::query();
+    
+        // Apply search filter
+        if ($request->has('search') && !empty($request->input('search'))) {
+            $searchTerm = $request->input('search');
+            $query->where(function($query) use ($searchTerm) {
+                $query->where('title', 'like', '%' . $searchTerm . '%')
+                      ->orWhere('year', 'like', '%' . $searchTerm . '%');
+            });
+        }
+    
+        // Apply department filter
+        if ($request->has('department') && !empty($request->input('department'))) {
+            $department = $request->input('department');
+            $query->whereHas('student', function($q) use ($department) {
+                $q->where('department', $department);
+            });
+        }
+    
+        $files = $query->orderBy('title', 'asc')->paginate(7)->appends($request->except('page'));
+        return view('archive.studentarchivefilter', compact('files'));
+    }
+    
+
     public function adminArchiveList(Request $request){
         $query = File::query();
         
@@ -218,7 +243,7 @@ class ViewController extends Controller
         $query->whereNotIn('id', [1, Auth::id()]); // Adjust 'id' to match your database schema
     
         // Paginate
-        $admins = $query->orderBy('lastname', 'asc')->paginate(5)->appends($request->except('page'));
+        $admins = $query->orderBy('lastname', 'asc')->paginate(7)->appends($request->except('page'));
     
         return view('accounts.adminlist', compact('admins'));
     }

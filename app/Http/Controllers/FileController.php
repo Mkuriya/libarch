@@ -35,17 +35,17 @@ class FileController extends Controller
             "year" => 'required|max:4',
             "members" => 'required',
             "abstract" => 'required',
-            'document' => 'required|mimes:pdf|max:2048',
+            'document' => 'required|mimes:pdf|max:5120',
             'student_id' => 'required',
             'status' => 'required',
         ]);
-
+   
         $fileName = time().$request->file('document')->getClientOriginalName();
         $paths = $request->file('document')->storeAs('document', $fileName, 'public'); 
         $validated["document"] = '/storage/'.$paths;
 
 
         $upload = File::create($validated);
-        return redirect('/student/dashboard');
+        return redirect('/student/dashboard')->with('success', 'File uploaded successfully!');
     }
 }

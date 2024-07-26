@@ -11,3 +11,24 @@
         
         reader.readAsDataURL(input.files[0]);
     }
+
+    document.getElementById('studentnumber').addEventListener('input', function (event) {
+        if (this.value.length > 10) {
+            this.value = this.value.slice(0, 10);
+        }
+    });
+    document.getElementById('studentnumber').addEventListener('input', function() {
+        var studentNumber = this.value;
+        var email = studentNumber + '@dhvsu.edu.ph';
+        document.getElementById('email').value = email;
+    });
+    document.getElementById('studentnumber').addEventListener('input', function (event) {
+        if (this.value.length > 10) {
+            this.value = this.value.slice(0, 10);
+        }
+    });
+    document.getElementById('studentnumber').addEventListener('input', function() {
+        var studentNumber = this.value;
+        var email = studentNumber + '@dhvsu.edu.ph';
+        document.getElementById('email').value = email;
+    });

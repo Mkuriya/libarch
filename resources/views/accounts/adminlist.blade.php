@@ -1,28 +1,29 @@
 @include('partials.adminnav')
-<div class="content">
+<div class="">
     <section class="max-w-screen-2xl p-6 mx-auto">
         <div class="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-8">
-            <div class="col-span-6">
+            <div class="sm:col-span-6 col-span-8">
                 <a href="/admin/dashboard/admin/register">
                     <button class="ml-4 bg-gray-800 px-5 py-1 text-white dark:hover:text-indigo-500">Register Admin</button>
                 </a>
             </div>
-            <div class="mb-2 mr-4 text-white col-span-2 border-b-2 border-black">
+            <div class="mb-2 mr-4 text-white sm:col-span-2 col-span-8 border-b-2 border-black">
                 <form action="{{ url('/admin/dashboard/admin') }}" id="searchForm" method="get" class="max-w-md mx-auto">   
                     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 start-0 flex items-center p-2 ">
+                        <div class="absolute inset-y-0 start-0 flex items-center p-2">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                             </svg>
                         </div>
                         
-                        <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="block bg-transparent w-full ps-10 py-4 text-sm text-white rounded-lg focus:outline-none "  placeholder="Search Name" />
-                        <button type="submit" class="text-white absolute end-0 bottom-2.5 bg-whitebg hover:bg-gray-800 font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
+                        <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="block bg-transparent w-full pl-10 py-4 text-sm text-white rounded-lg focus:outline-none" placeholder="Search Name" />
+                        <button type="submit" class="text-white absolute end-0 bottom-2.5 bg-whitebg hover:bg-gray-800 font-medium rounded-lg text-sm px-4 py-2">Search</button>
                     </div>
                 </form>
             </div>
         </div>
+        
         <div class="flex flex-col">
            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 ">
                  <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -90,7 +91,7 @@
                                                     <form action="/admin/dashboard/admin/delete/{{$item->id}}" method="post">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button onclick="return confirm('Permanent Delete?');" class="text-red-700 transition-colors duration-200 hover:text-white focus:outline-none">
+                                                        <button onclick="return confirm('Permanent Delete?');" class="text-red-700 transition-colors duration-200 hover:text-white focus:outline-none sm:pr-0 pr-2">
                                                             Delete
                                                         </button>
                                                     </form>
@@ -105,12 +106,16 @@
                     </div>
                     <nav aria-label="Page navigation example" class="mt-4 grid justify-items-center">
                         <div class="flex">
-                            <!-- Previous Button -->
-                            @if ($admins->onFirstPage())
-                                <span class="flex items-center justify-center mr-3 px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Previous</span>
-                            @else
-                                <a href="{{ $admins->previousPageUrl() }}" class="flex mr-3 items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                            <!-- Conditional display of Previous Button -->
+                            @if ($admins->lastPage() > 1)
+                                @if ($admins->onFirstPage())
+                                    <span class="flex items-center justify-center mr-3 px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Previous</span>
+                                @else
+                                    <a href="{{ $admins->previousPageUrl() }}" class="flex mr-3 items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                                @endif
                             @endif
+                    
+                            <!-- Pagination Links -->
                             <ul class="flex items-center -space-x-px h-8 text-sm">
                                 @if ($admins->hasPages())
                                     @foreach ($admins->links()->elements as $element)
@@ -135,14 +140,18 @@
                                     @endforeach
                                 @endif
                             </ul>
-                            <!-- Next Button -->
-                            @if ($admins->hasMorePages())
-                                <a href="{{ $admins->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                            @else
-                                <span class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Next</span>
+                    
+                            <!-- Conditional display of Next Button -->
+                            @if ($admins->lastPage() > 1)
+                                @if ($admins->hasMorePages())
+                                    <a href="{{ $admins->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                                @else
+                                    <span class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Next</span>
+                                @endif
                             @endif
                         </div>
                     </nav>
+                    
                 </div>
             </div>
         </div>
