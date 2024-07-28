@@ -28,9 +28,10 @@ class AdminController extends Controller
             $request->validate([
             'old_password'=> 'required',
             'new_password'=> 'required',
+            'confirm_password'=> 'required',
         ]);
         if(!Hash::check($request->old_password, auth()->guard('admin')->user()->password)){
-            return back()->with("error", "Old Password Doesn't Match");
+            return back()->withErrors(['old_password' => "Password doesn't match"]);
         }
         Admin::whereId(auth()->guard('admin')->user()->id)->update([
             'password' => Hash::make($request->new_password)
@@ -82,7 +83,7 @@ class AdminController extends Controller
         // Update student with sanitized and validated data
         $student->update($datas);
     
-        return redirect('/admin/dashboard/student');
+        return redirect('/admin/dashboard/student')->with("success", "Details Successfully Updated");
     }
     
     
@@ -165,7 +166,7 @@ class AdminController extends Controller
         // Update admin with sanitized and validated data
         $admin->update($data);
     
-        return redirect('/admin/dashboard');
+        return redirect()->back()->with('success', 'Your profile has been updated successfully.');
     }
     
     
@@ -208,7 +209,7 @@ class AdminController extends Controller
     
         $admin->update($data);
     
-        return redirect('/admin/dashboard/admin');
+        return redirect('/admin/dashboard/admin')->with("success", "Details Successfully Updated");
     }
     
     

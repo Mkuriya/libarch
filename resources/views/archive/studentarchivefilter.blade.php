@@ -6,22 +6,24 @@
             <form action="{{ url('/student/dashboard/archivelist/filter') }}" id="searchForm" method="get" class="w-full">   
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div class="relative flex items-center w-full sm:mt-2">
-                    <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="block w-full pl-12 pr-2 py-2 text-gray-800 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white " placeholder="Search Student Name/Number" />
+                    <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="block w-full pl-12 pr-2 py-2 text-gray-800 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white " placeholder="Search Title" />
                     <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-800 dark:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>  
         </div>
-        {{--<div class="col-span-1 sm:col-span-2 ">
+        <div class="col-span-1 sm:col-span-1">
             <div class="relative">
-                <select id="dropdown1" name="gender" class="block w-full px-2 py-2 sm:mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
-                    <option value=""  {{ request()->input('gender') ? '' : 'selected' }}>Year</option>
-                    <option value="Male" {{ request()->input('gender') === 'Male' ? 'selected' : '' }}>Male</option>
-                    <option value="Female" {{ request()->input('gender') === 'Female' ? 'selected' : '' }}>Female</option>
+                <select id="dropdownYear" name="year" class="block w-full px-2 py-2 sm:mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white">
+                    <option value="" {{ request()->input('year') ? '' : 'selected' }}>Year</option>
+                    @for ($year = now()->year; $year >= 2000; $year--)
+                        <option value="{{ $year }}" {{ request()->input('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                    @endfor
                 </select>
             </div>
-        </div>--}}
-        <div class="col-span-2 sm:col-span-4">
+        </div>
+        
+        <div class="col-span-2 sm:col-span-3">
             <div class="relative">
                 <select id="dropdown2" name="department" class="block w-full px-2 py-2 sm:mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                     <option value=""   {{ request()->input('department') ? '' : 'selected' }}>Department</option>

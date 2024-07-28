@@ -22,7 +22,9 @@ class ViewController extends Controller
                       ->orWhere('year', 'like', '%' . $searchTerm . '%');
             });
         }
-    
+        if ($request->has('year') && !empty($request->input('year'))) {
+            $query->where('year', $request->input('year'));
+        }
         // Apply department filter
         if ($request->has('department') && !empty($request->input('department'))) {
             $department = $request->input('department');
@@ -38,27 +40,31 @@ class ViewController extends Controller
 
     public function adminArchiveList(Request $request){
         $query = File::query();
-        
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'LIKE', "%{$search}%")
-                  ->orWhere('year', 'LIKE', "%{$search}%");
-            });
-        }
     
-        if ($request->input('status') == 0) {
-            $query->where('status', 1);
-        }
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'LIKE', "%{$search}%")
+              ->orWhere('year', 'LIKE', "%{$search}%");
+        });
+    }
     
-        // Add sorting
-        $query->orderBy('title', 'asc'); // or 'year', 'student->firstname', etc.
+    if ($request->input('status') == 0) {
+        $query->where('status', 1);
+    }
+    if ($request->has('department') && !empty($request->input('department'))) {
+        $department = $request->input('department');
+        $query->whereHas('student', function($q) use ($department) {
+            $q->where('department', $department);
+        });
+    }
+    // Add sorting
+    $query->orderBy('title', 'asc'); // or 'year', 'student->firstname', etc.
     
-        // Paginate
+    // Paginate
+    $files = $query->paginate(2)->appends($request->except('page'));
     
-        $files = $query->paginate(2)->appends($request->except('page'));
-    
-        return view('archive.list', compact('files'));
+    return view('archive.list', compact('files'));
     }
     
     public function studentArchiveList(Request $request) {
@@ -102,6 +108,12 @@ class ViewController extends Controller
         if ($status == 0) {
             $query->where('status', 0);
         }
+        if ($request->has('department') && !empty($request->input('department'))) {
+            $department = $request->input('department');
+            $query->whereHas('student', function($q) use ($department) {
+                $q->where('department', $department);
+            });
+        }
     
         $files = $query->paginate(1)->appends($request->except('page'));
     
@@ -121,6 +133,12 @@ class ViewController extends Controller
     
         if ($request->input('status') == 0) {
             $query->where('status', 2);
+        }
+        if ($request->has('department') && !empty($request->input('department'))) {
+            $department = $request->input('department');
+            $query->whereHas('student', function($q) use ($department) {
+                $q->where('department', $department);
+            });
         }
     
         // Add sorting

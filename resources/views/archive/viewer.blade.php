@@ -1,38 +1,11 @@
-@include('partials.studentnav')
-<div class="absolute max-w-2xl ">
-	<aside class="w-64 ml-4" aria-label="Sidebar">
-		<div class="px-3 py-4 overflow-y-auto rounded bg-gray-50 dark:bg-whitebg text-white">
-			<ul class="space-y-2">
-				<li class="hover:text-amber-500">
-					<a href="/student/dashboard/archivelist">
-                        <button>Back</button>
-                    </a>
-				</li>
-				<li>
-                    <p>Book Information</p>
-                    <br>
-                    <label for="">Title</label>
-                    <p>{{$file->title}}</p>
-					
-				</li>
-				
-			</ul>
-		</div>
-	</aside>
-</div>  
-  
-<div class="h-[90vh] w-full bg-transparent flex justify-center items-center px-4">
-    <iframe src="{{$file->document}}#toolbar=0" frameborder="0" class="w-[50%] h-full bg-transparent"></iframe>
-</div>
-{{--}}
-<div>
-    
-   
-        <div class="px-4 ml-2 mt-2  inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-whitebg rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
-            <a href="/student/dashboard/archivelist" class="inline-block rounded py-1.5 px-3  text-white ">Back</p></a>
-        </div>
-
+@include('partials.studentnav')  
+<div class="h-[88%]">
+    <div class="w-full flex justify-center items-center text-center">
+        <p class="bg-whitebg w-full text-white px-8 py-2">Research Title: {{$file->title}}</p>
     </div>
-    <br> 
-    
-</div>--}}
+    <div class="h-full bg-transparent flex justify-center items-center px-4 relative">
+        <div class="sm:w-1/2 w-full h-full overflow-y-auto absolute top-0 left-1/2 transform -translate-x-1/2">
+            <iframe src="{{$file->document}}#toolbar=0" frameborder="0" class="w-full h-full bg-transparent border-whitebg border-8"></iframe>
+        </div>
+    </div>
+</div>

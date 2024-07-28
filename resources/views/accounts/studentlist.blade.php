@@ -118,4 +118,19 @@
         </div>
     </div>
 </div>
+
+<!-- Success/Error Message Container -->
+<div class="fixed bottom-4 right-4 z-50 w-96">
+    @if(session('success'))
+        <div class="bg-gray-200 p-4 rounded relative alert" role="alert">
+            {{ session('success') }}
+            <button type="button" class="absolute top-0 right-0 mt-2 mr-4 text-lg text-gray-600 hover:text-gray-800" onclick="this.parentElement.style.display='none';">&times;</button>
+        </div>
+    @elseif(session('error'))
+        <div class="bg-sky-500 p-4 rounded relative alert" role="alert">
+            {{ session('error') }}
+            <button type="button" class="absolute top-0 right-0 mt-2 mr-4 text-lg text-gray-600 hover:text-gray-800" onclick="this.parentElement.style.display='none';">&times;</button>
+        </div>
+    @endif
+</div>
 @extends('partials.footer')

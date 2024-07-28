@@ -15,14 +15,15 @@ class StudentController extends Controller
         $request->validate([
         'old_password'=> 'required',
         'new_password'=> 'required',
+        'confirm_password'=> 'required',
     ]);
     if(!Hash::check($request->old_password, auth()->guard('student')->user()->password)){
-        return back()->with("error", "Old Password Doesn't Match");
+        return back()->withErrors(['old_password' => "Password doesn't match"],['new_password' => "Password doesn't match"]);
     }
     Student::whereId(auth()->guard('student')->user()->id)->update([
         'password' => Hash::make($request->new_password)
     ]);
-    return back()->with("status", "Password Success Update");
+    return back()->with("success", "Password Success Update");
     
 }
     
@@ -32,7 +33,7 @@ public function studentProfile(Student $student, Request $request){
         'lastname' => ['required'],
         'middlename' => ['nullable'],
         'gender' => ['required'],
-        'email' => ['required', 'email'],
+       // 'email' => ['required', 'email'],
         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
     ]);
 
@@ -41,7 +42,7 @@ public function studentProfile(Student $student, Request $request){
     $datas['lastname'] = strip_tags($datas['lastname']);
     $datas['middlename'] = strip_tags($datas['middlename']);
     $datas['gender'] = strip_tags($datas['gender']);
-    $datas['email'] = strip_tags($datas['email']); 
+   // $datas['email'] = strip_tags($datas['email']); 
 
     // Check if a photo is uploaded
     if ($request->hasFile('photo')) {
@@ -58,7 +59,7 @@ public function studentProfile(Student $student, Request $request){
     // Update student with sanitized and validated data
     $student->update($datas);
 
-    return redirect('/student/dashboard');
+    return redirect()->back()->with('success', 'Your profile has been updated successfully.');
 }
 
    

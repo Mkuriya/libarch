@@ -1,4 +1,5 @@
 @include('partials.adminnav')
+
 <div class="sm:mt-6 mt-0">
     <section class="max-w-screen-xl p-6 mx-auto bg-indigo-600 rounded-md shadow-md dark:bg-gray-800 ">
         <h1 class="text-xl font-bold text-white capitalize dark:text-white">Update Profile</h1>
@@ -23,6 +24,7 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 ">
                 <div class="sm:col-span-2 col-span-1">
                     <label class="text-white dark:text-gray-200" for="email">Email</label>
+                    <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">(Cannot be edited)</span>
                     <input value="{{$admin->email}}" disabled name="email" id="password" type="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
                 
                 </div> 
@@ -68,5 +70,19 @@
     </section>
 </div>
 
+<!-- Success/Error Message Container -->
+<div class="fixed bottom-4 right-4 z-50 w-96">
+    @if(session('success'))
+        <div class="bg-gray-200 p-4 rounded relative alert" role="alert">
+            {{ session('success') }}
+            <button type="button" class="absolute top-0 right-0 mt-2 mr-4 text-lg text-gray-600 hover:text-gray-800" onclick="this.parentElement.style.display='none';">&times;</button>
+        </div>
+    @elseif(session('error'))
+        <div class="bg-sky-500 p-4 rounded relative alert" role="alert">
+            {{ session('error') }}
+            <button type="button" class="absolute top-0 right-0 mt-2 mr-4 text-lg text-gray-600 hover:text-gray-800" onclick="this.parentElement.style.display='none';">&times;</button>
+        </div>
+    @endif
+</div>
 <script src="/js/previewimage.js"></script>
 @extends('partials.footer')

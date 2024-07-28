@@ -14,18 +14,22 @@
                 </li>
             </ul>
         </div>
-        <div class="mb-2 text-white  w-96 border-b-2 border-black">
-            <form action="{{ url('/admin/dashboard/archive') }}" id="searchForm" method="get" class="max-w-md mx-auto">   
-                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 start-0 flex items-center p-2 ">
-                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                        </svg>
+        <div class="text-white w-full h-12 sm:w-2/6 ">
+            <form action="{{ url('/admin/dashboard/archive') }}" id="searchForm" method="get" class=" w-full mx-auto h-full">
+                <div class="flex flex-row mt-2 sm:mt-0 md:flex-row items-center h-full">
+                    <div class="relative h-full">
+                        <select id="dropdown" class="text-white w-full md:w-36 bg-whitebg hover:bg-gray-800 font-medium text-sm px-2 py-4 md:py-0 h-full rounded-lg-g md:rounded-l-lg" name="department">
+                            <option value="" {{ request()->input('department') ? '' : 'selected' }}>Department</option>
+                            <option value="Marketing & Entrepreneurship" {{ request()->input('department') === 'Marketing & Entrepreneurship' ? 'selected' : '' }}>Marketing & Entrepreneurship</option>
+                            <option value="Engineering" {{ request()->input('department') === 'Engineering' ? 'selected' : '' }}>Engineering</option>
+                            <option value="Information Technology" {{ request()->input('department') === 'Information Technology' ? 'selected' : '' }}>Information Technology</option>
+                            <option value="Tourism" {{ request()->input('department') === 'Tourism' ? 'selected' : '' }}>Tourism</option>
+                            <option value="Education" {{ request()->input('department') === 'Education' ? 'selected' : '' }}>Education</option>
+                            <option value="Psychology" {{ request()->input('department') === 'Psychology' ? 'selected' : '' }}>Psychology</option>
+                        </select>
                     </div>
-                    
-                    <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="block w-full p-4 ps-10 text-sm text-white  rounded-lg bg-transparent" placeholder="Search Name" />
-                    <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-whitebg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
+                    <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="w-full p-4 text-sm text-white bg-transparent hover:bg-gray-800 focus:outline-none md:py-0 h-full md:border-b-2 md:border-t-2 border-y-2 border-whitebg md:border-whitebg " placeholder="Search Name" />
+                    <button type="submit" class="text-white bg-whitebg hover:bg-gray-800 font-medium text-sm px-4 py-4 md:py-0 h-full rounded-lg-g md:rounded-r-lg">Search</button>
                 </div>
             </form>
         </div>
@@ -35,51 +39,46 @@
         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 ">
               <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                  <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                   <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                         <thead class="bg-gray-50 dark:bg-gray-800">
-                             <tr>
-                                 <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                     <div class="flex items-center gap-x-3">
-                                         <button class="flex items-center gap-x-2">
-                                             <span>Title</span>
-                                         </button>
-                                     </div>
-                                 </th>
- 
-                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                     Year
-                                 </th>
- 
-                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                     Uploader
-                                 </th>
- 
-                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                     Department
-                                 </th>
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-800">
+                            <tr>
+                                <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <div class="flex items-center gap-x-3">
+                                        <button class="flex items-center gap-x-2">
+                                            <span>Title</span>
+                                        </button>
+                                    </div>
+                                </th>
                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                     Action
-                                 </th> 
-                             </tr>
-                         </thead>
-                         <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                            @foreach ($files as $item)
+                                    Year
+                                </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Uploader
+                                </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Department
+                                </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                            @forelse ($files as $item)
                                 @if ($item->status == 1)
                                     <tr>
                                         <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                             <div class="inline-flex items-center gap-x-3">
-                                            
                                                 <span>{{$item->title}}</span>
                                             </div>
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                             {{$item->year}}
                                         </td>
-                                        <td class="px-4 py-4 text-sm ext-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                <h2 class="text-sm font-normal">{{$item->student->firstname}}</h2>
-                                            
+                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                            <h2 class="text-sm font-normal">{{$item->student->firstname}}</h2>
                                         </td>
-                                        <td class="px-4 py-4 text-sm ext-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                             @if ($item->student->department == "Marketing & Entrepreneurship")
                                                 <h1 class="text-red-400">Marketing & Entrepreneurship</h1>
                                             @elseif($item->student->department == "Engineering")
@@ -94,27 +93,34 @@
                                                 <p class="text-sky-300">Psychology</p>
                                             @endif
                                         </td>
-                                        <td class="px-1 py-4 text-sm whitespace-nowrap"> <!-- for viewer botton-->
+                                        <td class="px-1 py-4 text-sm whitespace-nowrap">
                                             <a href="/admin/dashboard/archive/view/{{$item->id}}">
-                                                <button class="hover:border-indigo-500 text-white hover:text-indigo-500 font-bold py-2 px-4 rounded-full">View</button>
+                                                <button class="hover:border-indigo-500 text-white hover:text-whitebg font-bold py-2 px-4 rounded-full">View</button>
                                             </a>
                                         </td>
                                     </tr>
                                 @endif
-                             @endforeach
-                         </tbody>
-                     </table>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap text-center">
+                                        No data available.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>                    
                  </div>
                  <nav aria-label="Page navigation example" class="mt-4 grid justify-items-center">
-                    <div class="flex">
-                        <!-- Previous Button -->
-                        @if ($files->onFirstPage())
-                            <span class="flex items-center justify-center mr-3 px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Previous</span>
-                        @else
-                            <a href="{{ $files->previousPageUrl() }}" class="flex mr-3 items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                        @endif
-                        <ul class="flex items-center -space-x-px h-8 text-sm">
-                            @if ($files->hasPages())
+                    @if ($files->hasPages())
+                        <div class="flex">
+                            <!-- Previous Button -->
+                            @if ($files->onFirstPage())
+                                <span class="flex items-center justify-center mr-3 px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Previous</span>
+                            @else
+                                <a href="{{ $files->previousPageUrl() }}" class="flex mr-3 items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                            @endif
+                
+                            <ul class="flex items-center -space-x-px h-8 text-sm">
                                 @foreach ($files->links()->elements as $element)
                                     @if (is_string($element))
                                         <li>
@@ -135,17 +141,23 @@
                                         @endforeach
                                     @endif
                                 @endforeach
+                            </ul>
+                
+                            <!-- Next Button -->
+                            @if ($files->hasMorePages())
+                                <a href="{{ $files->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                            @else
+                                <span class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Next</span>
                             @endif
-                        </ul>
-                        <!-- Next Button -->
-                        @if ($files->hasMorePages())
-                            <a href="{{ $files->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                        @else
-                            <span class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Next</span>
-                        @endif
-                    </div>
-                </nav>
+                        </div>
+                    @endif
+                </nav> 
              </div>
          </div>
      </div>
+     <script>
+        document.getElementById('dropdownButton').addEventListener('click', function() {
+            document.getElementById('dropdown').classList.toggle('hidden');
+        });
+    </script>
 @include('partials.footer')
