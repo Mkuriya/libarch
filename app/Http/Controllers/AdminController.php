@@ -130,7 +130,7 @@ class AdminController extends Controller
     
         Admin::create($validated);
     
-        return redirect('/admin/dashboard/admin')->with('success', 'User registered successfully');
+        return redirect('/admin/dashboard/admin')->with('success', 'Registered successfully');
     }
     
        

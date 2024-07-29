@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="mt-4 flex items-center justify-between">
-                        <a class="text-sm font-medium text-black underline" href="/">Forgot
+                        <a class="text-sm font-medium text-black underline" >Forgot
                             password?</a>
                     </div>
                     <div class="mt-4 flex items-center justify-center gap-x-2">

@@ -6,6 +6,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\PasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,10 +88,16 @@ Route::controller(ViewController::class)->group(function(){
     Route::get('/admin/dashboard/student/filter', 'filterstudentlist'); // to display the student list
 
     Route::get('/student/dashboard/archivelist/filter', 'archivelistfilter');
-    
+    Route::get('/forgotpassword', 'forget_password')->name("forget.password");//display the forgot password form that will send email
+   
     
 });
-
+Route::controller(PasswordController::class)->group(function(){
+    Route::get('/forgotpassword', 'forget_password')->name("forget.password");//display the forgot password form that will send email
+    Route::post('/forgotpassword', 'forget_password_post')->name("forget.password.post"); // process in sending a email
+    Route::post('/reset-password', 'reset_password')->name("reset_password"); //process in reset the password
+    Route::get('/reset-password/{token}', 'passwordReset')->name("resetpassword"); 
+});
 
 Route::controller(FileController::class)->group(function(){
 
