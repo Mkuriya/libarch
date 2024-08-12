@@ -18,17 +18,17 @@
             <form action="{{ url('/admin/dashboard/archive/pending') }}" id="searchForm" method="get" class=" w-full mx-auto h-full">
                 <div class="flex flex-row mt-2 sm:mt-0 md:flex-row items-center h-full">
                     <div class="relative h-full">
-                        <select id="dropdown" class="text-white w-full md:w-36 bg-whitebg hover:bg-gray-800 font-medium text-sm px-2 py-4 md:py-0 h-full rounded-lg-g md:rounded-l-lg" name="department">
-                            <option value="" {{ request()->input('department') ? '' : 'selected' }}>Department</option>
-                            <option value="Marketing & Entrepreneurship" {{ request()->input('department') === 'Marketing & Entrepreneurship' ? 'selected' : '' }}>Marketing & Entrepreneurship</option>
-                            <option value="Engineering" {{ request()->input('department') === 'Engineering' ? 'selected' : '' }}>Engineering</option>
-                            <option value="Information Technology" {{ request()->input('department') === 'Information Technology' ? 'selected' : '' }}>Information Technology</option>
-                            <option value="Tourism" {{ request()->input('department') === 'Tourism' ? 'selected' : '' }}>Tourism</option>
-                            <option value="Education" {{ request()->input('department') === 'Education' ? 'selected' : '' }}>Education</option>
-                            <option value="Psychology" {{ request()->input('department') === 'Psychology' ? 'selected' : '' }}>Psychology</option>
+                        <select id="dropdown" class="text-white w-full md:w-36 bg-whitebg hover:bg-gray-800 font-medium text-sm px-2 py-4 md:py-0 h-full rounded-lg-g md:rounded-l-lg" name="student_department">
+                            <option value="" {{ request()->input('student_department') ? '' : 'selected' }}>Department</option>
+                            <option value="Marketing & Entrepreneurship" {{ request()->input('student_department') === 'Marketing & Entrepreneurship' ? 'selected' : '' }}>Marketing & Entrepreneurship</option>
+                            <option value="Engineering" {{ request()->input('student_department') === 'Engineering' ? 'selected' : '' }}>Engineering</option>
+                            <option value="Information Technology" {{ request()->input('student_department') === 'Information Technology' ? 'selected' : '' }}>Information Technology</option>
+                            <option value="Tourism" {{ request()->input('student_department') === 'Tourism' ? 'selected' : '' }}>Tourism</option>
+                            <option value="Education" {{ request()->input('student_department') === 'Education' ? 'selected' : '' }}>Education</option>
+                            <option value="Psychology" {{ request()->input('student_department') === 'Psychology' ? 'selected' : '' }}>Psychology</option>
                         </select>
                     </div>
-                    <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="w-full p-4 text-sm text-white bg-transparent hover:bg-gray-800 focus:outline-none md:py-0 h-full md:border-b-2 md:border-t-2 border-y-2 border-whitebg md:border-whitebg " placeholder="Search Name" />
+                    <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="w-full p-4 text-sm text-white bg-transparent hover:bg-gray-800 focus:outline-none md:py-0 h-full md:border-b-2 md:border-t-2 border-y-2 border-whitebg md:border-whitebg " placeholder="Search Title" />
                     <button type="submit" class="text-white bg-whitebg hover:bg-gray-800 font-medium text-sm px-4 py-4 md:py-0 h-full rounded-lg-g md:rounded-r-lg">Search</button>
                 </div>
             </form>
@@ -80,21 +80,21 @@
                                             {{$item->year}}
                                         </td>
                                         <td class="px-4 py-4 text-sm ext-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            <h2 class="text-sm font-normal">{{$item->student->firstname}}</h2>
+                                            <h2 class="text-sm font-normal">{{$item->student_firstname}} {{$item->student_lastname}}</h2>
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                             <div class="flex items-center gap-x-2">
-                                                @if ($item->student->department == "Marketing & Entrepreneurship")
+                                                @if ($item->student_department == "Marketing & Entrepreneurship")
                                                     <h1 class="text-red-400">Marketing & Entrepreneurship</h1>
-                                                @elseif($item->student->department == "Engineering")
+                                                @elseif($item->student_department == "Engineering")
                                                     <p class="text-sky-800">Engineering</p>
-                                                @elseif($item->student->department == "Information Technology")
+                                                @elseif($item->student_department == "Information Technology")
                                                     <p class="text-purple-800">Information Technology</p>
-                                                @elseif($item->student->department == "Tourism")
+                                                @elseif($item->student_department == "Tourism")
                                                     <p class="text-gray-800">Tourism</p>
-                                                @elseif($item->student->department == "Education")
+                                                @elseif($item->student_department == "Education")
                                                     <p class="text-sky-300">Education</p>
-                                                @elseif($item->student->department == "Psychology")
+                                                @elseif($item->student_department == "Psychology")
                                                     <p class="text-sky-300">Psychology</p>
                                                 @endif
                                             </div>
@@ -137,7 +137,7 @@
                                                                 <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-12">
                                                                     <div class="col-span-12 sm:col-span-10">
                                                                         <label class="text-white dark:text-gray-200 pl-2" for="lastname">Department</label>
-                                                                        <input value="{{$item->student->department}}" disabled type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                                                        <input value="{{$item->student_department}}" disabled type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                                                                     </div>
                                                                     <div class="col-span-12 sm:col-span-2">
                                                                         <label class="text-white dark:text-gray-200 pl-2" for="firstname">Status</label>

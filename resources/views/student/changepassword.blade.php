@@ -69,7 +69,7 @@
     <!-- Success Modal -->
     <div id="successModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50">
     <div class="bg-gray-400 p-6 rounded-lg shadow-lg">
-        <h3 class="text-xl item-center font-semibold mb-4 border-b-2 border-black">{{ session('status') }}</h3>
+        <h3 class="text-xl item-center font-semibold mb-4 border-b-2 border-black">{{ session('success') }}</h3>
         <a href="/student/dashboard/profile/{{auth()->guard('student')->user()->id}}"><button id="closeModal" class="w-full px-4 py-2 bg-whitebg text-white rounded-md hover:bg-gray-700">Close</button></a>
     </div>
     </div>
@@ -81,7 +81,7 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function(event) {
-      @if(session('status'))
+      @if(session('success'))
           document.getElementById('successButton').click();
       @endif
   

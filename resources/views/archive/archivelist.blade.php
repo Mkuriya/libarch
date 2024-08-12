@@ -65,7 +65,7 @@
                                             
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                                            {{$item->student->department}}
+                                            {{$item->student_department}}
                                         </td>
                                     
                                         <td class="px-1 py-4 text-sm "> <!-- for viewer botton-->

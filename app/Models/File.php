@@ -15,7 +15,9 @@ class File extends Model
         'members',
         'abstract',
         'document',
-        'student_id',
+        'student_department',
+        'student_lastname',
+        'student_firstname',
         'status',
     ];
     public function student(){

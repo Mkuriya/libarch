@@ -89,20 +89,23 @@ Route::controller(ViewController::class)->group(function(){
 
     Route::get('/student/dashboard/archivelist/filter', 'archivelistfilter');
     Route::get('/forgotpassword', 'forget_password')->name("forget.password");//display the forgot password form that will send email
+    Route::get('/student/dashboard/archivelist/document/${result.document}', 'pdfviewer');//display the forgot password form that will send email
    
     
 });
 Route::controller(PasswordController::class)->group(function(){
-    Route::get('/forgotpassword', 'forget_password')->name("forget.password");//display the forgot password form that will send email
+    Route::get('/forgotpassword', 'forget_password')->name("forget.password");//display the forgot password form that will reset email
     Route::post('/forgotpassword', 'forget_password_post')->name("forget.password.post"); // process in sending a email
     Route::post('/reset-password', 'reset_password')->name("reset_password"); //process in reset the password
-    Route::get('/reset-password/{token}', 'passwordReset')->name("resetpassword"); 
+    Route::get('/reset-password/{token}', 'passwordReset')->name("resetpassword"); // the form that send in email
 });
 
 Route::controller(FileController::class)->group(function(){
 
     Route::put('/admin/dashboard/archive/pending/status/{file}', 'fileUpdate'); // for edit profile
     Route::post('/student/dashboard/upload/file','fileUpload'); // for edit profile
+// In routes/web.php or routes/api.php
+    Route::get('/search-abstracts',  'searchAbstract');
 
 });
 

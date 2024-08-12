@@ -25,14 +25,14 @@
         
         <div class="col-span-2 sm:col-span-3">
             <div class="relative">
-                <select id="dropdown2" name="department" class="block w-full px-2 py-2 sm:mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
-                    <option value=""   {{ request()->input('department') ? '' : 'selected' }}>Department</option>
-                    <option value="Marketing & Entrepreneurship" {{ request()->input('department') === 'Marketing & Entrepreneurship' ? 'selected' : '' }}>Marketing & Entrepreneurship</option>
-                    <option value="Engineering" {{ request()->input('department') === 'Engineering' ? 'selected' : '' }}>Engineering</option>
-                    <option value="Information Technology" {{ request()->input('department') === 'Information Technology' ? 'selected' : '' }}>Information Technology</option>
-                    <option value="Tourism" {{ request()->input('department') === 'Tourism' ? 'selected' : '' }}>Tourism</option>
-                    <option value="Education" {{ request()->input('department') === 'Education' ? 'selected' : '' }}>Education</option>
-                    <option value="Psychology" {{ request()->input('department') === 'Psychology' ? 'selected' : '' }}>Psychology</option>
+                <select id="dropdown2" name="student_department" class="block w-full px-2 py-2 sm:mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
+                    <option value=""   {{ request()->input('student_department') ? '' : 'selected' }}>Department</option>
+                    <option value="Marketing & Entrepreneurship" {{ request()->input('student_department') === 'Marketing & Entrepreneurship' ? 'selected' : '' }}>Marketing & Entrepreneurship</option>
+                    <option value="Engineering" {{ request()->input('student_department') === 'Engineering' ? 'selected' : '' }}>Engineering</option>
+                    <option value="Information Technology" {{ request()->input('student_department') === 'Information Technology' ? 'selected' : '' }}>Information Technology</option>
+                    <option value="Tourism" {{ request()->input('student_department') === 'Tourism' ? 'selected' : '' }}>Tourism</option>
+                    <option value="Education" {{ request()->input('student_department') === 'Education' ? 'selected' : '' }}>Education</option>
+                    <option value="Psychology" {{ request()->input('student_department') === 'Psychology' ? 'selected' : '' }}>Psychology</option>
                 </select>
             </div>
         </div>
@@ -98,7 +98,7 @@
                                                 <h2 class="text-sm font-normal">{{ \Illuminate\Support\Str::words($item->abstract, 10, '...') }}</h2>
                                             </td>
                                             <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                                                {{$item->student->department}}
+                                                {{$item->student_department}}
                                             </td>
                                             <td class="px-1 py-4 text-sm "> <!-- for viewer button -->
                                                 <a href="/student/dashboard/archivelist/document/{{$item->id}}">

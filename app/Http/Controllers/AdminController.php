@@ -157,7 +157,7 @@ class AdminController extends Controller
             if ($admin->photo && $admin->photo !== 'img/profile.jpg') {
                 Storage::disk('public')->delete($admin->photo);
             }
-    
+            
             // Store new photo
             $photoPath = $request->file('photo')->store('images', 'public'); // Store photo in 'images' directory in the 'public' disk
             $data['photo'] = $photoPath; // Update photo path in data

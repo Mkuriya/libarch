@@ -18,7 +18,7 @@ class StudentController extends Controller
         'confirm_password'=> 'required',
     ]);
     if(!Hash::check($request->old_password, auth()->guard('student')->user()->password)){
-        return back()->withErrors(['old_password' => "Password doesn't match"],['new_password' => "Password doesn't match"]);
+        return back()->withErrors(['old_password' => "Password doesn't match"]);
     }
     Student::whereId(auth()->guard('student')->user()->id)->update([
         'password' => Hash::make($request->new_password)
@@ -46,8 +46,8 @@ public function studentProfile(Student $student, Request $request){
 
     // Check if a photo is uploaded
     if ($request->hasFile('photo')) {
-        // Delete the old photo if it exists
-        if ($student->photo) {
+        // Delete the old photo if it exists and is not the default photo
+        if ($student->photo && $student->photo !== 'img/profile.jpg') {
             Storage::disk('public')->delete($student->photo);
         }
         

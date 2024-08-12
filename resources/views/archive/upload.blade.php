@@ -46,9 +46,12 @@
             <textarea name="abstract" id="" cols="0" rows="5" class="block w-full px-4 py-2 sm:mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white "></textarea>
         </div>
         <div>
-            <input type="hidden" value="{{auth()->guard('student')->user()->id}}" name="student_id">
-            <input type="hidden" value="0" name="status">
-        </div>
+            <input type="text" value="0" name="status">
+            <input type="text" value="{{auth()->guard('student')->user()->department}}" name="student_department">
+            <input type="text" value="{{auth()->guard('student')->user()->lastname}}" name="student_lastname">
+            <input type="text" value="{{auth()->guard('student')->user()->firstname}}" name="student_firstname">
+            
+        </div>  
         <div class="mt-2">
             <label for="" class="text-white dark:text-gray-200">
                 File<span class="text-sm text-gray-400">(PDF ONLY, Limit: 5MB)</span>

@@ -20,7 +20,9 @@ return new class extends Migration
             $table->text('members');
             $table->longtext('abstract');
             $table->string('document', 300);
-            $table->foreignid('student_id')->constrained();
+            $table->string('student_lastname');
+            $table->string('student_firstname');
+            $table->string('student_department');
             $table->integer('status');
             $table->timestamps();
         });

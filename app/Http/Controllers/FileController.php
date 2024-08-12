@@ -8,6 +8,19 @@ use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
+    // In AbstractController.php
+    public function searchAbstract(Request $request)
+    {
+        $query = $request->input('query');
+        $abstracts = File::where('status', 1)  // Add this line to filter by status
+            ->where('abstract', 'like', "%{$query}%")
+            ->get(['abstract', 'document']); // Ensure 'document' is included if you need it
+        
+        return response()->json($abstracts);
+    }
+
+
+
     public function search(Request $request){
 
         $search = $request->search;
@@ -26,7 +39,7 @@ class FileController extends Controller
         ]);
         $data['status'] = strip_tags($data['status']);
         $file->update($data);
-        return redirect('/admin/dashboard/archive');
+        return redirect()->back()->with('Success', 'File update successfully!');
     } 
     
     public function fileUpload(Request $request){
@@ -36,7 +49,9 @@ class FileController extends Controller
             "members" => 'required',
             "abstract" => 'required',
             'document' => 'required|mimes:pdf|max:5120',
-            'student_id' => 'required',
+            'student_lastname' => 'required',
+            'student_firstname' => 'required',
+            'student_department' => 'required',
             'status' => 'required',
         ]);
    

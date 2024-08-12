@@ -89,9 +89,9 @@
             <button type="button" class="absolute top-0 right-0 mt-2 mr-4 text-lg text-gray-600 hover:text-gray-800" onclick="this.parentElement.style.display='none';">&times;</button>
         </div>
     @elseif(session('error'))
-        <div class="bg-sky-500 p-4 rounded relative alert" role="alert">
+        <div class="bg-whitebg p-4 rounded relative alert text-white" role="alert">
             {{ session('error') }}
-            <button type="button" class="absolute top-0 right-0 mt-2 mr-4 text-lg text-gray-600 hover:text-gray-800" onclick="this.parentElement.style.display='none';">&times;</button>
+            <button type="button" class="absolute top-0 right-0 mt-2 mr-4 text-lg text-white hover:text-gray-800" onclick="this.parentElement.style.display='none';">&times;</button>
         </div>
     @endif
 </div>

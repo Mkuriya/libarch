@@ -26,11 +26,8 @@ class ViewController extends Controller
             $query->where('year', $request->input('year'));
         }
         // Apply department filter
-        if ($request->has('department') && !empty($request->input('department'))) {
-            $department = $request->input('department');
-            $query->whereHas('student', function($q) use ($department) {
-                $q->where('department', $department);
-            });
+        if ($request->has('student_department') && !empty($request->input('student_department'))) {
+            $query->where('student_department', $request->input('student_department'));
         }
     
         $files = $query->orderBy('title', 'asc')->paginate(7)->appends($request->except('page'));
@@ -52,11 +49,8 @@ class ViewController extends Controller
     if ($request->input('status') == 0) {
         $query->where('status', 1);
     }
-    if ($request->has('department') && !empty($request->input('department'))) {
-        $department = $request->input('department');
-        $query->whereHas('student', function($q) use ($department) {
-            $q->where('department', $department);
-        });
+    if ($request->has('student_department') && !empty($request->input('student_department'))) {
+        $query->where('student_department', $request->input('student_department'));
     }
     // Add sorting
     $query->orderBy('title', 'asc'); // or 'year', 'student->firstname', etc.
@@ -108,11 +102,8 @@ class ViewController extends Controller
         if ($status == 0) {
             $query->where('status', 0);
         }
-        if ($request->has('department') && !empty($request->input('department'))) {
-            $department = $request->input('department');
-            $query->whereHas('student', function($q) use ($department) {
-                $q->where('department', $department);
-            });
+        if ($request->has('student_department') && !empty($request->input('student_department'))) {
+            $query->where('student_department', $request->input('student_department'));
         }
     
         $files = $query->paginate(1)->appends($request->except('page'));
@@ -134,11 +125,8 @@ class ViewController extends Controller
         if ($request->input('status') == 0) {
             $query->where('status', 2);
         }
-        if ($request->has('department') && !empty($request->input('department'))) {
-            $department = $request->input('department');
-            $query->whereHas('student', function($q) use ($department) {
-                $q->where('department', $department);
-            });
+        if ($request->has('student_department') && !empty($request->input('student_department'))) {
+            $query->where('student_department', $request->input('student_department'));
         }
     
         // Add sorting
