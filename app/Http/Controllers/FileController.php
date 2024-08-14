@@ -52,6 +52,7 @@ class FileController extends Controller
             'student_lastname' => 'required',
             'student_firstname' => 'required',
             'student_department' => 'required',
+            'citation' => 'required',
             'status' => 'required',
         ]);
    

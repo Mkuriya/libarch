@@ -18,6 +18,7 @@ class File extends Model
         'student_department',
         'student_lastname',
         'student_firstname',
+        'citation',
         'status',
     ];
     public function student(){

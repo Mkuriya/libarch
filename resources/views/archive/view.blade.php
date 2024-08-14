@@ -17,7 +17,9 @@
         <div class="sm:w-1/2 w-full h-full overflow-y-auto absolute top-0 left-1/2 transform -translate-x-1/2">
             <iframe src="{{$file->document}}#toolbar=0" frameborder="0" class="w-full h-full bg-transparent border-whitebg border-8"></iframe>
         </div>
-    </div>
         
+       
+    </div>
+         <p class="bg-whitebg w-full text-white px-8 py-2">Citation: {{$file->citation}}</p>
 </div>
   

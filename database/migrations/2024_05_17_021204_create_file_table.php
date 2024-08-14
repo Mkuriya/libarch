@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('student_lastname');
             $table->string('student_firstname');
             $table->string('student_department');
+            $table->string('citation');
             $table->integer('status');
             $table->timestamps();
         });
