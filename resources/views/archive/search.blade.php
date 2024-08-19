@@ -28,97 +28,100 @@
 
 
 <script>
-    document.getElementById('search-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const query = document.getElementById('search-input').value.trim().toLowerCase();
-        const resultsContainer = document.getElementById('results-container');
+   document.getElementById('search-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const query = document.getElementById('search-input').value.trim().toLowerCase();
+    const resultsContainer = document.getElementById('results-container');
 
-        // Clear previous results
-        resultsContainer.innerHTML = '';
+    // Clear previous results
+    resultsContainer.innerHTML = '';
 
-        if (!query) {
-            // Display a message if the query is empty
-            const noResultDiv = document.createElement('div');
-            noResultDiv.classList.add('bg-gray-200', 'shadow-md', 'rounded-md', 'p-4', 'mb-4', 'w-full', 'max-w-lg');
-            noResultDiv.innerHTML = `
-                <p class="text-gray-800">Please enter a search query.</p>
-            `;
-            resultsContainer.appendChild(noResultDiv);
-            return;
-        }
+    if (!query) {
+        // Display a message if the query is empty
+        const noResultDiv = document.createElement('div');
+        noResultDiv.classList.add('bg-gray-200', 'shadow-md', 'rounded-md', 'p-4', 'mb-4', 'w-full', 'max-w-lg');
+        noResultDiv.innerHTML = `
+            <p class="text-gray-800">Please enter a search query.</p>
+        `;
+        resultsContainer.appendChild(noResultDiv);
+        return;
+    }
 
-        // Fetch search results from the server
-        fetch(`/search-abstracts?query=${encodeURIComponent(query)}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Display results
-                if (data.length > 0) {
-                    data.forEach(result => {
-                        const resultDiv = document.createElement('div');
-                        resultDiv.classList.add('flex', 'flex-col', 'mb-4', 'w-full', 'max-w-lg');
+    // Fetch search results from the server
+    fetch(`/search-abstracts?query=${encodeURIComponent(query)}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Clear the search input
+            document.getElementById('search-input').value = '';
 
-                        // Question bubble
-                        const questionDiv = document.createElement('div');
-                        questionDiv.classList.add('bg-gray-500', 'text-white', 'p-4', 'rounded-lg', 'shadow-md', 'self-end', 'mb-2');
-                        questionDiv.innerHTML = `<p><strong>Question:</strong> ${query}</p>`;
+            // Display the question once
+            if (data.length > 0) {
+                const resultDiv = document.createElement('div');
+                resultDiv.classList.add('flex', 'flex-col', 'mb-4', 'w-full', 'max-w-lg');
 
-                        // Answer bubble with truncated and highlighted text
-                        const answerDiv = document.createElement('div');
-                        answerDiv.classList.add('bg-gray-200', 'text-black', 'p-4', 'rounded-lg', 'shadow-md', 'self-start');
-                        const truncatedAnswer = truncateText(result.abstract, query);
-                        const highlightedAnswer = highlightText(truncatedAnswer, query);
-                        answerDiv.innerHTML = `
-                            <p><strong>Answer:</strong> ${highlightedAnswer}</p>
-                            <p class="mt-2"><a href="" class="text-red-800 hover:underline" target="_blank">View PDF</a></p>
-                        `;
+                // Question bubble (displayed once)
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('bg-gray-500', 'text-white', 'p-4', 'rounded-lg', 'shadow-md', 'self-end', 'mb-2');
+                questionDiv.innerHTML = `<p><strong>Question:</strong> ${query}</p>`;
+                resultDiv.appendChild(questionDiv);
 
-                        resultDiv.appendChild(questionDiv);
-                        resultDiv.appendChild(answerDiv);
-
-                        resultsContainer.appendChild(resultDiv);
-                    });
-                } else {
-                    const noResultDiv = document.createElement('div');
-                    noResultDiv.classList.add('bg-gray-200', 'shadow-md', 'rounded-md', 'p-4', 'mb-4', 'w-full', 'max-w-lg');
-                    noResultDiv.innerHTML = `
-                        <p class="text-gray-800">No results found for "${query}".</p>
+                // Append all answers under the single question
+                data.forEach(result => {
+                    const answerDiv = document.createElement('div');
+                    answerDiv.classList.add('bg-gray-200', 'text-black', 'p-4', 'rounded-lg', 'shadow-md', 'self-start', 'mb-2');
+                    const truncatedAnswer = truncateText(result.abstract, query);
+                    const highlightedAnswer = highlightText(truncatedAnswer, query);
+                    answerDiv.innerHTML = `
+                        <p><strong>Answer:</strong> ${highlightedAnswer}</p>
+                        <p class="mt-2"><a href="" class="text-red-800 hover:underline" target="_blank">View PDF</a></p>
                     `;
-                    resultsContainer.appendChild(noResultDiv);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching abstracts:', error);
-                const errorDiv = document.createElement('div');
-                errorDiv.classList.add('bg-gray-200', 'shadow-md', 'rounded-md', 'p-4', 'mb-4', 'w-full', 'max-w-lg');
-                errorDiv.innerHTML = `<p class="text-gray-800">An error occurred while fetching results.</p>`;
-                resultsContainer.appendChild(errorDiv);
-            });
-    });
+                    resultDiv.appendChild(answerDiv);
+                });
 
-    // Function to truncate text to the full sentence containing the query word up to the first period
-    function truncateText(text, query) {
-        const queryIndex = text.toLowerCase().indexOf(query);
-        if (queryIndex === -1) {
-            return ''; // Query word not found
-        }
-        
-        const start = text.lastIndexOf('.', queryIndex) + 1;
-        const end = text.indexOf('.', queryIndex);
+                resultsContainer.appendChild(resultDiv);
+            } else {
+                const noResultDiv = document.createElement('div');
+                noResultDiv.classList.add('bg-gray-200', 'shadow-md', 'rounded-md', 'p-4', 'mb-4', 'w-full', 'max-w-lg');
+                noResultDiv.innerHTML = `
+                    <p class="text-gray-800">No results found for "${query}".</p>
+                `;
+                resultsContainer.appendChild(noResultDiv);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching abstracts:', error);
+            const errorDiv = document.createElement('div');
+            errorDiv.classList.add('bg-gray-200', 'shadow-md', 'rounded-md', 'p-4', 'mb-4', 'w-full', 'max-w-lg');
+            errorDiv.innerHTML = `<p class="text-gray-800">An error occurred while fetching results.</p>`;
+            resultsContainer.appendChild(errorDiv);
+        });
+});
 
-        if (end === -1) {
-            return text.slice(start).trim(); // No period found after query
-        }
-        return text.slice(start, end + 1).trim(); // Include the period
+// Function to truncate text to the full sentence containing the query word up to the first period
+function truncateText(text, query) {
+    const queryIndex = text.toLowerCase().indexOf(query);
+    if (queryIndex === -1) {
+        return ''; // Query word not found
     }
 
-    // Function to highlight matching words in the text
-    function highlightText(text, query) {
-        const queryRegex = new RegExp(`(${query})`, 'gi');
-        return text.replace(queryRegex, '<span class="highlight">$1</span>');
+    const start = text.lastIndexOf('.', queryIndex) + 1;
+    const end = text.indexOf('.', queryIndex);
+
+    if (end === -1) {
+        return text.slice(start).trim(); // No period found after query
     }
+    return text.slice(start, end + 1).trim(); // Include the period
+}
+
+// Function to highlight matching words in the text
+function highlightText(text, query) {
+    const queryRegex = new RegExp(`(${query})`, 'gi');
+    return text.replace(queryRegex, '<span class="highlight">$1</span>');
+}
+
 </script>
