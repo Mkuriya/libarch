@@ -1,4 +1,7 @@
 @include('partials.studentnav')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js"></script>
+
 <div class="w-full flex justify-center items-end fixed bottom-0 left-0">
     <div id="search-bar" class="w-full sm:w-1/2 bg-white rounded-md shadow-lg z-10 mb-4">
         <form id="search-form" class="flex items-center justify-between p-2">
@@ -15,6 +18,7 @@
 
 <div id="results-container" class="w-full flex flex-col items-center mt-6">
     <!-- Search results will be displayed here -->
+   
 </div>
 
 <style>
@@ -24,14 +28,31 @@
         padding: 2px;
         font-weight: bold;
     }
+
+    /* Additional styling to control the appearance of results */
+    #results-container {
+        max-height: 75vh; /* 75% of viewport height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+
+    .result-item {
+        margin-bottom: 1rem; /* Space between result items */
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.1);
+    }
 </style>
 
 
 <script>
    document.getElementById('search-form').addEventListener('submit', function(event) {
     event.preventDefault();
-    const query = document.getElementById('search-input').value.trim().toLowerCase();
+    const queryInput = document.getElementById('search-input');
+    const query = queryInput.value.trim().toLowerCase();
     const resultsContainer = document.getElementById('results-container');
+
+    // Clear the input field
+    queryInput.value = '';
 
     // Clear previous results
     resultsContainer.innerHTML = '';
@@ -39,7 +60,7 @@
     if (!query) {
         // Display a message if the query is empty
         const noResultDiv = document.createElement('div');
-        noResultDiv.classList.add('bg-gray-200', 'shadow-md', 'rounded-md', 'p-4', 'mb-4', 'w-full', 'max-w-lg');
+        noResultDiv.classList.add('result-item', 'bg-gray-200');
         noResultDiv.innerHTML = `
             <p class="text-gray-800">Please enter a search query.</p>
         `;
@@ -47,38 +68,51 @@
         return;
     }
 
-    // Fetch search results from the server
-    fetch(`/search-abstracts?query=${encodeURIComponent(query)}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Clear the search input
-            document.getElementById('search-input').value = '';
+    // Path to your PDF file
+    const pdfUrl = '/storage/document/1723449816OJT.pdf';
 
-            // Display the question once
-            if (data.length > 0) {
+    // Fetch and process the PDF file
+    pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+        let allText = '';
+        let results = [];
+
+        // Iterate over all the pages of the PDF to extract text
+        const pages = [];
+        for (let i = 1; i <= pdf.numPages; i++) {
+            pages.push(
+                pdf.getPage(i).then(page => {
+                    return page.getTextContent().then(textContent => {
+                        const textItems = textContent.items.map(item => item.str);
+                        const pageText = textItems.join(' ');
+                        allText += ' ' + pageText;
+
+                        // Find and collect all relevant text snippets
+                        const snippets = findSnippets(pageText, query);
+                        results = results.concat(snippets);
+                    });
+                })
+            );
+        }
+
+        Promise.all(pages).then(() => {
+            if (results.length > 0) {
+                // Display the question once
                 const resultDiv = document.createElement('div');
                 resultDiv.classList.add('flex', 'flex-col', 'mb-4', 'w-full', 'max-w-lg');
 
-                // Question bubble (displayed once)
                 const questionDiv = document.createElement('div');
-                questionDiv.classList.add('bg-gray-500', 'text-white', 'p-4', 'rounded-lg', 'shadow-md', 'self-end', 'mb-2');
+                questionDiv.classList.add('result-item', 'bg-gray-500', 'text-white');
                 questionDiv.innerHTML = `<p><strong>Question:</strong> ${query}</p>`;
                 resultDiv.appendChild(questionDiv);
 
-                // Append all answers under the single question
-                data.forEach(result => {
+                // Highlight and display all results
+                results.forEach(result => {
+                    const highlightedAnswer = highlightText(result, query);
                     const answerDiv = document.createElement('div');
-                    answerDiv.classList.add('bg-gray-200', 'text-black', 'p-4', 'rounded-lg', 'shadow-md', 'self-start', 'mb-2');
-                    const truncatedAnswer = truncateText(result.abstract, query);
-                    const highlightedAnswer = highlightText(truncatedAnswer, query);
+                    answerDiv.classList.add('result-item', 'bg-gray-200');
                     answerDiv.innerHTML = `
                         <p><strong>Answer:</strong> ${highlightedAnswer}</p>
-                        <p class="mt-2"><a href="" class="text-red-800 hover:underline" target="_blank">View PDF</a></p>
+                        <p class="mt-2"><a href="${pdfUrl}" class="text-red-800 hover:underline" target="_blank">View PDF</a></p>
                     `;
                     resultDiv.appendChild(answerDiv);
                 });
@@ -86,36 +120,31 @@
                 resultsContainer.appendChild(resultDiv);
             } else {
                 const noResultDiv = document.createElement('div');
-                noResultDiv.classList.add('bg-gray-200', 'shadow-md', 'rounded-md', 'p-4', 'mb-4', 'w-full', 'max-w-lg');
+                noResultDiv.classList.add('result-item', 'bg-gray-200');
                 noResultDiv.innerHTML = `
                     <p class="text-gray-800">No results found for "${query}".</p>
                 `;
                 resultsContainer.appendChild(noResultDiv);
             }
-        })
-        .catch(error => {
-            console.error('Error fetching abstracts:', error);
-            const errorDiv = document.createElement('div');
-            errorDiv.classList.add('bg-gray-200', 'shadow-md', 'rounded-md', 'p-4', 'mb-4', 'w-full', 'max-w-lg');
-            errorDiv.innerHTML = `<p class="text-gray-800">An error occurred while fetching results.</p>`;
-            resultsContainer.appendChild(errorDiv);
         });
+    }).catch(error => {
+        console.error('Error loading PDF:', error);
+        const errorDiv = document.createElement('div');
+        errorDiv.classList.add('result-item', 'bg-gray-200');
+        errorDiv.innerHTML = `<p class="text-gray-800">An error occurred while fetching the PDF.</p>`;
+        resultsContainer.appendChild(errorDiv);
+    });
 });
 
-// Function to truncate text to the full sentence containing the query word up to the first period
-function truncateText(text, query) {
-    const queryIndex = text.toLowerCase().indexOf(query);
-    if (queryIndex === -1) {
-        return ''; // Query word not found
+// Function to find all relevant snippets containing the query word
+function findSnippets(text, query) {
+    const snippets = [];
+    const queryRegex = new RegExp(`[^.]*${query}[^.]*`, 'gi');
+    let match;
+    while ((match = queryRegex.exec(text)) !== null) {
+        snippets.push(match[0].trim());
     }
-
-    const start = text.lastIndexOf('.', queryIndex) + 1;
-    const end = text.indexOf('.', queryIndex);
-
-    if (end === -1) {
-        return text.slice(start).trim(); // No period found after query
-    }
-    return text.slice(start, end + 1).trim(); // Include the period
+    return snippets;
 }
 
 // Function to highlight matching words in the text
@@ -123,5 +152,6 @@ function highlightText(text, query) {
     const queryRegex = new RegExp(`(${query})`, 'gi');
     return text.replace(queryRegex, '<span class="highlight">$1</span>');
 }
+
 
 </script>

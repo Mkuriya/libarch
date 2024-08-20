@@ -106,6 +106,7 @@ Route::controller(FileController::class)->group(function(){
     Route::post('/student/dashboard/upload/file','fileUpload'); // for edit profile
 // In routes/web.php or routes/api.php
     Route::get('/search-abstracts',  'searchAbstract');
+    Route::post('/search-in-pdf',  'searchInPDF');
 
 });
 
