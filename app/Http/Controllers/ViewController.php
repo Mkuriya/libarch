@@ -150,9 +150,14 @@ class ViewController extends Controller
         return view('student.dashboard');
     }
         
-    public function fileSearch(){
-        return view('archive.search');
+    public function fileSearch(Request $request) {
+        // Retrieve the PDF file from the database
+        $pdfFile = File::where('status', 1)->get(); // Replace this with your own logic
+    
+        // Pass the PDF file path to the view
+        return view('archive.search', ['file' => $pdfFile]);
     }
+    
 
     public function studentPassword(Student $student){
         return view('student.changepassword', ['student' => $student]);
