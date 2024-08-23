@@ -8,19 +8,6 @@ use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
-    // In AbstractController.php
-    public function searchAbstract(Request $request)
-    {
-        $query = $request->input('query');
-        $abstracts = File::where('status', 1)  // Add this line to filter by status
-            ->where('abstract', 'like', "%{$query}%")
-            ->get(['abstract', 'document']); // Ensure 'document' is included if you need it
-        
-        return response()->json($abstracts);
-    }
-
-
-
     public function search(Request $request){
 
         $search = $request->search;
@@ -65,39 +52,6 @@ class FileController extends Controller
         return redirect('/student/dashboard')->with('success', 'File uploaded successfully!');
     }
 
-    public function searchInPDF(Request $request)
-{
-    $query = $request->input('query');
     
-    // Assuming you have a model `Document` and the PDF is stored as a BLOB
-    $document = Document::find($request->input('document_id'));
-
-    if (!$document || !$query) {
-        return response()->json(['message' => 'Document or query not found'], 404);
-    }
-
-    // Fetch the PDF content
-    $pdfContent = $document->pdf_content; // Replace `pdf_content` with your actual column name
-
-    // Convert the PDF content to text
-    $pdfText = $this->extractTextFromPDF($pdfContent);
-
-    // Perform the search
-    if (stripos($pdfText, $query) !== false) {
-        return response()->json(['status' => 'found', 'pdfText' => $pdfText]);
-    } else {
-        return response()->json(['status' => 'not found']);
-    }
-}
-
-private function extractTextFromPDF($pdfContent)
-{
-    // Use a package like Smalot/pdfparser to extract text from the PDF
-    $parser = new \Smalot\PdfParser\Parser();
-    $pdf = $parser->parseContent($pdfContent);
-    $text = $pdf->getText();
-
-    return $text;
-}
 
 }

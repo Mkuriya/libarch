@@ -18,7 +18,7 @@
                         </button>
                     </a>
                     <div class="relative flex-1">
-                        <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="block bg-transparent w-full py-4 text-sm text-white rounded-lg focus:outline-none  " placeholder="Search Name" />
+                        <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="block bg-transparent w-full py-4 text-sm text-white rounded-lg focus:outline-none  " placeholder="Student Number" />
                         <button type="submit" class="absolute right-1 bottom-2.5 bg-whitebg hover:bg-gray-700 text-white font-medium rounded-lg text-sm px-4 py-2 focus:ring-4 focus:outline-none focus:ring-blue-300">Search</button>
                     </div>
                 </div>

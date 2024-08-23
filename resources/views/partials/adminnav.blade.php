@@ -1,14 +1,12 @@
 @include('partials.header')
-  <div id="side-menu" class="fixed top-0 right-[-250px] w-[240px] h-screen z-50 bg-whitebg p-5
-  flex flex-col space-y-5 text-white duration-300">
-  <div class="grid grid-cols-4 gap-4 ">
-    <div class=" grid-rows-2 col-span-3">
-        <div class="text-xl ">{{auth()->guard('admin')->user()->firstname}}</div>
-        <div class="text-xs">{{auth()->guard('admin')->user()->email}}</div>
+  <div id="side-menu" class="fixed top-0 right-[-250px] w-[240px] h-screen z-50 bg-whitebg p-5 flex flex-col space-y-5 text-white duration-300">
+    <div class="grid grid-cols-4 gap-4 ">
+      <div class=" grid-rows-2 col-span-3">
+          <div class="text-xl ">{{auth()->guard('admin')->user()->firstname}}</div>
+          <div class="text-xs">{{auth()->guard('admin')->user()->email}}</div>
+      </div>    
+      <div class=" "><a href="javascript:void(0)" class="text-right float-right text-3xl" onclick="closeMenu()">&times; </a></div>
     </div>
-    
-    <div class=" "><a href="javascript:void(0)" class="text-right float-right text-3xl" onclick="closeMenu()">&times; </a></div>
-  </div>
       <hr>
       <a href="/admin/dashboard/profile/{{auth()->guard('admin')->user()->id}} "class="hover:text-amber-500">My Profile</a>
       <hr>
@@ -22,12 +20,13 @@
     </form></a>
   </div>
 
-  <main class="h-12 bg-muted-dark pt-1">
+  <main class="h-12 bg-muted-dark  flex items-center justify-between">
       <!-- This is used to open the menu -->
-      <span class="text-2xl pl-5 text-white">
+      <span class="flex items-center text-2xl pl-5 text-white">
+        <img src="/img/logo.jpg" width="20px" height="20px" alt="">
         <a href="/admin/dashboard">Libarch</a>
       </span>
-      <span class="cursor-pointer text-2xl absolute right-0 mr-8 pt-1" onclick="openMenu()">
+      <span class="cursor-pointer text-2xl absolute right-0 mr-8 " onclick="openMenu()">
         @if (auth()->guard('admin')->check() && auth()->guard('admin')->user()->photo)
           <img src="{{ asset('storage/' . auth()->guard('admin')->user()->photo) }}" class="rounded-full h-8 w-8 object-cover">
         @else

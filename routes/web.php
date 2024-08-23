@@ -87,7 +87,7 @@ Route::controller(ViewController::class)->group(function(){
     Route::get('/admin/dashboard/archive/view/{file}', 'viewDocument'); // pdf view in admin 
     Route::get('/admin/dashboard/student/filter', 'filterstudentlist'); // to display the student list
 
-    Route::get('/student/dashboard/archivelist/filter', 'archivelistfilter');
+    Route::get('/student/dashboard/archivelist/filter', 'archivelistfilter');//filter search
     Route::get('/forgotpassword', 'forget_password')->name("forget.password");//display the forgot password form that will send email
     Route::get('/student/dashboard/archivelist/document/${result.document}', 'pdfviewer');//display the forgot password form that will send email
    
@@ -104,10 +104,6 @@ Route::controller(FileController::class)->group(function(){
 
     Route::put('/admin/dashboard/archive/pending/status/{file}', 'fileUpdate'); // for edit profile
     Route::post('/student/dashboard/upload/file','fileUpload'); // for edit profile
-// In routes/web.php or routes/api.php
-    Route::get('/search-abstracts',  'searchAbstract');
-    Route::post('/search-in-pdf',  'searchInPDF');
-
 });
 
 Auth::routes();
