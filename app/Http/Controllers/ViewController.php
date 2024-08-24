@@ -4,13 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\Admin;
+use App\Models\History;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ViewController extends Controller
-{
+{ 
+    public function showMenu(){
+        $history = History::all(); // Retrieve all history records from the database
+        
+        return view('archive.history', ['history' => $history]);
+    }
+    
+
     public function archivelistfilter(Request $request) {
         $query = File::query();
     
@@ -31,7 +39,8 @@ class ViewController extends Controller
         }
     
         $files = $query->orderBy('title', 'asc')->paginate(7)->appends($request->except('page'));
-        return view('archive.studentarchivefilter', compact('files'));
+        $history = History::all();
+        return view('archive.studentarchivefilter', compact('files'), ['history' => $history]);
     }
     
 
@@ -82,8 +91,8 @@ class ViewController extends Controller
     
         // Paginate and append query parameters except 'page'
         $files = $query->paginate(2)->appends($request->except('page'));
-    
-        return view('archive.archivelist', compact('files'));
+        $history = History::all();
+        return view('archive.archivelist', compact('files'), ['history' => $history]);
     }
     
     public function pending(Request $request){
@@ -138,40 +147,66 @@ class ViewController extends Controller
         return view('archive.decline', compact('files'));
     }
     public function viewDocument(File $file){
-        return view('archive.view', ['file' => $file]);
+      
+        return view('archive.view', ['file' => $file ]);
     }
-    public function viewDoc(File $file){
-        return view('archive.viewer', ['file' => $file]);
+    public function historyDoc(File $file){ 
+       
+        // Fetch history if you need it for the view
+        $history = History::all(); 
+        
+        return view('archive.viewer', ['file' => $file, 'history' => $history]);
     }
+    public function viewDoc(File $file){ 
+        $userId = auth()->guard('student')->id(); // Get the authenticated user's ID
+        $fileId = $file->id;
+        
+        // Save the history record
+        \App\Models\History::create([
+            'student_id' => $userId,
+            'document_id' => $fileId,
+        ]);
+        
+        // Fetch history if you need it for the view
+        $history = History::all(); 
+        
+        return view('archive.viewer', ['file' => $file, 'history' => $history]);
+    }
+    
     public function studentLogin(){
         return view('student.login');
     }
     public function studentDashboard(){
-        return view('student.dashboard');
+        $history = History::all();
+        return view('student.dashboard',['history' => $history]);
     }
         
     public function fileSearch(Request $request) {
         // Retrieve the PDF file from the database
+        $history = History::all();
         $pdfFile = File::where('status', 1)->get(); // Replace this with your own logic
     
         // Pass the PDF file path to the view
-        return view('archive.search', ['file' => $pdfFile]);
+        return view('archive.search', ['file' => $pdfFile, 'history' => $history]);
     }
     
 
     public function studentPassword(Student $student){
-        return view('student.changepassword', ['student' => $student]);
+        $history = History::all();
+        return view('student.changepassword', ['student' => $student, 'history' =>$history]);
     }
     public function adminPassword(Admin $admin){
         return view('admin.changepassword', ['admin' => $admin]);
     }
     
     public function studentUpload(){
-        return view('archive.upload');
+        $history = History::all();
+        return view('archive.upload', ['history' => $history]);
     }
     
     public function studentprofileView(Student $student){
-        return view('accounts.studentprofile', ['student' => $student]);
+        $history = History::all();
+        return view('accounts.studentprofile', ['student' => $student,'history' => $history]);
     }
     public function adminprofileView(Admin $admin){
         return view('accounts.adminprofile', ['admin' => $admin]);

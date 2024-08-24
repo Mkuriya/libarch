@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -58,8 +59,8 @@ public function studentProfile(Student $student, Request $request){
 
     // Update student with sanitized and validated data
     $student->update($datas);
-
-    return redirect()->back()->with('success', 'Your profile has been updated successfully.');
+    $history = History::all();
+    return redirect()->back()->with('success', 'Your profile has been updated successfully.',['history' => $history]);
 }
 
    

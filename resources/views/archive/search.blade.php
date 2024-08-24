@@ -5,7 +5,7 @@
 <div class="w-full flex justify-center items-end fixed bottom-0 left-0">
     <div id="search-bar" class="w-full sm:w-1/2 bg-white rounded-md shadow-lg z-10 mb-4">
         <form id="search-form" class="flex items-center justify-between p-2">
-            <input id="search-input" type="text" placeholder="Search here" class="text-xl py-2 px-4 border-0 bg-white text-sm placeholder:text-gray-800 focus:outline-none focus:ring-0 w-full">
+            <input id="search-input" type="text" placeholder="Search here" class="text-xl py-2 px-4 border-0 bg-white text-sm placeholder:text-gray-800 focus:outline-none focus:ring-0 w-full" autocomplete="off" >
             <button type="submit" class="bg-whitebg hover:bg-blue-700 text-white rounded-md py-2 px-4 ml-2">
                 <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13" />
@@ -15,6 +15,7 @@
         </form>
     </div>
 </div>
+
 
 <div id="results-container" class="w-full flex flex-col items-center mt-6">
     <!-- Search results will be displayed here -->
@@ -83,6 +84,8 @@
 </style>
 
 <script>
+    const studentId = @json(auth()->guard('student')->user()->id); // Assuming this is in a Blade file and the user is authenticated
+
     // Copy Citation to Clipboard
     document.getElementById('copy-citation').addEventListener('click', function() {
         const citationText = document.getElementById('pdf-citation').textContent;
@@ -166,26 +169,26 @@
                     if (!questionDisplayed) {
                         const questionDiv = document.createElement('div');
                         questionDiv.classList.add('result-item', 'bg-gray-500', 'text-white');
-                        questionDiv.innerHTML = `<p><strong>Question:</strong> ${query}</p>`;
+                        questionDiv.innerHTML = `<p style="text-align: right;"> ${query}</p>`;
                         resultDiv.appendChild(questionDiv);
                         questionDisplayed = true;
                     }
-
                     results.forEach(result => {
                         const highlightedAnswer = highlightText(result.text, query);
                         const resultItemDiv = document.createElement('div');
                         resultItemDiv.classList.add('result-item', 'bg-gray-100');
 
+                        // Create the inner HTML with a tooltip (title attribute) for fast hover display
                         resultItemDiv.innerHTML = `
-                                <p class="mb-2">
-                                    <button  class="text-red-800 hover:underline" onclick="showPDF('${pdfUrl}', '${pdfTitle}', '${pdfCitation}')">${pdfTitle}</button>
-                                Page: ${result.page}
-                                </p>
-                            <p class="mb-2"><strong>Result:</strong> ${highlightedAnswer}</p>
-                            
+                            <p class="mb-2 hover:underline cursor-pointer" onclick="showPDF('${pdfUrl}', '${pdfTitle}', '${pdfCitation}', '${file.id}')" style="position: relative; padding-left: 30px;"  title="${pdfTitle} - Page: ${result.page}">
+                                <img src="/img/profile.jpg" alt="Result Icon" style="width: 20px; height: 20px; position: absolute; top: 2%; left: 0;">
+                                <span>${highlightedAnswer}</span>
+                            </p>
                         `;
+
                         resultDiv.appendChild(resultItemDiv);
                     });
+
 
                     resultsContainer.appendChild(resultDiv);
                 }
@@ -208,7 +211,6 @@
         }
     }, 1000);
 });
-
 function showPDF(pdfUrl, title, citation, documentId) {
     const pdfContainer = document.getElementById('pdf-container');
     const resultsContainer = document.getElementById('results-container');
@@ -226,14 +228,14 @@ function showPDF(pdfUrl, title, citation, documentId) {
 
     pdfContainer.classList.remove('hidden');
 
-    // Send request to save the history
-    fetch('/save-history', {
+    // Fetch request to save the document view to the database
+    fetch('/save-document', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         },
-        body: JSON.stringify({ document_id: documentId })
+        body: JSON.stringify({ document_id: documentId, student_id: studentId })  // Correctly using documentId here
     })
     .then(response => response.json())
     .then(data => {
@@ -243,8 +245,13 @@ function showPDF(pdfUrl, title, citation, documentId) {
             console.error('Failed to save history');
         }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while saving the history.');
+    });
 }
+
+
 
 
 

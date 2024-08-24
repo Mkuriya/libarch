@@ -23,4 +23,5 @@ class Student extends Authenticatable
         'password',
         'photo',
     ];
+    
 }

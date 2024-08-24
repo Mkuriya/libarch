@@ -83,7 +83,8 @@ Route::controller(ViewController::class)->group(function(){
 
     Route::get('/admin/dashboard/admin/reset/{admin}', 'adminReset')->name('resetadmin'); // display the reset form of admin 
 
-    Route::get('/student/dashboard/archivelist/document/{file}', 'viewDoc'); // pdf view in student 
+    Route::get('/student/dashboard/archivelist/document/{file}', 'viewDoc')->name('document.view'); // pdf view in student 
+    Route::get('/student/dashboard/history/{file}', 'historyDoc'); // pdf view in student 
     Route::get('/admin/dashboard/archive/view/{file}', 'viewDocument'); // pdf view in admin 
     Route::get('/admin/dashboard/student/filter', 'filterstudentlist'); // to display the student list
 
@@ -91,7 +92,8 @@ Route::controller(ViewController::class)->group(function(){
     Route::get('/forgotpassword', 'forget_password')->name("forget.password");//display the forgot password form that will send email
     Route::get('/student/dashboard/archivelist/document/${result.document}', 'pdfviewer');//display the forgot password form that will send email
    
-    
+    Route::get('/student/menu', 'showMenu')->name('student.menu');
+
 });
 Route::controller(PasswordController::class)->group(function(){
     Route::get('/forgotpassword', 'forget_password')->name("forget.password");//display the forgot password form that will reset email
@@ -104,6 +106,11 @@ Route::controller(FileController::class)->group(function(){
 
     Route::put('/admin/dashboard/archive/pending/status/{file}', 'fileUpdate'); // for edit profile
     Route::post('/student/dashboard/upload/file','fileUpload'); // for edit profile
+
+    Route::post('/save-document',  'saveDocument');
+    // Add this route to handle deletion
+Route::delete('/student/dashboard/history/{id}',  'destroy')->name('history.destroy');
+
 });
 
 Auth::routes();

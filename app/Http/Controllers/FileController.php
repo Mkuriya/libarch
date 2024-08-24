@@ -2,12 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use App\Models\File;
+use App\Models\History;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
+    public function destroy($id)
+    {
+        // Find the record by ID
+        $record = History::findOrFail($id);
+        
+        // Check if the record belongs to the authenticated student
+        if ($record->student_id == auth()->guard('student')->user()->id) {
+            $record->delete();
+            
+        }
+        
+        return redirect()->back()->with('Success', 'History delete successfully!');
+    }
+
+    
+    public function saveDocument(Request $request)
+    {
+            $validated = $request->validate([
+                'student_id' => 'required|integer',
+                'document_id' => 'required|integer',
+            ]);
+    
+            // Save to the database
+            History::create([
+                'student_id' => $validated['student_id'],
+                'document_id' => $validated['document_id'],
+            ]);
+    
+            \Log::info('Document saved successfully'); // Log success
+            return response()->json(['status' => 'success']);
+    }
+    
+    
+
     public function search(Request $request){
 
         $search = $request->search;
