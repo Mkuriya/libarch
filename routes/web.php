@@ -107,9 +107,9 @@ Route::controller(FileController::class)->group(function(){
     Route::put('/admin/dashboard/archive/pending/status/{file}', 'fileUpdate'); // for edit profile
     Route::post('/student/dashboard/upload/file','fileUpload'); // for edit profile
 
-    Route::post('/save-document',  'saveDocument');
+    Route::post('/save-document',  'saveDocument');//save history
     // Add this route to handle deletion
-Route::delete('/student/dashboard/history/{id}',  'destroy')->name('history.destroy');
+    Route::delete('/student/dashboard/history/{id}',  'destroy')->name('history.destroy');
 
 });
 

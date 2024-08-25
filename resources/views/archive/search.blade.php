@@ -312,31 +312,3 @@ function calculateTermFrequency(text, term) {
 }
 
 </script>
-{{--}}
-
-                    results.forEach(result => {
-                        const highlightedAnswer = highlightText(result.text, query);
-                        const answerDiv = document.createElement('div');
-                        answerDiv.classList.add('result-item', 'bg-gray-200');
-                        answerDiv.innerHTML = `
-                            <p class="p-2 bg-red-300 w-full">
-                                <a href="${pdfUrl}" class="text-red-800 hover:underline" target="_blank">${pdfTitle}</a>
-                                <p class="right-0">Page:${result.page}</p>
-                            </p>
-                            <p><strong>Answer:</strong> ${highlightedAnswer}...</p>
-                        `;
-                        resultDiv.appendChild(answerDiv);
-                    });
-
-                    resultsContainer.appendChild(resultDiv);
-                }
-            });
-        }).catch(error => {
-            console.error('Error loading PDF:', error);
-            const errorDiv = document.createElement('div');
-            errorDiv.classList.add('result-item', 'bg-gray-200');
-            errorDiv.innerHTML = `<p class="text-gray-800">An error occurred while fetching the PDF.</p>`;
-            resultsContainer.appendChild(errorDiv);
-        });
-    });
---}}

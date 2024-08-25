@@ -23,9 +23,10 @@
   <main class="h-12 bg-muted-dark  flex items-center justify-between">
       <!-- This is used to open the menu -->
       <span class="flex items-center text-2xl pl-5 text-white">
-        <img src="/img/logo.jpg" width="20px" height="20px" alt="">
+      <!--  <img src="/img/logo.jpg" width="20px" height="20px" alt="">-->
         <a href="/admin/dashboard">Libarch</a>
       </span>
+      
       <span class="cursor-pointer text-2xl absolute right-0 mr-8 " onclick="openMenu()">
         @if (auth()->guard('admin')->check() && auth()->guard('admin')->user()->photo)
           <img src="{{ asset('storage/' . auth()->guard('admin')->user()->photo) }}" class="rounded-full h-8 w-8 object-cover">

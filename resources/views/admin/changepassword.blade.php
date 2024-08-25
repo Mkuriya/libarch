@@ -62,17 +62,7 @@
                             <button type="button" class="block w-full px-4 py-2 mt-2 text-white bg-whitebg border border-gray-300 rounded-md hover:bg-gray-600">Back</button>
                         </a>
                     </div>
-                </div>{{--}}
-                <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-12">   
-                    <div class="col-span-6">
-                        <button type="submit"  class="block w-full px-4 py-2 mt-2 text-white bg-whitebg 
-                            border border-gray-300 rounded-md hover:bg-gray-600"></button>
-                    </div>
-                    <div class="col-span-6">
-                        <a href=" "><button type="button" class="block w-full px-4 py-2 mt-2 text-white bg-whitebg 
-                            border border-gray-300 rounded-md hover:bg-gray-600">Back</button></a>
-                    </div>   
-                </div> --}}
+                </div>
             </div> 
 
         </form>

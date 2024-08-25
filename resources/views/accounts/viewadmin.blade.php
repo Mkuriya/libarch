@@ -43,28 +43,3 @@
 </div>
 
 @extends('partials.footer')
-
-{{--
-    <div class="">
-    <a href="/admin/dashboard"><h1>LibArch</h1></a>
-    <a href="/admin/dashboard/admin"><h4>Back</h4></a>
-    <h1>Admin View</h1>
-    
-        <label for="lastname">Last Name</label>
-        <input name="lastname" type="text" value="{{$admin->lastname}}"><br>
-        <label for="firstname">First Name</label>
-        <input name="firstname" type="text" value="{{$admin->firstname}}"><br>
-        <label for="middlename">Middle Name</label>
-        <input name="middlename" type="text" value="{{$admin->middlename}}"><br>
-        <label for="gender">Gender</label> 
-        <input name="gender" type="text" value="{{$admin->gender}}"><br>
-        <label for="email">Email</label> 
-        <input name="email" type="email" value="{{$admin->email}}"><br>
-        
-        <br>
-        <label for="photo">Photo</label>
-        <img src="{{ asset($admin->photo) }}" width= '100' height='100' class=" rounded-full" />
-       
-</div>
-
-    --}}

@@ -27,7 +27,7 @@
         </div>
         <div style="background-color: #701d0b; color:#ffffff; padding: 16px; text-align: center;">
             <p style="font-size: 12px;">Lib-Arch<br>
-            Email: libarch@dhvsu.edu.ph | Contact No: https://www.libarch.edu.ph</p>
+            Email: lib.arch.03@gmail.com </p>
         </div>
     </div>
 
