@@ -25,8 +25,8 @@
 </div>
 @endif
 
-<section class="max-w-5xl pt-6 px-6 mx-auto bg-indigo-600 rounded-md shadow-md dark:bg-gray-800 sm:mt-4 mt-0">
-<h1 class="text-xl font-bold text-white capitalize dark:text-white">Upload Research</h1>
+<section class="max-w-5xl pt-6 px-6 mx-auto rounded-md shadow-md bg-gray-800 sm:mt-4 mt-0">
+<h1 class="text-xl font-bold text-white capitalize ">Upload Research</h1>
 <form id="citation-form" name="citation-form" action="/student/dashboard/upload/file" method="POST" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="status" value="0">
@@ -34,15 +34,15 @@
     <input type="hidden" name="student_firstname" value="{{ auth()->guard('student')->user()->lastname }}">
     <input type="hidden" name="student_department" value="{{ auth()->guard('student')->user()->department }}">
     <div class="mt-4">
-        <label for="title" class="text-white dark:text-gray-200">Title</label>
-        <input type="text" name="title" id="title" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white">
+        <label for="title" class="text-gray-200">Title</label>
+        <input type="text" name="title" id="title" class="block w-full px-4 py-2 mt-2  border  rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white ">
     </div>
     <div class="mt-4">
         <label for="year" class="text-white dark:text-gray-200">Year</label>
-        <input min="1900" max="2099" step="1" value="2024" name="year" id="year" type="number" class="hide-arrows block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white no-spinner">
+        <input min="1900" max="2099" step="1" value="2024" name="year" id="year" type="number" class="hide-arrows block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white  no-spinner">
     </div>
     <div class="mt-4 flex justify-between items-center">
-        <label for="" class="text-white dark:text-gray-200">Members</label>
+        <label for="" class="text-gray-200">Members</label>
         <button type="button" onclick="addAuthor()" class="p-2 bg-whitebg hover:bg-gray-700 text-white rounded-md">Add Author</button>
     </div>
     
@@ -51,21 +51,21 @@
     </div>
     
     <div class="mt-4 hidden">
-        <label class="text-white dark:text-gray-200">Members List</label>
-        <textarea id="members-preview" name="members" rows="3" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white" readonly></textarea>
+        <label class="text-gray-200">Members List</label>
+        <textarea id="members-preview" name="members" rows="3" class="block w-full px-4 py-2 mt-2  border  rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white " readonly></textarea>
     </div>
     
     <div class="mt-4">
-        <label for="abstract" class="text-white dark:text-gray-200">Abstract</label>
-        <textarea name="abstract" id="abstract" cols="0" rows="5" class="block w-full px-4 py-2 sm:mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white"></textarea>
+        <label for="abstract" class="text-gray-200">Abstract</label>
+        <textarea name="abstract" id="abstract" cols="0" rows="5" class="block w-full px-4 py-2 sm:mt-2  border  rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white "></textarea>
     </div>
     <div class="mt-2">
-        <label for="document" class="text-white dark:text-gray-200">File <span class="text-sm text-gray-400">(PDF ONLY, Limit: 5MB)</span></label>
+        <label for="document" class="text-gray-200">File <span class="text-sm text-gray-400">(PDF ONLY, Limit: 5MB)</span></label>
         <input type="file" name="document" id="document" accept="application/pdf" class="block w-full mt-2 px-2 py-2 bg-gray-800 border border-gray-600 rounded-md text-white file:py-1 file:px-2 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-transparent file:text-white hover:file:bg-gray-700 hover:bg-gray-700">
     </div>
     <div class="mt-4 ">
-        <label class="text-white dark:text-gray-200">APA Citation</label>
-        <input id="citation-preview" type="text" name="citation" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white" readonly>
+        <label class="text-gray-200">APA Citation</label>
+        <input id="citation-preview" type="text" name="citation" class="block w-full px-4 py-2 mt-2  border  rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white " readonly>
     </div>
     <div class="flex justify-center py-4">
         <button type="submit" class="px-16 py-2 leading-5 text-white transition-colors duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Save</button>
@@ -89,8 +89,8 @@ function addAuthor() {
     div.className = 'mb-1 flex items-center space-x-2';
     div.innerHTML = `
         <div class="bg-gray-600 w-full flex items-center space-x-1 p-2">
-            <input type="text" name="firstnames[]" class="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white capitalize" placeholder="First Name" oninput="capitalizeFirstLetter(this)">
-            <input type="text" name="lastnames[]" class="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white capitalize" placeholder="Last Name" oninput="capitalizeFirstLetter(this)">
+            <input type="text" name="firstnames[]" class="block w-full px-4 py-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white capitalize" placeholder="First Name" oninput="capitalizeFirstLetter(this)">
+            <input type="text" name="lastnames[]" class="block w-full px-4 py-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white capitalize" placeholder="Last Name" oninput="capitalizeFirstLetter(this)">
             <button type="button" onclick="removeAuthor(this)" class="p-2 text-white rounded-md">
                 <svg class="w-6 h-6 text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>

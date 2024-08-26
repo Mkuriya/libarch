@@ -22,9 +22,9 @@
   <div class="flex justify-center  mt-6 w-full sm:w-1/2   ">
     <div class=" flex justify-center w-full sm:w-1/2 sm:px-16">
     <a href="/student/dashboard/upload"class=" w-[200px] h-[65px]  flex justify-center item-center">
-      <button type="button" class=" w-full h-full text-white bg-whitebg hover:bg-gray-700  font-medium rounded-lg text-xl px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2">
+      <button type="button" class=" w-full h-full text-white bg-whitebg hover:bg-gray-700  font-medium rounded-lg text-xl px-5 py-2.5 text-center inline-flex items-center focus:ring-[#3b5998]/55 me-2 mb-2">
         Upload 
-        <svg class="w-7 h-7 ml-12 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg class="w-7 h-7 ml-12 ttext-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2M8 9l4-5 4 5m1 8h.01"/>
         </svg>
       </button>
@@ -32,9 +32,9 @@
     </div>
     <div class=" flex justify-center w-full sm:w-1/2 sm:px-16">
     <a href="/student/dashboard/search"class=" w-[200px] h-[65px]  flex justify-center item-center">
-      <button type="button" class=" w-full h-full text-white bg-whitebg hover:bg-gray-700  font-medium rounded-lg text-xl px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2">
+      <button type="button" class=" w-full h-full text-white bg-whitebg hover:bg-gray-700  font-medium rounded-lg text-xl px-5 py-2.5 text-center inline-flex items-center focus:ring-[#3b5998]/55 me-2 mb-2">
         Search 
-        <svg class="w-6 h-6 ml-12 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 ml-12 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
         </svg>
       </button>

@@ -1,8 +1,8 @@
 @extends('partials.header')
 <div class="login text-black flex min-h-screen flex-col items-center pt-16 justify-center sm:justify-center sm:pt-0">
     <div class="relative mt-12 w-full max-w-lg sm:mt-10">
-        <div id="login-container" class="holder mx-5 border dark:border-b-white/50 dark:border-t-white/50 border-b-white/20 sm:border-t-white/20 shadow-[20px_0_20px_20px]
-            shadow-slate-500/10 dark:shadow-white/20 rounded-lg border-white/20 border-l-white/20 border-r-white/20 sm:shadow-sm lg:rounded-xl 
+        <div id="login-container" class="holder mx-5 border  border-b-white/20 sm:border-t-white/20 shadow-[20px_0_20px_20px]
+            shadow-slate-500/10 shadow-white/20 rounded-lg border-white/20 border-l-white/20 border-r-white/20 sm:shadow-sm lg:rounded-xl 
             lg:shadow-sm">
             <div class="flex flex-col p-6">
                 <h3 class="text-3xl font-semibold leading-6 tracking-tighter text-center">LOGIN</h3>
@@ -50,8 +50,8 @@
                 </form>
             </div>
         </div>
-        <div id="reset-container" class="holder mx-5 border dark:border-b-white/50 dark:border-t-white/50 border-b-white/20 sm:border-t-white/20 shadow-[20px_0_20px_20px]
-            shadow-slate-500/10 dark:shadow-white/20 rounded-lg border-white/20 border-l-white/20 border-r-white/20 sm:shadow-sm lg:rounded-xl 
+        <div id="reset-container" class="holder mx-5 border  border-b-white/20 sm:border-t-white/20 shadow-[20px_0_20px_20px]
+            shadow-slate-500/10 shadow-white/20 rounded-lg border-white/20 border-l-white/20 border-r-white/20 sm:shadow-sm lg:rounded-xl 
             lg:shadow-sm hidden">
             <div class="flex flex-col p-6">
                 <h3 class="text-3xl font-semibold leading-6 tracking-tighter text-center">Reset Password</h3>
