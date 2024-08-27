@@ -1,7 +1,7 @@
 @include('partials.adminnav')
 <div class="content px-10">
     <div class="mt-6 mb-4 md:flex md:items-center md:justify-between">
-        <div class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
+        <div class="inline-flex overflow-hidden border divide-x rounded-lg bg-gray-900 rtl:flex-row-reverse border-gray-700 divide-gray-700">
             <ul class="flex">
                 <li class="mr-3">
                     <a class="inline-block rounded py-1.5 px-3  text-white " href="/admin/dashboard/archive">Archive List</a>
@@ -39,47 +39,47 @@
     <div class="flex flex-col">
         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 ">
               <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                 <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-800">
+                 <div class="overflow-hidden border border-gray-700 md:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-700">
+                        <thead class="bg-gray-800">
                             <tr>
-                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Title </th>
-                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Year </th>
-                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Uploader </th>
-                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Department </th>
-                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Status </th>
-                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Action </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">Title </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">Year </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">Uploader </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">Department </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">Status </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">Action </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                        <tbody class="divide-y divide-gray-700 bg-gray-900">
                             @forelse ($files as $item)
                                 @if ($item->status == 2)
                                     <tr>
-                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
                                             {{$item->title}}
                                         </td>
-                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
                                             {{$item->year}}
                                         </td>
                                         <td class="px-4 py-4 text-sm ext-gray-500 dark:text-gray-300 whitespace-nowrap">
                                             <h2 class="text-sm font-normal">{{$item->student_firstname}} {{$item->student_lastname}}</h2>
                                         </td>
-                                        <td class="px-4 py-4 text-sm ext-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
                                             @if ($item->student_department == "Marketing & Entrepreneurship")
-                                                <h1 class="text-red-400">Marketing & Entrepreneurship</h1>
+                                                <h1 class="text-white">Marketing & Entrepreneurship</h1>
                                             @elseif($item->student_department == "Engineering")
-                                                <p class="text-sky-800">Engineering</p>
+                                                <p class="text-white">Engineering</p>
                                             @elseif($item->student_department == "Information Technology")
-                                                <p class="text-purple-800">Information Technology</p>
+                                                <p class="text-white">Information Technology</p>
                                             @elseif($item->student_department == "Tourism")
-                                                <p class="text-gray-800">Tourism</p>
+                                                <p class="text-white">Tourism</p>
                                             @elseif($item->student_department == "Education")
-                                                <p class="text-sky-300">Education</p>
+                                                <p class="text-white">Education</p>
                                             @elseif($item->student_department == "Psychology")
-                                                <p class="text-sky-300">Psychology</p>
+                                                <p class="text-white">Psychology</p>
                                             @endif
                                         </td>
-                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
                                             <div class="flex items-center gap-x-2">
                                                 @if($item->status == 0)
                                                     <h1 class="text-sky-200">Pending</h1>
@@ -106,22 +106,22 @@
                                                                 @method('PUT')
                                                                 <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-12">
                                                                     <div class="col-span-12 sm:col-span-10">
-                                                                        <label class="text-white dark:text-gray-200 pl-2" for="lastname">Title</label>
-                                                                        <input value="{{$item->title}}" disabled type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                                                        <label class="text-gray-200 pl-2" for="lastname">Title</label>
+                                                                        <input value="{{$item->title}}" disabled type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">
                                                                     </div>
                                                                     <div class="col-span-12 sm:col-span-2">
-                                                                        <label class="text-white dark:text-gray-200 pl-2" for="firstname">Year</label>
-                                                                        <input value="{{$item->year}}" disabled type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                                                        <label class="text-gray-200 pl-2" for="firstname">Year</label>
+                                                                        <input value="{{$item->year}}" disabled type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">
                                                                     </div>
                                                                 </div>
                                                                 <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-12">
                                                                     <div class="col-span-12 sm:col-span-10">
-                                                                        <label class="text-white dark:text-gray-200 pl-2" for="lastname">Department</label>
-                                                                        <input value="{{$item->student_department}}" disabled type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                                                        <label class="text-gray-200 pl-2" for="lastname">Department</label>
+                                                                        <input value="{{$item->student_department}}" disabled type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">
                                                                     </div>
                                                                     <div class="col-span-12 sm:col-span-2">
-                                                                        <label class="text-white dark:text-gray-200 pl-2" for="firstname">Status</label>
-                                                                        <select name="status" id="" class="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                                                        <label class="text-gray-200 pl-2" for="firstname">Status</label>
+                                                                        <select name="status" id="" class="block w-full px-2 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">
                                                                             <option value="0" {{$item->status == '0' ? 'selected' : ''}}>Pending</option>
                                                                             <option value="1" {{$item->status == '1' ? 'selected' : ''}}>Approve</option>
                                                                             <option value="2" {{$item->status == '2' ? 'selected' : ''}}>Decline</option>
@@ -143,7 +143,7 @@
                                 @endif
                             @empty
                                 <tr>
-                                    <td colspan="6" class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap text-center">
+                                    <td colspan="6" class="px-4 py-4 text-sm font-medium text-gray-200 whitespace-nowrap text-center">
                                         No data available.
                                     </td>
                                 </tr>
@@ -157,27 +157,27 @@
                         <div class="flex">
                             <!-- Previous Button -->
                             @if ($files->onFirstPage())
-                                <span class="flex items-center justify-center mr-3 px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Previous</span>
+                                <span class="flex items-center justify-center mr-3 px-3 h-8 text-sm font-medium border rounded-lg bg-gray-800 border-gray-700 text-gray-400">Previous</span>
                             @else
-                                <a href="{{ $files->previousPageUrl() }}" class="flex mr-3 items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                                <a href="{{ $files->previousPageUrl() }}" class="flex mr-3 items-center justify-center px-3 h-8 text-sm font-medium border rounded-lg bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white">Previous</a>
                             @endif
                 
                             <ul class="flex items-center -space-x-px h-8 text-sm">
                                 @foreach ($files->links()->elements as $element)
                                     @if (is_string($element))
                                         <li>
-                                            <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">{{ $element }}</span>
+                                            <span class="flex items-center justify-center px-3 h-8 leading-tight border bg-gray-800 border-gray-700 text-gray-400">{{ $element }}</span>
                                         </li>
                                     @endif
                                     @if (is_array($element))
                                         @foreach ($element as $page => $url)
                                             @if ($page == $files->currentPage())
                                                 <li>
-                                                    <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">{{ $page }}</span>
+                                                    <span class="flex items-center justify-center px-3 h-8 leading-tight border bg-gray-800 border-gray-700 text-gray-400">{{ $page }}</span>
                                                 </li>
                                             @else
                                                 <li>
-                                                    <a href="{{ $url }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ $page }}</a>
+                                                    <a href="{{ $url }}" class="flex items-center justify-center px-3 h-8 leading-tight border bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white">{{ $page }}</a>
                                                 </li>
                                             @endif
                                         @endforeach
@@ -187,9 +187,9 @@
                 
                             <!-- Next Button -->
                             @if ($files->hasMorePages())
-                                <a href="{{ $files->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                                <a href="{{ $files->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium border rounded-lg bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white">Next</a>
                             @else
-                                <span class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Next</span>
+                                <span class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium border rounded-lg bg-gray-800 border-gray-700 text-gray-400">Next</span>
                             @endif
                         </div>
                     @endif

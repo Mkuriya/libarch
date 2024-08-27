@@ -34,23 +34,23 @@
     </div>
 @endif
 <div class="sm:mt-6 mt-0 ">
-    <section class="max-w-screen-xl p-6 mx-auto bg-indigo-600 rounded-md shadow-md dark:bg-gray-800 ">
-        <h1 class="text-xl font-bold text-white capitalize dark:text-white">Change Password</h1>
+    <section class="max-w-screen-xl p-6 mx-auto rounded-md shadow-md bg-gray-800 ">
+        <h1 class="text-xl font-bold text-white capitalize ">Change Password</h1>
         <hr>
         
         <form action="/admin/dashboard/profile/changepassword/update" method="POST">
             @csrf
             <div class="mt-4">
-                <label class="text-white dark:text-gray-200 pl-2" for="lastname">Old Password</label>
-                <input name="old_password" id="old_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
+                <label class="text-gray-200 pl-2" for="old_password">Old Password</label>
+                <input name="old_password" id="old_password" type="password" class="block w-full px-4 py-2 mt-2  border  rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white ">
             </div>
             <div class="mt-4">
-                <label class="text-white dark:text-gray-200 pl-2" for="lastname">New Password</label>
-                <input  name="new_password" id="new_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
+                <label class="text-gray-200 pl-2" for="new_password">New Password</label>
+                <input  name="new_password" id="new_password" type="password" class="block w-full px-4 py-2 mt-2  border  rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white ">
             </div>
             <div class="mt-4"> 
-                <label class="text-white dark:text-gray-200 pl-2" for="lastname">Confirm Password</label>
-                <input  name="confirm_password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-white dark:focus:border-white ">
+                <label class="text-gray-200 pl-2" for="confirm_password">Confirm Password</label>
+                <input  name="confirm_password" type="password" class="block w-full px-4 py-2 mt-2  border  rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white ">
             </div>
             <div class="grid-row-2 col-span-10 mt-12">
                 <div class="grid grid-cols-2 gap-6 mt-2 sm:mt-8">

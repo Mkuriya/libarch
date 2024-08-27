@@ -12,7 +12,7 @@
                     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 start-0 flex items-center p-2">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <svg class="w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                             </svg>
                         </div>
@@ -27,51 +27,51 @@
         <div class="flex flex-col">
            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 ">
                  <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                    <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead class="bg-gray-50 dark:bg-gray-800">
+                    <div class="overflow-hidden border border-gray-700 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-700">
+                            <thead class="bg-gray-800">
                                 <tr>
-                                    <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-400">
                                         <div class="flex items-center gap-x-3">
                                             <button class="flex items-center gap-x-2">
                                                 <span>Name</span>
                                             </button>
                                         </div>
                                     </th>
-                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
                                         Gender
                                     </th>
-                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
                                         Email
                                     </th>
-                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
                                         Photo
                                     </th>
-                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
                                         Action
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                            <tbody class=" divide-y divide-gray-700 bg-gray-900">
                                 @if($admins->isEmpty())
                                     <tr>
-                                        <td colspan="5" class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap text-center">
+                                        <td colspan="5" class="px-4 py-4 text-sm font-medium text-gray-200 whitespace-nowrap text-center">
                                             No data found.
                                         </td>
                                     </tr>
                                 @else
                                     @foreach ($admins as $item)
                                         <tr>
-                                            <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                            <td class="px-4 py-4 text-sm font-medium text-gray-200 whitespace-nowrap">
                                                 <div class="inline-flex items-center gap-x-3">
                                                     <span>{{$item->lastname}}, {{$item->firstname}} {{$item->middlename}}</span>
                                                 </div>
                                             </td>
-                                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{$item->gender}}</td>
-                                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                            <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">{{$item->gender}}</td>
+                                            <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
                                                 <h2 class="text-sm font-normal">{{$item->email}}</h2>
                                             </td>
-                                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                            <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
                                                 <div class="flex items-center gap-x-2">
                                                     <img class="object-cover w-10 h-10 " src="{{ asset('storage/' . $item->photo) }}" alt="">
                                                 </div>
@@ -79,12 +79,12 @@
                                             <td class="px-1 py-4 text-sm whitespace-nowrap">
                                                 <div class="flex items-center gap-x-6">
                                                     <a href="/admin/dashboard/admin/view/{{$item->id}}" title="View Admin">
-                                                        <button class="text-gray-500 transition-colors duration-200 dark:hover:text-whitebg dark:text-gray-300 hover:text-whitebg focus:outline-none">
+                                                        <button class=" transition-colors duration-200 hover:text-whitebg text-gray-300  focus:outline-none">
                                                             View
                                                         </button>
                                                     </a>
                                                     <a href="/admin/dashboard/admin/edit/{{$item->id}}" title="Edit Admin">
-                                                        <button onclick="return confirm('Update the data?');" class="text-gray-500 transition-colors duration-200 dark:hover:text-whitebg dark:text-gray-300 hover:text-whitebg focus:outline-none">
+                                                        <button onclick="return confirm('Update the data?');" class="transition-colors duration-200 hover:text-whitebg text-gray-300  focus:outline-none">
                                                             Update
                                                         </button>
                                                     </a>
@@ -109,9 +109,9 @@
                             <!-- Conditional display of Previous Button -->
                             @if ($admins->lastPage() > 1)
                                 @if ($admins->onFirstPage())
-                                    <span class="flex items-center justify-center mr-3 px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Previous</span>
+                                    <span class="flex items-center justify-center mr-3 px-3 h-8 text-sm font-medium text-gray-500  border rounded-lg bg-gray-800 border-gray-700 text-gray-400">Previous</span>
                                 @else
-                                    <a href="{{ $admins->previousPageUrl() }}" class="flex mr-3 items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                                    <a href="{{ $admins->previousPageUrl() }}" class="flex mr-3 items-center justify-center px-3 h-8 text-sm font-medium text-gray-500  border rounded-lg border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white">Previous</a>
                                 @endif
                             @endif
                     
@@ -121,18 +121,18 @@
                                     @foreach ($admins->links()->elements as $element)
                                         @if (is_string($element))
                                             <li>
-                                                <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">{{ $element }}</span>
+                                                <span class="flex items-center justify-center px-3 h-8 leading-tight border bg-gray-800 border-gray-700 text-gray-400">{{ $element }}</span>
                                             </li>
                                         @endif
                                         @if (is_array($element))
                                             @foreach ($element as $page => $url)
                                                 @if ($page == $admins->currentPage())
                                                     <li>
-                                                        <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">{{ $page }}</span>
+                                                        <span class="flex items-center justify-center px-3 h-8 leading-tight border bg-gray-800 border-gray-700 text-gray-400">{{ $page }}</span>
                                                     </li>
                                                 @else
                                                     <li>
-                                                        <a href="{{ $url }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ $page }}</a>
+                                                        <a href="{{ $url }}" class="flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white">{{ $page }}</a>
                                                     </li>
                                                 @endif
                                             @endforeach
@@ -144,9 +144,9 @@
                             <!-- Conditional display of Next Button -->
                             @if ($admins->lastPage() > 1)
                                 @if ($admins->hasMorePages())
-                                    <a href="{{ $admins->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                                    <a href="{{ $admins->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium border rounded-lg hover:bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white">Next</a>
                                 @else
-                                    <span class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Next</span>
+                                    <span class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium border rounded-lg bg-gray-800 border-gray-700 text-gray-400">Next</span>
                                 @endif
                             @endif
                         </div>
