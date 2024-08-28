@@ -24,7 +24,7 @@
 <!-- Container to display PDF, hidden by default -->
 
 
-<div id="pdf-container" class="w-full h-[84%] flex flex-col items-center hidden ">
+<div id="pdf-container" class="w-full h-[93%] flex flex-col items-center hidden ">
     <div class="w-full flex justify-between items-center text-center">
         <p id="pdf-title" class="bg-whitebg w-full text-white px-8 py-2"></p>
         <button id="close-pdf" class="bg-whitebg text-white px-4 py-2">
@@ -84,6 +84,8 @@
 </style>
 
 <script>
+
+    
     const studentId = @json(auth()->guard('student')->user()->id); // Assuming this is in a Blade file and the user is authenticated
 
     // Copy Citation to Clipboard
@@ -112,155 +114,165 @@
     }
 
     document.getElementById('search-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const queryInput = document.getElementById('search-input');
-    const query = queryInput.value.trim().toLowerCase();
-    const resultsContainer = document.getElementById('results-container');
-    const pdfContainer = document.getElementById('pdf-container');
+        event.preventDefault();
+        const queryInput = document.getElementById('search-input');
+        const query = queryInput.value.trim().toLowerCase();
+        const resultsContainer = document.getElementById('results-container');
+        const pdfContainer = document.getElementById('pdf-container');
 
-    queryInput.value = '';
-    resultsContainer.innerHTML = '';
-    pdfContainer.classList.add('hidden');
+        queryInput.value = '';
+        resultsContainer.innerHTML = '';
+        pdfContainer.classList.add('hidden');
 
-    if (!query) {
-        const noResultDiv = document.createElement('div');
-        noResultDiv.classList.add('result-item', 'bg-gray-200');
-        noResultDiv.innerHTML = `<p class="text-gray-800">Please enter a search query.</p>`;
-        resultsContainer.appendChild(noResultDiv);
-        return;
-    }
-
-    let questionDisplayed = false;
-    let resultsFound = false;
-
-    @json($file).forEach(function(file) {
-        const pdfUrl = file.document;
-        const pdfTitle = file.title;
-        const pdfCitation = file.citation;
-
-        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
-            let allText = '';
-            let results = [];
-
-            const pages = [];
-            for (let i = 1; i <= pdf.numPages; i++) {
-                pages.push(
-                    pdf.getPage(i).then(page => {
-                        return page.getTextContent().then(textContent => {
-                            const textItems = textContent.items.map(item => item.str);
-                            const pageText = textItems.join(' ');
-                            allText += ' ' + pageText;
-
-                            const snippets = findSnippets(pageText, query, i);
-                            results = results.concat(snippets);
-                        });
-                    })
-                );
-            }
-
-            Promise.all(pages).then(() => {
-                if (results.length > 0) {
-                    resultsFound = true;
-                    results.sort((a, b) => calculateTermFrequency(b.text, query) - calculateTermFrequency(a.text, query));
-
-                    const resultDiv = document.createElement('div');
-                    resultDiv.classList.add('flex', 'flex-col', 'mb-4', 'w-full', 'max-w-lg');
-
-                    if (!questionDisplayed) {
-                        const questionDiv = document.createElement('div');
-                        questionDiv.classList.add('result-item', 'bg-gray-500', 'text-white');
-                        questionDiv.innerHTML = `<p style="text-align: right;"> ${query}</p>`;
-                        resultDiv.appendChild(questionDiv);
-                        questionDisplayed = true;
-                    }
-                    results.forEach(result => {
-                        const highlightedAnswer = highlightText(result.text, query);
-                        const resultItemDiv = document.createElement('div');
-                        resultItemDiv.classList.add('result-item', 'bg-gray-100');
-
-                        // Create the inner HTML with a tooltip (title attribute) for fast hover display
-                        resultItemDiv.innerHTML = `
-                            <p class="mb-2 hover:underline cursor-pointer" onclick="showPDF('${pdfUrl}', '${pdfTitle}', '${pdfCitation}', '${file.id}')" style="position: relative; padding-left: 30px;"  title="${pdfTitle} - Page: ${result.page}">
-                                <img src="/img/profile.jpg" alt="Result Icon" style="width: 20px; height: 20px; position: absolute; top: 2%; left: 0;">
-                                <span>${highlightedAnswer}</span>
-                            </p>
-                        `;
-
-                        resultDiv.appendChild(resultItemDiv);
-                    });
-
-
-                    resultsContainer.appendChild(resultDiv);
-                }
-            });
-        }).catch(error => {
-            console.error('Error loading PDF:', error);
-            const errorDiv = document.createElement('div');
-            errorDiv.classList.add('result-item', 'bg-gray-200');
-            errorDiv.innerHTML = `<p class="text-gray-800">An error occurred while fetching the PDF.</p>`;
-            resultsContainer.appendChild(errorDiv);
-        });
-    });
-
-    setTimeout(() => {
-        if (!resultsFound) {
+        if (!query) {
             const noResultDiv = document.createElement('div');
             noResultDiv.classList.add('result-item', 'bg-gray-200');
-            noResultDiv.innerHTML = `<p class="text-gray-800">No data found for "${query}"</p>`;
+            noResultDiv.innerHTML = `<p class="text-gray-800">Please enter a search query.</p>`;
             resultsContainer.appendChild(noResultDiv);
+            return;
         }
-    }, 1000);
-});
-function showPDF(pdfUrl, title, citation, documentId) {
-    const pdfContainer = document.getElementById('pdf-container');
-    const resultsContainer = document.getElementById('results-container');
-    const pdfTitle = document.getElementById('pdf-title');
-    const pdfIframe = document.getElementById('pdf-iframe');
-    const pdfCitation = document.getElementById('pdf-citation');
 
-    // Hide the search results container
-    resultsContainer.classList.add('hidden');
+        let questionDisplayed = false;
+        let resultsFound = false;
 
-    // Display the PDF container
-    pdfTitle.textContent = title;
-    pdfIframe.src = `${pdfUrl}#toolbar=0`;
-    pdfCitation.textContent = `Citation: ${citation}`;
+        @json($file).forEach(function(file) {
+            const pdfUrl = file.document;
+            const pdfTitle = file.title;
+            const pdfCitation = file.citation;
 
-    pdfContainer.classList.remove('hidden');
+            pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+                let allText = '';
+                let results = [];
 
-    // Fetch request to save the document view to the database
-    fetch('/save-document', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({ document_id: documentId, student_id: studentId })  // Correctly using documentId here
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            console.log('History saved successfully');
-        } else {
-            console.error('Failed to save history');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while saving the history.');
+                const pages = [];
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    pages.push(
+                        pdf.getPage(i).then(page => {
+                            return page.getTextContent().then(textContent => {
+                                const textItems = textContent.items.map(item => item.str);
+                                const pageText = textItems.join(' ');
+                                allText += ' ' + pageText;
+
+                                const snippets = findSnippets(pageText, query, i);
+                                results = results.concat(snippets);
+                            });
+                        })
+                    );
+                }
+
+                Promise.all(pages).then(() => {
+                    if (results.length > 0) {
+                        resultsFound = true;
+                        results.sort((a, b) => calculateTermFrequency(b.text, query) - calculateTermFrequency(a.text, query));
+
+                        const resultDiv = document.createElement('div');
+                        resultDiv.classList.add('flex', 'flex-col', 'mb-2', 'w-full', 'max-w-2xl');
+
+                        if (!questionDisplayed) {
+                            const questionDiv = document.createElement('div');
+                            questionDiv.classList.add('result-item', 'bg-gray-500', 'text-white');
+                            questionDiv.innerHTML = `<p style="text-align: right;"> ${query}</p>`;
+                            resultDiv.appendChild(questionDiv);
+                            questionDisplayed = true;
+                        }
+
+                        let combinedAnswer = '';
+                        let lastPageNumber = null;
+
+                        results.forEach(result => {
+                            if (lastPageNumber !== null && lastPageNumber !== result.page) {
+                                combinedAnswer += `<br>`; // Add a line break between answers found on different pages
+                            }
+                            combinedAnswer += `<strong>Page:</strong> ${result.page} <br> <strong>Answer:</strong> <span class="hover:underline cursor-pointer">${highlightText(result.text, query)}</span><br>`; // Add page number and answer
+                            lastPageNumber = result.page;
+                        });
+
+                        const resultItemDiv = document.createElement('div');
+                        resultItemDiv.classList.add('result-item', 'bg-gray-100');
+                        resultItemDiv.innerHTML = `
+                            <p class="mb-2" onclick="showPDF('${pdfUrl}', '${pdfTitle}', '${pdfCitation}', '${file.id}')" style="position: relative; padding-left: 30px;"  title="${pdfTitle}">
+                                <strong>Title:</strong> ${pdfTitle} <br>
+                                <img src="/img/profile.jpg" alt="Result Icon" style="width: 20px; height: 20px; position: absolute; top: 0%; left: 0;">
+                                <span>${combinedAnswer}</span>
+                            </p>
+                        `;
+                        resultDiv.appendChild(resultItemDiv);
+                        resultsContainer.appendChild(resultDiv);
+                    }
+                });
+            }).catch(error => {
+                console.error('Error loading PDF:', error);
+                const errorDiv = document.createElement('div');
+                errorDiv.classList.add('result-item', 'bg-gray-200');
+                errorDiv.innerHTML = `<p class="text-gray-800">An error occurred while fetching the PDF.</p>`;
+                resultsContainer.appendChild(errorDiv);
+            });
+        });
+
+        setTimeout(() => {
+            if (!resultsFound) {
+                const noResultDiv = document.createElement('div');
+                noResultDiv.classList.add('result-item', 'bg-gray-200');
+                noResultDiv.innerHTML = `<p class="text-gray-800">No data found for "${query}"</p>`;
+                resultsContainer.appendChild(noResultDiv);
+            }
+        }, 1000);
     });
-}
+    function showPDF(pdfUrl, title, citation, documentId) {
+        const pdfContainer = document.getElementById('pdf-container');
+        const resultsContainer = document.getElementById('results-container');
+        const searchBar = document.getElementById('search-bar');
+        const pdfTitle = document.getElementById('pdf-title');
+        const pdfIframe = document.getElementById('pdf-iframe');
+        const pdfCitation = document.getElementById('pdf-citation');
 
-document.getElementById('close-pdf').addEventListener('click', function() {
-    const pdfContainer = document.getElementById('pdf-container');
-    const resultsContainer = document.getElementById('results-container');
+        // Hide the search bar and search results container
+        searchBar.classList.add('hidden');
+        resultsContainer.classList.add('hidden');
 
-    // Hide the PDF container
-    pdfContainer.classList.add('hidden');
+        // Display the PDF container
+        pdfTitle.textContent = title;
+        pdfIframe.src = `${pdfUrl}#toolbar=0`;
+        pdfCitation.textContent = `Citation: ${citation}`;
 
-    // Show the search results container
-    resultsContainer.classList.remove('hidden');
-});
+        pdfContainer.classList.remove('hidden');
+
+        // Fetch request to save the document view to the database
+        fetch('/save-document', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ document_id: documentId, student_id: studentId })  // Correctly using documentId here
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                console.log('History saved successfully');
+            } else {
+                console.error('Failed to save history');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while saving the history.');
+        });
+    }
+
+    document.getElementById('close-pdf').addEventListener('click', function() {
+        const pdfContainer = document.getElementById('pdf-container');
+        const resultsContainer = document.getElementById('results-container');
+        const searchBar = document.getElementById('search-bar');
+
+        // Hide the PDF container
+        pdfContainer.classList.add('hidden');
+
+        // Show the search results container and search bar
+        resultsContainer.classList.remove('hidden');
+        searchBar.classList.remove('hidden');
+    });
+
 
 function findSnippets(text, query, page) {
     const snippets = [];
