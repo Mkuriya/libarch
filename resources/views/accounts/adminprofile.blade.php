@@ -40,7 +40,7 @@
                 <div class="sm:col-span-2 col-span-10">
                     <label class="block text-sm font-medium text-white">Image</label>
                     <div>
-                        <input type="file" name="photo" id="file" class="sr-only mt-1 flex justify-center px-4 pt-3 pb-4 border-2 border-gray-600  rounded-md" onchange="previewImage(event)">
+                        <input type="file" name="photo" id="file" @if($admin->id == 1) disabled @endif class="sr-only mt-1 flex justify-center px-4 pt-3 pb-4 border-2 border-gray-600  rounded-md" onchange="previewImage(event)">
                         <label for="file" class="relative flex sm:min-h-[150px] bg-gray-700 items-center justify-center rounded-md border border-gray-600  text-center">
                             <div id="imagePreviewContainer">
                                 <img id="imagePreview" src="{{ asset('storage/' . $admin->photo) }}" class="h-48 sm:h-44 w-56 object-cover">

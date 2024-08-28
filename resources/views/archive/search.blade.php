@@ -16,13 +16,9 @@
     </div>
 </div>
 
-
 <div id="results-container" class="w-full flex flex-col items-center mt-6">
     <!-- Search results will be displayed here -->
 </div>
-
-<!-- Container to display PDF, hidden by default -->
-
 
 <div id="pdf-container" class="w-full h-[93%] flex flex-col items-center hidden ">
     <div class="w-full flex justify-between items-center text-center">
@@ -35,7 +31,7 @@
         </button>
     </div>
     <div class="sm:w-1/2 w-full flex-1 overflow-y-auto relative ">
-        <iframe id="pdf-iframe" src="" frameborder="0" class="w-full h-full bg-transparent border-whitebg  border-r-8 border-l-8"></iframe>
+        <iframe id="pdf-iframe" src="" frameborder="0" class="w-full h-full bg-transparent border-whitebg border-r-8 border-l-8"></iframe>
     </div>
     <div class="flex items-center justify-center sm:w-1/2 w-full bg-whitebg py-1 text-white">
         <p id="pdf-citation" class="mr-4"></p>
@@ -44,7 +40,6 @@
                 <path fill-rule="evenodd" d="M18 3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1V9a4 4 0 0 0-4-4h-3a1.99 1.99 0 0 0-1 .267V5a2 2 0 0 1 2-2h7Z" clip-rule="evenodd"/>
                 <path fill-rule="evenodd" d="M8 7.054V11H4.2a2 2 0 0 1 .281-.432l2.46-2.87A2 2 0 0 1 8 7.054ZM10 7v4a2 2 0 0 1-2 2H4v6a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3Z" clip-rule="evenodd"/>
               </svg>
-              
         </button>
     </div>
 </div>
@@ -68,24 +63,22 @@
         border-radius: 0.5rem;
         box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.1);
     }
+
     .notification {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background-color: #503030; /* Green background */
+        background-color: #503030;
         color: white;
         padding: 10px 20px;
         border-radius: 4px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        z-index: 1000; /* Ensure it's on top of other elements */
+        z-index: 1000;
         transition: opacity 0.5s ease-in-out;
     }
-
 </style>
 
 <script>
-
-    
     const studentId = @json(auth()->guard('student')->user()->id); // Assuming this is in a Blade file and the user is authenticated
 
     // Copy Citation to Clipboard
@@ -99,15 +92,12 @@
     });
 
     function showNotification(message) {
-        // Create notification element
         const notification = document.createElement('div');
         notification.className = 'notification';
         notification.textContent = message;
-        
-        // Add the notification to the body
+
         document.body.appendChild(notification);
-        
-        // Remove the notification after 3 seconds
+
         setTimeout(function() {
             notification.remove();
         }, 3000);
@@ -171,7 +161,7 @@
                         if (!questionDisplayed) {
                             const questionDiv = document.createElement('div');
                             questionDiv.classList.add('result-item', 'bg-gray-500', 'text-white');
-                            questionDiv.innerHTML = `<p style="text-align: right;"> ${query}</p>`;
+                            questionDiv.innerHTML = `<p class="text-sm"><strong>Question:</strong> ${query}</p>`;
                             resultDiv.appendChild(questionDiv);
                             questionDisplayed = true;
                         }
@@ -181,22 +171,17 @@
 
                         results.forEach(result => {
                             if (lastPageNumber !== null && lastPageNumber !== result.page) {
-                                combinedAnswer += `<br>`; // Add a line break between answers found on different pages
+                                combinedAnswer += `<br>`;
                             }
-                            combinedAnswer += `<strong>Page:</strong> ${result.page} <br> <strong>Answer:</strong> <span class="hover:underline cursor-pointer">${highlightText(result.text, query)}</span><br>`; // Add page number and answer
+                            combinedAnswer += `<strong>Page:</strong> ${result.page} <br> <strong>Answer:</strong> <span class="hover:underline cursor-pointer" onclick="showPDF('${pdfUrl}', '${pdfTitle}', '${pdfCitation}', '${file.id}', ${result.page})">${highlightText(result.text, query)}</span><br>`;
                             lastPageNumber = result.page;
                         });
 
-                        const resultItemDiv = document.createElement('div');
-                        resultItemDiv.classList.add('result-item', 'bg-gray-100');
-                        resultItemDiv.innerHTML = `
-                            <p class="mb-2" onclick="showPDF('${pdfUrl}', '${pdfTitle}', '${pdfCitation}', '${file.id}')" style="position: relative; padding-left: 30px;"  title="${pdfTitle}">
-                                <strong>Title:</strong> ${pdfTitle} <br>
-                                <img src="/img/profile.jpg" alt="Result Icon" style="width: 20px; height: 20px; position: absolute; top: 0%; left: 0;">
-                                <span>${combinedAnswer}</span>
-                            </p>
-                        `;
-                        resultDiv.appendChild(resultItemDiv);
+                        const answerDiv = document.createElement('div');
+                        answerDiv.classList.add('result-item', 'bg-gray-300', 'text-gray-800', 'p-2');
+                        answerDiv.innerHTML = `<p class="text-sm"><strong>Title:</strong> ${pdfTitle} <br>${combinedAnswer}</p>`;
+
+                        resultDiv.appendChild(answerDiv);
                         resultsContainer.appendChild(resultDiv);
                     }
                 });
@@ -218,7 +203,47 @@
             }
         }, 1000);
     });
-    function showPDF(pdfUrl, title, citation, documentId) {
+
+    function calculateTermFrequency(text, query) {
+        const regex = new RegExp(`\\b${query}\\b`, 'gi');
+        const matches = text.match(regex);
+        return matches ? matches.length : 0;
+    }
+
+    function findSnippets(text, query, pageNumber) {
+        const sentences = text.split(/(?<=[.!?])\s+/); // Split text into sentences based on punctuation
+        const snippetSize = 15; // Number of words to include after the search term
+
+        for (const sentence of sentences) {
+            if (sentence.toLowerCase().includes(query.toLowerCase())) {
+                const words = sentence.split(/\s+/);
+                const index = words.findIndex(word => word.toLowerCase().includes(query.toLowerCase()));
+
+                if (index !== -1) {
+                    // Create the snippet up to the snippet size or end of sentence, whichever comes first
+                    const snippetWords = words.slice(0, Math.min(words.length, index + snippetSize + 1));
+                    let snippet = snippetWords.join(' ');
+
+                    // Add "..." if the snippet doesn't include the full sentence
+                    if (snippetWords.length < words.length) {
+                        snippet += '...';
+                    }
+
+                    return [{ text: snippet, page: pageNumber }];
+                }
+            }
+        }
+
+        return [];
+    }
+
+
+    function highlightText(text, query) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    function showPDF(pdfUrl, title, citation, documentId, page) {
         const pdfContainer = document.getElementById('pdf-container');
         const resultsContainer = document.getElementById('results-container');
         const searchBar = document.getElementById('search-bar');
@@ -226,25 +251,22 @@
         const pdfIframe = document.getElementById('pdf-iframe');
         const pdfCitation = document.getElementById('pdf-citation');
 
-        // Hide the search bar and search results container
         searchBar.classList.add('hidden');
         resultsContainer.classList.add('hidden');
 
-        // Display the PDF container
         pdfTitle.textContent = title;
-        pdfIframe.src = `${pdfUrl}#toolbar=0`;
+        pdfIframe.src = `${pdfUrl}#page=${page}&toolbar=0`; // Set the page number in the URL
         pdfCitation.textContent = `Citation: ${citation}`;
 
         pdfContainer.classList.remove('hidden');
 
-        // Fetch request to save the document view to the database
         fetch('/save-document', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
-            body: JSON.stringify({ document_id: documentId, student_id: studentId })  // Correctly using documentId here
+            body: JSON.stringify({ document_id: documentId, student_id: studentId })
         })
         .then(response => response.json())
         .then(data => {
@@ -261,62 +283,17 @@
     }
 
     document.getElementById('close-pdf').addEventListener('click', function() {
-        const pdfContainer = document.getElementById('pdf-container');
-        const resultsContainer = document.getElementById('results-container');
-        const searchBar = document.getElementById('search-bar');
+    const pdfContainer = document.getElementById('pdf-container');
+    const searchBar = document.getElementById('search-bar');
+    const resultsContainer = document.getElementById('results-container');
+    const pdfIframe = document.getElementById('pdf-iframe');
 
-        // Hide the PDF container
-        pdfContainer.classList.add('hidden');
+    // Reset the iframe's src to clear the current view of the PDF
+    pdfIframe.src = ''; 
 
-        // Show the search results container and search bar
-        resultsContainer.classList.remove('hidden');
-        searchBar.classList.remove('hidden');
-    });
-
-
-function findSnippets(text, query, page) {
-    const snippets = [];
-    const queryRegex = new RegExp(`[^.?!]*?${query}[^.?!]*[.?!]`, 'gi'); // Adjust regex to capture full sentences
-    let match;
-    
-    while ((match = queryRegex.exec(text)) !== null) {
-        const snippet = match[0].trim();
-
-        // Ensure snippet starts from the beginning of the sentence
-        const sentenceStartIndex = Math.max(
-            text.lastIndexOf('.', match.index - 1) + 1,
-            text.lastIndexOf('!', match.index - 1) + 1,
-            text.lastIndexOf('?', match.index - 1) + 1
-        );
-
-        const fullSnippet = text.substring(sentenceStartIndex, match.index + snippet.length).trim();
-
-        // Limit snippet to 20 words
-        const limitedSnippet = limitWords(fullSnippet, 50);
-
-        snippets.push({ text: limitedSnippet, page: page });
-    }
-    return snippets;
-}
-
-function limitWords(text, wordLimit) {
-    const words = text.split(/\s+/);
-    if (words.length > wordLimit) {
-        return words.slice(0, wordLimit).join(' ') + '...'; // Append ellipsis if truncated
-    }
-    return text;
-}
-
-
-function highlightText(text, query) {
-    const queryRegex = new RegExp(`(${query})`, 'gi');
-    return text.replace(queryRegex, '<span class="highlight">$1</span>');
-}
-
-function calculateTermFrequency(text, term) {
-    const words = text.toLowerCase().split(/\s+/);
-    const termCount = words.filter(word => word === term).length;
-    return termCount / words.length;
-}
+    pdfContainer.classList.add('hidden');
+    searchBar.classList.remove('hidden');
+    resultsContainer.classList.remove('hidden');
+});
 
 </script>
