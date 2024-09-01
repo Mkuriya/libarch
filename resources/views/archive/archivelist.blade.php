@@ -55,7 +55,7 @@
                                     <tr>
                                         
                                         <td class="px-4 py-4 text-sm text-gray-300 ">
-                                            {{$item->title}}
+                                            <span>{{ \Illuminate\Support\Str::words($item->title, 10, '...') }}</span>
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-300 ">
                                             {{$item->year}}

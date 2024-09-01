@@ -56,7 +56,7 @@
                                 @if ($item->status == 2)
                                     <tr>
                                         <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
-                                            {{$item->title}}
+                                            <span>{{ \Illuminate\Support\Str::words($item->title, 10, '...') }}</span>
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
                                             {{$item->year}}

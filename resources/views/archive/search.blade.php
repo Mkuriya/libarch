@@ -178,7 +178,7 @@
                         });
 
                         const answerDiv = document.createElement('div');
-                        answerDiv.classList.add('result-item', 'bg-gray-300', 'text-gray-800', 'p-2');
+                        answerDiv.classList.add('result-item', 'bg-gray-300', 'text-black', 'p-2');
                         answerDiv.innerHTML = `<p class="text-sm"><strong>Title:</strong> ${pdfTitle} <br>${combinedAnswer}</p>`;
 
                         resultDiv.appendChild(answerDiv);
@@ -189,7 +189,7 @@
                 console.error('Error loading PDF:', error);
                 const errorDiv = document.createElement('div');
                 errorDiv.classList.add('result-item', 'bg-gray-200');
-                errorDiv.innerHTML = `<p class="text-gray-800">An error occurred while fetching the PDF.</p>`;
+                errorDiv.innerHTML = `<p class="text-black">An error occurred while fetching the PDF.</p>`;
                 resultsContainer.appendChild(errorDiv);
             });
         });
@@ -198,7 +198,7 @@
             if (!resultsFound) {
                 const noResultDiv = document.createElement('div');
                 noResultDiv.classList.add('result-item', 'bg-gray-200');
-                noResultDiv.innerHTML = `<p class="text-gray-800">No data found for "${query}"</p>`;
+                noResultDiv.innerHTML = `<p class="text-black">No data found for "${query}"</p>`;
                 resultsContainer.appendChild(noResultDiv);
             }
         }, 1000);

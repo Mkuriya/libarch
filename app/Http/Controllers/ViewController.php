@@ -65,7 +65,7 @@ class ViewController extends Controller
     $query->orderBy('title', 'asc'); // or 'year', 'student->firstname', etc.
     
     // Paginate
-    $files = $query->paginate(2)->appends($request->except('page'));
+    $files = $query->paginate(7)->appends($request->except('page'));
     
     return view('archive.list', compact('files'));
     }
@@ -115,7 +115,7 @@ class ViewController extends Controller
             $query->where('student_department', $request->input('student_department'));
         }
     
-        $files = $query->paginate(1)->appends($request->except('page'));
+        $files = $query->paginate(7)->appends($request->except('page'));
     
         return view('archive.pending', compact('files'));
         
@@ -142,7 +142,7 @@ class ViewController extends Controller
         $query->orderBy('title', 'asc'); // or 'year', 'student->firstname', etc.
     
         // Paginate
-        $files = $query->paginate(2)->appends($request->except('page'));
+        $files = $query->paginate(7)->appends($request->except('page'));
     
         return view('archive.decline', compact('files'));
     }

@@ -73,7 +73,7 @@
                                     <tr>
                                         <td class="px-4 py-4 text-sm font-medium text-gray-200 whitespace-nowrap">
                                             <div class="inline-flex items-center gap-x-3">
-                                                <span>{{$item->title}}</span>
+                                                <span>{{ \Illuminate\Support\Str::words($item->title, 10, '...') }}</span>
                                             </div>
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">

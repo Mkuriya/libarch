@@ -79,7 +79,7 @@
                                             <td class="px-1 py-4 text-sm whitespace-nowrap">
                                                 <div class="flex items-center gap-x-6">
                                                     <a href="/admin/dashboard/admin/view/{{$item->id}}" title="View Admin">
-                                                        <button class=" transition-colors duration-200 hover:text-whitebg text-gray-300  focus:outline-none">
+                                                        <button class="transition-colors duration-200 hover:text-whitebg text-gray-300  focus:outline-none">
                                                             View
                                                         </button>
                                                     </a>
@@ -88,18 +88,21 @@
                                                             Update
                                                         </button>
                                                     </a>
-                                                    <form action="/admin/dashboard/admin/delete/{{$item->id}}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button onclick="return confirm('Permanent Delete?');" class="text-red-700 transition-colors duration-200 hover:text-white focus:outline-none sm:pr-0 pr-2">
-                                                            Delete
-                                                        </button>
-                                                    </form>
+                                                    @if(auth()->guard('admin')->user()->id == 1)
+                                                        <form action="/admin/dashboard/admin/delete/{{$item->id}}" method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button onclick="return confirm('Permanent Delete?');" class="text-red-700 transition-colors duration-200 hover:text-white focus:outline-none sm:pr-0 pr-2">
+                                                                Delete
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                 @endif
+
                             </tbody>
                         </table>
                         

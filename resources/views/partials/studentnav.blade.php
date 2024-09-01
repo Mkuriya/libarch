@@ -77,12 +77,13 @@
     </a>
 </div>
 
-<main class="h-12 bg-muted-dark pt-1">
+<main class="h-12 bg-muted-dark pt-2">
     <!-- This is used to open the menu -->
-    <span class="text-2xl pl-5 text-white">
-        <a href="/student/dashboard">Libarch</a>
+    <span class="text-2xl pl-10 text-white font-calligraphy">
+        <a href="/student/dashboard">Lib-Arch</a>
     </span>
-    <span class="cursor-pointer text-2xl absolute right-0 mr-8 pt-1" onclick="openMenu()">
+    
+    <span class="cursor-pointer text-2xl absolute right-0 mr-8 " onclick="openMenu()">
         @if (auth()->guard('student')->check() && auth()->guard('student')->user()->photo)
             <img src="{{ asset('storage/' . auth()->guard('student')->user()->photo) }}" class="rounded-full h-8 w-8 object-cover">
         @else
