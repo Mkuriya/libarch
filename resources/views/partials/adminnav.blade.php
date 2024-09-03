@@ -22,9 +22,8 @@
 
   <main class="h-12 bg-muted-dark  flex items-center justify-between">
       <!-- This is used to open the menu -->
-      <span class="flex items-center text-2xl pl-5 text-white">
-      <!--  <img src="/img/logo.jpg" width="20px" height="20px" alt="">-->
-        <a href="/admin/dashboard">Libarch</a>
+      <span class="text-2xl pl-10 text-white font-calligraphy">
+        <a href="/admin/dashboard">Lib-Arch</a>
       </span>
       
       <span class="cursor-pointer text-2xl absolute right-0 mr-8 " onclick="openMenu()">
