@@ -90,7 +90,7 @@ class ViewController extends Controller
         $query->orderBy('title', 'asc'); // or 'year', 'student->firstname', etc.
     
         // Paginate and append query parameters except 'page'
-        $files = $query->paginate(2)->appends($request->except('page'));
+        $files = $query->paginate(7)->appends($request->except('page'));
         $history = History::all();
         return view('archive.archivelist', compact('files'), ['history' => $history]);
     }
