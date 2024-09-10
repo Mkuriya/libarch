@@ -15,7 +15,7 @@
                         </a>
                     </div>
                     
-                    <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="block w-full p-4 ps-10 text-sm text-white focus:outline-none bg-transparent" placeholder="Search Name" />
+                    <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="block w-full p-4 ps-10 text-sm text-white focus:outline-none bg-transparent" placeholder="Search Title / Description" />
                     <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-whitebg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
                 </div>
             </form>
@@ -41,6 +41,9 @@
                                      Abstract
                                  </th>
                                  <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
+                                     Description
+                                 </th>
+                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
                                      Department
                                  </th>
  
@@ -62,7 +65,9 @@
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-300 ">
                                                 <h2 class="text-sm font-normal">{{ \Illuminate\Support\Str::words($item->abstract, 10, '...') }}</h2>
-                                            
+                                        </td>
+                                        <td class="px-4 py-4 text-sm text-gray-300 ">
+                                                <h2 class="text-sm font-normal">{{ \Illuminate\Support\Str::words($item->description, 10, '...') }}</h2>
                                         </td>
                                         <td class="px-4 py-4 text-sm text-sky-300 ">
                                             {{$item->student_department}}

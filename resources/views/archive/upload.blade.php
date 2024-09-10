@@ -56,12 +56,16 @@
     </div>
     
     <div class="mt-4">
-        <label for="abstract" class="text-gray-200">Abstract</label>
+        <label for="abstract" class="text-gray-200">Abstract/Introduction</label>
         <textarea name="abstract" id="abstract" cols="0" rows="5" class="block w-full px-4 py-2 sm:mt-2  border  rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white "></textarea>
     </div>
     <div class="mt-2">
         <label for="document" class="text-gray-200">File <span class="text-sm text-gray-400">(PDF ONLY, Limit: 5MB)</span></label>
         <input type="file" name="document" id="document" accept="application/pdf" class="block w-full mt-2 px-2 py-2 bg-gray-800 border border-gray-600 rounded-md text-white file:py-1 file:px-2 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-transparent file:text-white hover:file:bg-gray-700 hover:bg-gray-700">
+    </div>
+    <div class="mt-4 ">
+        <label class="text-gray-200">Description</label>
+        <input id="" type="text" name="description" class="block w-full px-4 py-2 mt-2  border  rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white ">
     </div>
     <div class="mt-4 ">
         <label class="text-gray-200">APA Citation</label>

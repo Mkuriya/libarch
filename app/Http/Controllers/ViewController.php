@@ -20,28 +20,38 @@ class ViewController extends Controller
     
 
     public function archivelistfilter(Request $request) {
+        // Create an initial query
         $query = File::query();
-    
+        
         // Apply search filter
-        if ($request->has('search') && !empty($request->input('search'))) {
-            $searchTerm = $request->input('search');
-            $query->where(function($query) use ($searchTerm) {
-                $query->where('title', 'like', '%' . $searchTerm . '%')
-                      ->orWhere('year', 'like', '%' . $searchTerm . '%');
+        if ($searchTerm = $request->input('search')) {
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('title', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('year', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('description', 'like', '%' . $searchTerm . '%');
             });
         }
-        if ($request->has('year') && !empty($request->input('year'))) {
-            $query->where('year', $request->input('year'));
-        }
-        // Apply department filter
-        if ($request->has('student_department') && !empty($request->input('student_department'))) {
-            $query->where('student_department', $request->input('student_department'));
+    
+        // Apply year filter
+        if ($year = $request->input('year')) {
+            $query->where('year', $year);
         }
     
+        // Apply student department filter
+        if ($studentDepartment = $request->input('student_department')) {
+            $query->where('student_department', $studentDepartment);
+        }
+    
+        // Get the results, order by title and paginate
         $files = $query->orderBy('title', 'asc')->paginate(7)->appends($request->except('page'));
+    
+        // Fetch all history records
         $history = History::all();
-        return view('archive.studentarchivefilter', compact('files'), ['history' => $history]);
+    
+        // Return the filtered view with the files and history data
+        return view('archive.studentarchivefilter', compact('files', 'history'));
     }
+    
     
 
     public function adminArchiveList(Request $request){

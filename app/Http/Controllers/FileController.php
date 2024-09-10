@@ -71,6 +71,7 @@ class FileController extends Controller
             "year" => 'required|max:4',
             "members" => 'required',
             "abstract" => 'required',
+            "description" => 'required',
             'document' => 'required|mimes:pdf|max:5120',
             'student_lastname' => 'required',
             'student_firstname' => 'required',

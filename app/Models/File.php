@@ -15,6 +15,7 @@ class File extends Model
         'members',
         'abstract',
         'document',
+        'description',
         'student_department',
         'student_lastname',
         'student_firstname',

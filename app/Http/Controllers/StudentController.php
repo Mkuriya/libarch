@@ -87,6 +87,7 @@ public function studentProfile(Student $student, Request $request){
             'firstname' => ['required'],
             'lastname' => ['required'],
             'middlename' => ['nullable'],
+            'yearlevel' => ['required'],
             'gender' => ['required'],
             'department' => ['required'],
             'studentnumber' => ['required',Rule::unique('students')],

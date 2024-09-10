@@ -19,6 +19,7 @@ return new class extends Migration
             $table->year('year');
             $table->text('members');
             $table->longtext('abstract');
+            $table->longtext('description');
             $table->string('document', 300);
             $table->string('student_lastname');
             $table->string('student_firstname');

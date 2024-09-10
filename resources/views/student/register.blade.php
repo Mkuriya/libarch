@@ -6,12 +6,12 @@
         <form action="/admin/dashboard/studentregister" method="POST" enctype="multipart/form-data" >
             @csrf
             <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-12">   
-                <div class="sm:col-span-5 col-span-12">
+                <div class="sm:col-span-4 col-span-12">
                     <label class="text-gray-200 pl-2" for="lastname">Last Name</label>
                     <input name="lastname" value="{{ old('lastname') }}" id="username" type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white ">
                     <span class="text-red-600"> @error('lastname'){{$message}}@enderror</span>
                 </div>
-                <div class="sm:col-span-5 col-span-12">
+                <div class="sm:col-span-4 col-span-12">
                     <label class="text-gray-200 pl-2" for="firstname">First Name</label>
                     <input name="firstname" value="{{ old('firstname') }}" id="username" type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white ">
                     <span class="text-red-600"> @error('firstname'){{$message}}@enderror</span>
@@ -20,6 +20,16 @@
                     <label class="text-gray-200" for="middlename">Middle Name</label>
                     <input name="middlename" value="{{ old('middlename') }}" id="username" type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white ">
                     <span class="text-red-600"> @error('middlename'){{$message}}@enderror</span>
+                </div>
+                <div class="sm:col-span-2 col-span-12">
+                    <label class="text-gray-200" for="middlename">Year Level</label>
+                    <select name="yearlevel" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white ">
+                        <option value="" disabled {{ old('yearlevel') ? '' : 'selected' }}>Select Year Level</option>
+                        <option value="0" {{ old('yearlevel') == '0' ? 'selected' : '' }}>1st Year</option>
+                        <option value="1" {{ old('yearlevel') == '1' ? 'selected' : '' }}>2nd Year</option>
+                        <option value="2" {{ old('yearlevel') == '2' ? 'selected' : '' }}>3rd Year</option>
+                        <option value="3" {{ old('yearlevel') == '3' ? 'selected' : '' }}>4th Year</option>
+                    </select>
                 </div>
             </div>
             <div class="grid grid-cols-5 gap-6 mt-4 sm:grid-cols-12">

@@ -6,7 +6,7 @@
             <form action="{{ url('/student/dashboard/archivelist/filter') }}" id="searchForm" method="get" class="w-full">   
                 <label for="default-search" class="mb-2 text-sm font-medium  sr-only text-white">Search</label>
                 <div class="relative flex items-center w-full sm:mt-2">
-                    <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="block w-full pl-12 pr-2 py-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white  " placeholder="Search Title" />
+                    <input type="search" id="default-search" value="{{ request()->input('search') }}" name="search" class="block w-full pl-12 pr-2 py-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white  " placeholder="Search Title / Description" />
                     <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6  text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
                     </svg>
@@ -64,6 +64,9 @@
                                     Abstract
                                 </th>
                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
+                                    Description
+                                </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
                                     Department
                                 </th>
                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
@@ -96,6 +99,9 @@
                                             </td>
                                             <td class="px-4 py-4 text-sm text-gray-300 ">
                                                 <h2 class="text-sm font-normal">{{ \Illuminate\Support\Str::words($item->abstract, 10, '...') }}</h2>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm text-gray-300 ">
+                                                <h2 class="text-sm font-normal">{{ \Illuminate\Support\Str::words($item->description, 10, '...') }}</h2>
                                             </td>
                                             <td class="px-4 py-4 text-sm text-gray-300 ">
                                                 {{$item->student_department}}
