@@ -55,14 +55,15 @@
             <div class="grid-row-2 col-span-10 mt-12">
                 <div class="grid grid-cols-2 gap-6 mt-2 sm:mt-8">
                     <div class="col-span-1">
-                        <button type="submit" class="block w-full px-4 py-2 mt-2 text-white bg-whitebg border border-gray-300 rounded-md hover:bg-gray-600">Change Password</button>
+                        <button type="submit" class="block w-full px-4 py-2 mt-2 text-white bg-whitebg border border-gray-300 rounded-md hover:bg-gray-600 text-sm sm:text-base">Change Password</button>
                     </div>
                     <div class="col-span-1">
                         <a href="/admin/dashboard/profile/{{auth()->guard('admin')->user()->id}}">
-                            <button type="button" class="block w-full px-4 py-2 mt-2 text-white bg-whitebg border border-gray-300 rounded-md hover:bg-gray-600">Back</button>
+                            <button type="button" class="block w-full px-4 py-2 mt-2 text-white bg-whitebg border border-gray-300 rounded-md hover:bg-gray-600 text-sm sm:text-base">Back</button>
                         </a>
                     </div>
                 </div>
+                
             </div> 
 
         </form>

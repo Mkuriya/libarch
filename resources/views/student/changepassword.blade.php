@@ -55,11 +55,11 @@
             </div>
             <div class="grid grid-cols-2 gap-6 mt-2 mt-4 sm:mt-8">
                 <div class="col-span-1">
-                    <button type="submit" class="block w-full px-4 py-2 mt-2 text-white bg-whitebg border border-gray-300 rounded-md hover:bg-gray-600">Update Password</button>
+                    <button type="submit" class="block w-full px-4 py-2 mt-2 text-white bg-whitebg border border-gray-300 rounded-md hover:bg-gray-600 text-sm sm:text-base">Update Password</button>
                 </div>
                 <div class="col-span-1">
                     <a href="/student/dashboard/profile/{{auth()->guard('student')->user()->id}}">
-                        <button type="button" class="block w-full px-4 py-2 mt-2 text-white bg-whitebg border border-gray-300 rounded-md hover:bg-gray-600">Back</button>
+                        <button type="button" class="block w-full px-4 py-2 mt-2 text-white bg-whitebg border border-gray-300 rounded-md hover:bg-gray-600 text-sm sm:text-base">Back</button>
                     </a>
                 </div>
             </div>

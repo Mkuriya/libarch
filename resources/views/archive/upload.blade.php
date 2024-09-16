@@ -71,10 +71,10 @@
         <label class="text-gray-200">APA Citation</label>
         <input id="citation-preview" type="text" name="citation" class="block w-full px-4 py-2 mt-2  border  rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white " readonly>
     </div>
-    <div class="flex justify-center py-4">
-        <button type="submit" class="px-16 py-2 leading-5 text-white transition-colors duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Save</button>
+    <div class="flex justify-center px-2 py-4">
+        <button type="submit" class="px-12 py-2 leading-5 text-white transition-colors duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Save</button>
         <a href="/student/dashboard">
-            <button type="button" class="ml-10 px-16 py-2 leading-5 text-white transition-colors duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Back</button>
+            <button type="button" class="ml-10 px-12 py-2 leading-5 text-white transition-colors duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Back</button>
         </a>
     </div>
 </form>

@@ -1,6 +1,6 @@
 @extends('partials.header')
 
-<div class="login text-black flex min-h-screen flex-col items-center pt-16 sm:justify-center sm:pt-0 ">
+<div class="login text-black flex min-h-screen flex-col items-center pt-16 sm:justify-center  justify-center sm:pt-0 ">
     <div class="relative mt-12 w-full max-w-lg sm:mt-10">
         <div class="holder  mx-5 border dark:border-b-white/50 dark:border-t-white/50 border-b-white/20 sm:border-t-white/20 shadow-[20px_0_20px_20px]
         shadow-slate-500/10 dark:shadow-white/20 rounded-lg border-white/20 border-l-white/20 border-r-white/20 sm:shadow-sm lg:rounded-xl 

@@ -1,8 +1,8 @@
 @include('partials.studentnav')  
 <div class="h-[calc(100vh-5.5rem)]"> <!-- Adjusted height to account for the adminnav -->
-    <div class="w-full flex justify-between items-center text-center">
-        <p class="bg-whitebg w-full text-white px-8 py-2">Research Title: {{$file->title}}</p>
-        <button onclick="window.history.back()" class="bg-whitebg text-white px-4 py-2"> 
+    <div class="w-full flex bg-whitebg justify-between items-center text-center">
+        <p class=" w-full text-white px-8 py-2">Research Title: {{$file->title}}</p>
+        <button onclick="window.history.back()" class=" text-white px-4 py-2"> 
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bg-gray-400 rounded-full text-black">
                 <path d="M18 6L6 18" />
                 <path d="M6 6L18 18" />
@@ -12,7 +12,7 @@
     
     <div class="h-full bg-transparent flex flex-col justify-between items-center sm:px-4 relative">
         <div class="sm:w-1/2 w-full flex-1 overflow-y-auto relative">
-            <iframe src="{{$file->document}}#toolbar=0" frameborder="0" class="w-full h-full bg-transparent border-whitebg border-8"></iframe>
+            <div id="pdf-container" class="w-full h-full bg-transparent "></div>
         </div>
   
         <div class="flex items-center justify-center sm:w-1/2 w-full bg-whitebg py-1 text-white">
@@ -46,6 +46,47 @@
     }
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const url = '{{$file->document}}';
+        const container = document.getElementById('pdf-container');
+        
+        function renderPDF() {
+            pdfjsLib.getDocument(url).promise.then(function(pdf) {
+                container.innerHTML = ''; // Clear previous content
+
+                const containerWidth = container.clientWidth;
+                
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    pdf.getPage(pageNum).then(function(page) {
+                        const viewport = page.getViewport({ scale: 1 }); // Initial scale of 1
+                        const scale = containerWidth / viewport.width; // Adjust scale based on container width
+                        const scaledViewport = page.getViewport({ scale: scale });
+                        const canvas = document.createElement('canvas');
+                        const context = canvas.getContext('2d');
+                        canvas.height = scaledViewport.height;
+                        canvas.width = scaledViewport.width;
+                        container.appendChild(canvas);
+
+                        const renderContext = {
+                            canvasContext: context,
+                            viewport: scaledViewport
+                        };
+                        page.render(renderContext);
+                    });
+                }
+            }).catch(function(error) {
+                console.error('Error loading PDF:', error);
+            });
+        }
+
+        renderPDF(); // Initial render
+
+        // Optionally, you can re-render the PDF on window resize
+        window.addEventListener('resize', renderPDF);
+    });
+</script>
 <script>
     document.getElementById('copy-citation').addEventListener('click', function() {
         // Get the citation text

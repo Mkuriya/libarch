@@ -5,7 +5,7 @@
 <div class="w-full flex justify-center items-end fixed bottom-0 left-0">
     <div id="search-bar" class="w-full sm:w-1/2 bg-white rounded-md shadow-lg z-10 mb-4">
         <form id="search-form" class="flex items-center justify-between p-2">
-            <input id="search-input" type="text" placeholder="Search here" class="text-xl py-2 px-4 border-0 bg-white text-sm placeholder:text-gray-800 focus:outline-none focus:ring-0 w-full" autocomplete="off" >
+            <input id="search-input" type="text" placeholder="Search here" class="text-xl py-2 px-4 border-0 bg-white text-sm placeholder:text-gray-800 focus:outline-none focus:ring-0 w-full" autocomplete="off">
             <button type="submit" class="bg-whitebg hover:bg-blue-700 text-white rounded-md py-2 px-4 ml-2">
                 <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13" />
@@ -20,18 +20,18 @@
     <!-- Search results will be displayed here -->
 </div>
 
-<div id="pdf-container" class="w-full h-[93%] flex flex-col items-center hidden ">
-    <div class="w-full flex justify-between items-center text-center">
-        <p id="pdf-title" class="bg-whitebg w-full text-white px-8 py-2"></p>
-        <button id="close-pdf" class="bg-whitebg text-white px-4 py-2">
+<div id="pdf-container" class="w-full h-[93%] flex flex-col items-center hidden">
+    <div class="w-full flex justify-between bg-whitebg items-center text-center">
+        <p id="pdf-title" class="w-full text-white px-8 py-2"></p>
+        <button id="close-pdf" class="text-white px-4 py-2">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bg-gray-400 rounded-full text-black">
                 <path d="M18 6L6 18" />
                 <path d="M6 6L18 18" />
             </svg>
         </button>
     </div>
-    <div class="sm:w-1/2 w-full flex-1 overflow-y-auto relative ">
-        <iframe id="pdf-iframe" src="" frameborder="0" class="w-full h-full bg-transparent border-whitebg border-r-8 border-l-8"></iframe>
+    <div class="sm:w-1/2 w-full flex-1 overflow-y-auto relative">
+        <canvas id="pdf-canvas" class="w-full h-full bg-transparent border-whitebg border-r-8 border-l-8"></canvas>
     </div>
     <div class="flex items-center justify-center sm:w-1/2 w-full bg-whitebg py-1 text-white">
         <p id="pdf-citation" class="px-4"></p>
@@ -39,7 +39,7 @@
             <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd" d="M18 3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1V9a4 4 0 0 0-4-4h-3a1.99 1.99 0 0 0-1 .267V5a2 2 0 0 1 2-2h7Z" clip-rule="evenodd"/>
                 <path fill-rule="evenodd" d="M8 7.054V11H4.2a2 2 0 0 1 .281-.432l2.46-2.87A2 2 0 0 1 8 7.054ZM10 7v4a2 2 0 0 1-2 2H4v6a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3Z" clip-rule="evenodd"/>
-              </svg>
+            </svg>
         </button>
     </div>
 </div>
@@ -237,7 +237,6 @@
         return [];
     }
 
-
     function highlightText(text, query) {
         const regex = new RegExp(`(${query})`, 'gi');
         return text.replace(regex, '<span class="highlight">$1</span>');
@@ -248,17 +247,33 @@
         const resultsContainer = document.getElementById('results-container');
         const searchBar = document.getElementById('search-bar');
         const pdfTitle = document.getElementById('pdf-title');
-        const pdfIframe = document.getElementById('pdf-iframe');
+        const canvas = document.getElementById('pdf-canvas');
         const pdfCitation = document.getElementById('pdf-citation');
+        const ctx = canvas.getContext('2d');
 
         searchBar.classList.add('hidden');
         resultsContainer.classList.add('hidden');
 
         pdfTitle.textContent = title;
-        pdfIframe.src = `${pdfUrl}#page=${page}&toolbar=0`; // Set the page number in the URL
         pdfCitation.textContent = `Citation: ${citation}`;
 
         pdfContainer.classList.remove('hidden');
+
+        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+            pdf.getPage(page).then(page => {
+                const viewport = page.getViewport({ scale: 1});
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                page.render({
+                    canvasContext: ctx,
+                    viewport: viewport
+                });
+            });
+        }).catch(error => {
+            console.error('Error loading PDF:', error);
+            alert('An error occurred while loading the PDF.');
+        });
 
         fetch('/save-document', {
             method: 'POST',
@@ -283,17 +298,17 @@
     }
 
     document.getElementById('close-pdf').addEventListener('click', function() {
-    const pdfContainer = document.getElementById('pdf-container');
-    const searchBar = document.getElementById('search-bar');
-    const resultsContainer = document.getElementById('results-container');
-    const pdfIframe = document.getElementById('pdf-iframe');
+        const pdfContainer = document.getElementById('pdf-container');
+        const searchBar = document.getElementById('search-bar');
+        const resultsContainer = document.getElementById('results-container');
+        const canvas = document.getElementById('pdf-canvas');
 
-    // Reset the iframe's src to clear the current view of the PDF
-    pdfIframe.src = ''; 
+        // Clear the canvas
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    pdfContainer.classList.add('hidden');
-    searchBar.classList.remove('hidden');
-    resultsContainer.classList.remove('hidden');
-});
-
+        pdfContainer.classList.add('hidden');
+        searchBar.classList.remove('hidden');
+        resultsContainer.classList.remove('hidden');
+    });
 </script>
