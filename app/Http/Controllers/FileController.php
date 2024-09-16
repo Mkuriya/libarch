@@ -66,29 +66,40 @@ class FileController extends Controller
     } 
     
     public function fileUpload(Request $request){
+        // Validate the input data
         $validated = $request->validate([
-            "title" => 'required',
-            "year" => 'required|max:4',
-            "members" => 'required',
-            "abstract" => 'required',
-            "description" => 'required',
-            'document' => 'required|mimes:pdf|max:5120',
-            'student_lastname' => 'required',
-            'student_firstname' => 'required',
-            'student_department' => 'required',
-            'citation' => 'required',
-            'status' => 'required',
+            'title' => 'required|string|max:255',
+            'year' => 'required|digits:4',
+            'members' => 'required|string',
+            'abstract' => 'required|string',
+            'description' => 'required|string',
+            'document' => 'required|mimes:pdf|max:5120',  // 5MB max file size
+            'student_lastname' => 'required|string|max:255',
+            'student_firstname' => 'required|string|max:255',
+            'student_department' => 'required|string|max:255',
+            'citation' => 'required|string',
+            'status' => 'required',  // Adjust status options as needed
         ]);
-   
-        $fileName = time().$request->file('document')->getClientOriginalName();
-        $paths = $request->file('document')->storeAs('document', $fileName, 'public'); 
-        $validated["document"] = '/storage/'.$paths;
 
+        try {
+            // Handle file upload
+            if ($request->hasFile('document')) {
+                $file = $request->file('document');
+                $path = $file->store('documents', 'public');  // Store in the 'documents' folder in 'public' disk
+                $validated['document'] = $path;
+            } else {
+                return back()->with('error', 'No file was uploaded.');
+            }
 
-        $upload = File::create($validated);
-        return redirect('/student/dashboard')->with('success', 'File uploaded successfully!');
+            // Save validated data to the database
+            $upload = File::create($validated);  // Ensure the 'File' model is being referenced correctly
+            
+            return redirect('/student/dashboard')->with('success', 'File uploaded successfully!');
+        } catch (\Exception $e) {
+            // Handle exceptions and show error messages
+            return back()->with('error', 'An error occurred during file upload: ' . $e->getMessage());
+        }
     }
 
-    
 
 }

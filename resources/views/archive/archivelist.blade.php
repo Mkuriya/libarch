@@ -92,7 +92,7 @@
                          </tbody>
                      </table>
                  </div>
-                 <nav aria-label="Page navigation example" class="mt-4 grid justify-items-center">
+                 <nav aria-label="Page navigation example" class="mt-4 grid justify-items-center ">
                     @if ($files->hasPages())
                         <div class="flex">
                             <!-- Previous Button -->
