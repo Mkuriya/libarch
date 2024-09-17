@@ -571,6 +571,10 @@ video {
   top: 0px;
   bottom: 0px;
 }
+.inset-x-2\/4 {
+  left: 50%;
+  right: 50%;
+}
 .bottom-0 {
   bottom: 0px;
 }
@@ -618,6 +622,9 @@ video {
 }
 .top-20 {
   top: 5rem;
+}
+.top-12 {
+  top: 3rem;
 }
 .z-10 {
   z-index: 10;
@@ -786,6 +793,15 @@ video {
 .mt-8 {
   margin-top: 2rem;
 }
+.mb-12 {
+  margin-bottom: 3rem;
+}
+.mt-16 {
+  margin-top: 4rem;
+}
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
 .block {
   display: block;
 }
@@ -818,6 +834,9 @@ video {
 }
 .h-16 {
   height: 4rem;
+}
+.h-36 {
+  height: 9rem;
 }
 .h-4 {
   height: 1rem;
@@ -869,6 +888,18 @@ video {
 }
 .h-screen {
   height: 100vh;
+}
+.h-1\/2 {
+  height: 50%;
+}
+.h-\[94\%\] {
+  height: 94%;
+}
+.h-\[95\%\] {
+  height: 95%;
+}
+.h-\[98\%\] {
+  height: 98%;
 }
 .max-h-\[200px\] {
   max-height: 200px;
@@ -982,6 +1013,9 @@ video {
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.resize {
+  resize: both;
 }
 .list-inside {
   list-style-position: inside;
@@ -1297,6 +1331,17 @@ video {
 }
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
+}
+.bg-opacity-55 {
+  --tw-bg-opacity: 0.55;
+}
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+.from-whitebg {
+  --tw-gradient-from: #701d0b var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(112 29 11 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 .object-cover {
   -o-object-fit: cover;
@@ -1643,6 +1688,10 @@ video {
   --tw-shadow-color: rgb(255 255 255 / 0.2);
   --tw-shadow: var(--tw-shadow-colored);
 }
+.blur {
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -1771,6 +1820,10 @@ video {
 .hover\:bg-whitebg:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(112 29 11 / var(--tw-bg-opacity));
+}
+.hover\:bg-gray-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 .hover\:text-amber-500:hover {
   --tw-text-opacity: 1;
