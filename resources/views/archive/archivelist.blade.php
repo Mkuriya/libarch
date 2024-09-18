@@ -5,7 +5,7 @@
             <form action="{{ url('/student/dashboard/archivelist/filter') }}" id="searchForm" method="get" class="max-w-md mx-auto">
                 <label for="default-search" class="mb-2 text-sm font-medium sr-only text-white">Search</label>
                 <div class="relative">
-                    <div class="absolute inset-y-0 start-0 flex items-center p-2">
+                    <div class="absolute inset-y-0 start-0 flex items-center p-2 z-50">
                         <a href="/student/dashboard/archivelist/filter">
                             <button type="button" class="text-white font-medium rounded-lg text-sm py-2 focus:ring-4 focus:outline-none focus:ring-blue-300">
                                 <svg class="w-6 h-6 hover:text-whitebg text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

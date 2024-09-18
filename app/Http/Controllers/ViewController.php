@@ -199,6 +199,20 @@ class ViewController extends Controller
         // Pass the PDF file path to the view
         return view('archive.search', ['file' => $pdfFile, 'history' => $history]);
     }
+    /*
+    public function fileSearch(Request $request) {
+        // Retrieve the PDF file from the database
+        $history = History::all();
+       
+         $pdfFile = File::where('status', 1)->get();
+        
+        // Convert the document paths for front-end access
+        foreach ($pdfFile as $file) {
+            $file->document = asset('/storage/app/public/' . $file->document);
+        }
+        // Pass the PDF file path to the view
+        return view('archive.search', ['file' => $pdfFile, 'history' => $history]);
+    }*/
     
 
     public function studentPassword(Student $student){

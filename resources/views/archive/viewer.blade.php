@@ -1,16 +1,17 @@
 @include('partials.studentnav')  
 <div class="h-[calc(100vh-5.5rem)]"> <!-- Adjusted height to account for the adminnav -->
-    <div class="w-full flex bg-whitebg justify-between items-center text-center">
-        <p class=" w-full text-white px-8 py-2">Research Title: {{$file->title}}</p>
-        <button onclick="window.history.back()" class=" text-white px-4 py-2"> 
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bg-gray-400 rounded-full text-black">
-                <path d="M18 6L6 18" />
-                <path d="M6 6L18 18" />
-            </svg>
-        </button>
+    <div class="w-full flex justify-center items-center">
+        <div class="flex items-center justify-center text-center  sm:w-1/2 w-full bg-whitebg">
+            <p class="w-full text-white px-8 py-2">Research Title: {{$file->title}}</p>
+            <button onclick="window.history.back()" class="text-white px-4 py-2"> 
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bg-gray-400 rounded-full text-black">
+                    <path d="M18 6L6 18" />
+                    <path d="M6 6L18 18" />
+                </svg>
+            </button>
+        </div>
     </div>
-    
-    <div class="h-full bg-transparent flex flex-col justify-between items-center sm:px-4 relative">
+    <div class="h-full bg-transparent flex flex-col justify-between items-center sm:px-2 relative">
         <div class="sm:w-1/2 w-full flex-1 overflow-y-auto relative">
             <div id="pdf-container" class="w-full h-full bg-transparent "></div>
         </div>
@@ -57,30 +58,45 @@
                 container.innerHTML = ''; // Clear previous content
 
                 const containerWidth = container.clientWidth;
+                const dpr = window.devicePixelRatio || 1; // Get the device's pixel ratio (default to 1 for normal displays)
                 
+                // Loop through each page of the PDF
                 for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
                     pdf.getPage(pageNum).then(function(page) {
-                        const viewport = page.getViewport({ scale: 1 }); // Initial scale of 1
+                        // Get initial viewport and scale it
+                        const viewport = page.getViewport({ scale: 1 });
                         const scale = containerWidth / viewport.width; // Adjust scale based on container width
-                        const scaledViewport = page.getViewport({ scale: scale });
+                        const scaledViewport = page.getViewport({ scale: scale * dpr }); // Scale with device pixel ratio
+                        
+                        // Create a canvas for each page
                         const canvas = document.createElement('canvas');
                         const context = canvas.getContext('2d');
+
+                        // Set canvas dimensions based on scaled viewport
                         canvas.height = scaledViewport.height;
                         canvas.width = scaledViewport.width;
+
+                        // Set the canvas size back to the CSS size for proper display in the layout
+                        canvas.style.width = `${scaledViewport.width / dpr}px`;
+                        canvas.style.height = `${scaledViewport.height / dpr}px`;
+
+                        // Append the canvas to the container
                         container.appendChild(canvas);
 
+                        // Render the PDF page
                         const renderContext = {
                             canvasContext: context,
                             viewport: scaledViewport
                         };
                         page.render(renderContext);
+                    }).catch(function(error) {
+                        console.error('Error rendering page:', error);
                     });
                 }
             }).catch(function(error) {
                 console.error('Error loading PDF:', error);
             });
         }
-
         renderPDF(); // Initial render
 
         // Optionally, you can re-render the PDF on window resize

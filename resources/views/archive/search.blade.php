@@ -19,23 +19,27 @@
 <div id="results-container" class="w-full flex flex-col items-center mt-6">
     <!-- Search results will be displayed here -->
 </div>
-
-<div id="pdf-container" class="w-full h-[93%] flex flex-col items-center hidden">
-    <div class="w-full flex justify-between bg-whitebg items-center text-center">
-        <p id="pdf-title" class="w-full text-white px-8 py-2"></p>
-        <button id="close-pdf" class="text-white px-4 py-2">
+<div id="pdf-container" class="w-full h-full flex flex-col justify-between items-center hidden">
+    <!-- Title fixed at the top -->
+    <div class="w-full sm:w-1/2 bg-whitebg text-white fixed top-12 left-1/2 transform -translate-x-1/2 py-1 flex justify-between items-center">
+        <p id="pdf-title" class="w-full text-center bg-whitebg text-white px-8 py-2">PDF Title</p>
+        <button id="close-pdf" class="bg-whitebg text-white px-4 py-2">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bg-gray-400 rounded-full text-black">
                 <path d="M18 6L6 18" />
                 <path d="M6 6L18 18" />
             </svg>
         </button>
     </div>
-    <div class="sm:w-1/2 w-full flex-1 overflow-y-auto relative">
-        <canvas id="pdf-canvas" class="w-full h-full bg-transparent border-whitebg border-r-8 border-l-8"></canvas>
+
+    <!-- PDF content centered vertically -->
+    <div class="w-full sm:w-1/2 flex-1 flex justify-center items-center bg-white overflow-y-auto mt-16 mb-12"> <!-- Adjusted top and bottom margin -->
+        <canvas id="pdf-canvas"></canvas>
     </div>
-    <div class="flex items-center justify-center sm:w-1/2 w-full bg-whitebg py-1 text-white">
-        <p id="pdf-citation" class="px-4"></p>
-        <button id="copy-citation" class="bg-whitebg text-white py-1 px-4 mr-2 rounded-md hover:bg-gray-700">
+
+    <!-- Citation fixed at the bottom -->
+    <div class="w-full sm:w-1/2 bg-whitebg text-white fixed bottom-0 left-1/2 transform -translate-x-1/2 py-2 flex justify-between items-center">
+        <p id="pdf-citation" class="px-4">Citation Text</p>
+        <button id="copy-citation" class="bg-gray-700 text-white py-1 px-4 rounded-md hover:bg-gray-600 mr-4">
             <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd" d="M18 3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1V9a4 4 0 0 0-4-4h-3a1.99 1.99 0 0 0-1 .267V5a2 2 0 0 1 2-2h7Z" clip-rule="evenodd"/>
                 <path fill-rule="evenodd" d="M8 7.054V11H4.2a2 2 0 0 1 .281-.432l2.46-2.87A2 2 0 0 1 8 7.054ZM10 7v4a2 2 0 0 1-2 2H4v6a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3Z" clip-rule="evenodd"/>
@@ -43,6 +47,8 @@
         </button>
     </div>
 </div>
+
+
 
 <style>
     .highlight {
@@ -76,6 +82,22 @@
         z-index: 1000;
         transition: opacity 0.5s ease-in-out;
     }
+    #pdf-container {
+    max-height: 85vh; /* Limit the height of the entire container */
+    overflow-y: auto; /* Allow vertical scroll if content is too long */
+}
+
+#pdf-canvas {
+    width: 100%; /* Ensure the canvas takes up full width */
+    height: auto; /* Auto-adjust height while maintaining aspect ratio */
+}
+
+@media (max-width: 640px) {
+    #pdf-container {
+        width: 100%; /* Full width on mobile */
+    }
+}
+
 </style>
 
 <script>
@@ -242,7 +264,7 @@
         return text.replace(regex, '<span class="highlight">$1</span>');
     }
 
-    function showPDF(pdfUrl, title, citation, documentId, page) {
+    /*function showPDF(pdfUrl, title, citation, documentId, page) {
         const pdfContainer = document.getElementById('pdf-container');
         const resultsContainer = document.getElementById('results-container');
         const searchBar = document.getElementById('search-bar');
@@ -296,19 +318,113 @@
             alert('An error occurred while saving the history.');
         });
     }
+*/
+function showPDF(pdfUrl, title, citation, documentId, page) {
+    const pdfContainer = document.getElementById('pdf-container');
+    const resultsContainer = document.getElementById('results-container');
+    const searchBar = document.getElementById('search-bar');
+    const pdfTitle = document.getElementById('pdf-title');
+    const pdfCitation = document.getElementById('pdf-citation');
 
-    document.getElementById('close-pdf').addEventListener('click', function() {
-        const pdfContainer = document.getElementById('pdf-container');
-        const searchBar = document.getElementById('search-bar');
-        const resultsContainer = document.getElementById('results-container');
-        const canvas = document.getElementById('pdf-canvas');
+    let currentPage = page; // Save current page for scrolling purposes
 
-        // Clear the canvas
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    searchBar.classList.add('hidden');
+    resultsContainer.classList.add('hidden');
+    pdfContainer.classList.remove('hidden');
 
-        pdfContainer.classList.add('hidden');
-        searchBar.classList.remove('hidden');
-        resultsContainer.classList.remove('hidden');
+    pdfTitle.textContent = title;
+    pdfCitation.textContent = `Citation: ${citation}`;
+
+    // Clear existing canvases if any
+    pdfContainer.querySelectorAll('canvas').forEach(canvas => canvas.remove());
+
+    // Render the entire PDF using pdf.js
+    pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            const canvas = document.createElement('canvas');
+            canvas.id = `pdf-page-${pageNum}`;
+            pdfContainer.appendChild(canvas);
+
+            renderPDFPage(pdf, pageNum, canvas);
+        }
+
+        // Scroll to the selected page after all pages have been rendered
+        setTimeout(() => {
+            document.getElementById(`pdf-page-${currentPage}`).scrollIntoView({ behavior: 'smooth' });
+        }, 500); // Adjust timeout if necessary depending on rendering speed
+
+        // Re-render pages on window resize
+        window.addEventListener('resize', function() {
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const canvas = document.getElementById(`pdf-page-${pageNum}`);
+                renderPDFPage(pdf, pageNum, canvas);
+            }
+        });
+    }).catch(function(error) {
+        console.error('Error rendering PDF:', error);
     });
+    
+    fetch('/save-document', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ document_id: documentId, student_id: studentId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                console.log('History saved successfully');
+            } else {
+                console.error('Failed to save history');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while saving the history.');
+        });
+}
+function renderPDFPage(pdf, pageNumber, canvas) {
+    const pdfContainer = document.getElementById('pdf-container');
+
+    pdf.getPage(pageNumber).then(function(page) {
+        const viewport = page.getViewport({ scale: 1 });
+        const containerWidth = pdfContainer.clientWidth;
+
+        // Calculate a suitable scale based on the container's width
+        let scale = containerWidth / viewport.width;
+        if (window.innerWidth > 640) {
+            scale = Math.min(1.28, containerWidth / viewport.width); // Max scale for larger screens
+        }
+
+        const scaledViewport = page.getViewport({ scale: scale });
+
+        const context = canvas.getContext('2d');
+        canvas.height = scaledViewport.height;
+        canvas.width = scaledViewport.width;
+
+        const renderContext = {
+            canvasContext: context,
+            viewport: scaledViewport
+        };
+
+        page.render(renderContext);
+    });
+}
+
+document.getElementById('close-pdf').addEventListener('click', function() {
+    const pdfContainer = document.getElementById('pdf-container');
+    const searchBar = document.getElementById('search-bar');
+    const resultsContainer = document.getElementById('results-container');
+
+    // Clear all canvases from the PDF container
+    pdfContainer.querySelectorAll('canvas').forEach(canvas => canvas.remove());
+
+    // Hide the PDF container and show the search bar and results container
+    pdfContainer.classList.add('hidden');
+    searchBar.classList.remove('hidden');
+    resultsContainer.classList.remove('hidden');
+});
+
 </script>
