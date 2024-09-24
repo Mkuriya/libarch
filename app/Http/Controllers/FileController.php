@@ -56,6 +56,19 @@ class FileController extends Controller
          return view('accounts.studentlist', compact('student', 'search'));
     }
 
+    public function detailsUpdate(File $file, Request $request){
+        $data = $request->validate([
+            'title' => 'required',
+            'abstract' => 'required',
+            'description' => 'required',
+        ]);
+        $data['description'] = strip_tags($data['description']);
+        $data['abstract'] = strip_tags($data['abstract']);
+        $data['title'] = strip_tags($data['title']);
+        $file->update($data);
+        return redirect()->back()->with('Success', 'File update successfully!');
+    } 
+    
     public function fileUpdate(File $file, Request $request){
         $data = $request->validate([
             'status' => 'required'
@@ -78,6 +91,7 @@ class FileController extends Controller
             'student_firstname' => 'required|string|max:255',
             'student_department' => 'required|string|max:255',
             'citation' => 'required|string',
+            'studentid' => 'required',
             'status' => 'required',  // Adjust status options as needed
         ]);
 

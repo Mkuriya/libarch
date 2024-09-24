@@ -43,7 +43,8 @@ class ViewController extends Controller
         }
     
         // Get the results, order by title and paginate
-        $files = $query->orderBy('title', 'asc')->paginate(7)->appends($request->except('page'));
+        $files = $query->orderByRaw('CASE WHEN studentid = ? THEN 0 ELSE 1 END', [auth()->guard('student')->id()])
+        ->orderBy('title', 'asc')->paginate(7)->appends($request->except('page'));
     
         // Fetch all history records
         $history = History::all();
@@ -96,9 +97,10 @@ class ViewController extends Controller
             $query->where('status', 1);
         }
     
-        // Add sorting
-        $query->orderBy('title', 'asc'); // or 'year', 'student->firstname', etc.
-    
+        // Add sorting // or 'year', 'student->firstname', etc.
+        $query->orderByRaw('CASE WHEN studentid = ? THEN 0 ELSE 1 END', [auth()->guard('student')->id()])
+        ->orderBy('title', 'asc');
+
         // Paginate and append query parameters except 'page'
         $files = $query->paginate(7)->appends($request->except('page'));
         $history = History::all();

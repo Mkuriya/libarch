@@ -20,6 +20,7 @@ class File extends Model
         'student_lastname',
         'student_firstname',
         'citation',
+        'studentid',
         'status',
     ];
     public function student(){

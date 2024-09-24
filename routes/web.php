@@ -104,6 +104,7 @@ Route::controller(PasswordController::class)->group(function(){
 
 Route::controller(FileController::class)->group(function(){
 
+    Route::put('/student/dashboard/archivelist/update/{file}', 'detailsUpdate'); // for edit profile
     Route::put('/admin/dashboard/archive/pending/status/{file}', 'fileUpdate'); // for edit profile
     Route::post('/student/dashboard/upload/file','fileUpload'); // for edit profile
 

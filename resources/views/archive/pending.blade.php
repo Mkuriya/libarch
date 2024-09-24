@@ -137,6 +137,10 @@
                                                                 <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-12">
                                                                     <div class="col-span-12 sm:col-span-10">
                                                                         <label class="text-gray-200 pl-2" for="lastname">Department</label>
+                                                                        <input value="{{$item->abstract}}" disabled type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">
+                                                                    </div>
+                                                                    <div class="col-span-12 sm:col-span-10">
+                                                                        <label class="text-gray-200 pl-2" for="lastname">Department</label>
                                                                         <input value="{{$item->student_department}}" disabled type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">
                                                                     </div>
                                                                     <div class="col-span-12 sm:col-span-2">
