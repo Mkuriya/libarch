@@ -86,7 +86,7 @@ class FileController extends Controller
             'members' => 'required|string',
             'abstract' => 'required|string',
             'description' => 'required|string',
-            'document' => 'required|mimes:pdf|max:5120',  // 5MB max file size
+            'document' => 'required|mimes:pdf',  // 5MB max file size
             'student_lastname' => 'required|string|max:255',
             'student_firstname' => 'required|string|max:255',
             'student_department' => 'required|string|max:255',

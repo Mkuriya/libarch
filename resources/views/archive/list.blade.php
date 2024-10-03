@@ -59,6 +59,9 @@
                                     Department
                                 </th>
                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
+                                    Updated At
+                                </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
                                     Action
                                 </th>
                             </tr>
@@ -93,6 +96,7 @@
                                                 <p class="text-white">Psychology</p>
                                             @endif
                                         </td>
+                                        <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">{{ \Carbon\Carbon::parse($item->updated_at)->format('Y-m-d') }}</td>
                                         <td class="px-1 py-4 text-sm whitespace-nowrap">
                                             <a href="/admin/dashboard/archive/view/{{$item->id}}">
                                                 <button class="hover:border-indigo-500 text-white hover:text-whitebg font-bold py-2 px-4 rounded-full">View</button>

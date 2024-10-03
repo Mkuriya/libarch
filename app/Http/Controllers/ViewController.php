@@ -273,7 +273,7 @@ class ViewController extends Controller
     public function studentlist(Request $request){
         $query = Student::query();
         
-        $students = $query->orderBy('lastname', 'asc')->paginate(7)->appends($request->except('page'));
+        $students = $query->orderBy('yearlevel', 'asc')->orderBy('lastname', 'asc')->paginate(7)->appends($request->except('page'));
         return view('accounts.studentlist', compact('students'));
     }
  

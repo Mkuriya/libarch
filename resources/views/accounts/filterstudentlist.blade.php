@@ -65,6 +65,9 @@
                                     Gender
                                 </th>
                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
+                                    Year Level
+                                </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
                                     Department
                                 </th>
                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400">
@@ -93,6 +96,21 @@
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">{{ $student->studentnumber }}</td>
                                         <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">{{ $student->gender }}</td>
+                                        <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
+                                            @if($student->yearlevel == 0)
+                                                1st Year
+                                            @elseif($student->yearlevel == 1)
+                                                2nd Year
+                                            @elseif($student->yearlevel == 2)
+                                                3rd Year
+                                            @elseif($student->yearlevel == 3)
+                                                4th Year
+                                            @elseif($student->yearlevel == 4)
+                                                Graduate
+                                            @else
+                                                Unknown Year Level
+                                            @endif
+                                        </td>
                                         <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">{{ $student->department }}</td>
                                         <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">{{ $student->email }}</td>
                                         <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">

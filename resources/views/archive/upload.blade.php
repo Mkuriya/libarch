@@ -61,8 +61,8 @@
         <textarea name="abstract" id="abstract" cols="0" rows="5" class="block w-full px-4 py-2 sm:mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white" oninput="filterInput(this)"></textarea>
     </div>
     <div class="mt-2">
-        <label for="document" class="text-gray-200">File <span class="text-sm text-gray-400">(PDF ONLY, Limit: 5MB)</span></label>
-        <input type="file" name="document" id="document" accept="application/pdf" class="block w-full mt-2 px-2 py-2 bg-gray-800 border border-gray-600 rounded-md text-white file:py-1 file:px-2 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-transparent file:text-white hover:file:bg-gray-700 hover:bg-gray-700">
+        <label for="document" class="text-gray-200">File <span class="text-sm text-gray-400">(PDF ONLY)</span></label>
+        <input oninput="filterInput(this)" type="file" name="document" id="document" accept="application/pdf" class="block w-full mt-2 px-2 py-2 bg-gray-800 border border-gray-600 rounded-md text-white file:py-1 file:px-2 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-transparent file:text-white hover:file:bg-gray-700 hover:bg-gray-700">
     </div>
     <div class="mt-4 ">
         <label class="text-gray-200">Description</label>
@@ -143,8 +143,8 @@
         div.className = 'mb-1 flex items-center space-x-2';
         div.innerHTML = `
             <div class="bg-gray-600 w-full flex items-center space-x-1 p-2">
-                <input type="text" name="firstnames[]" class="block w-full px-4 py-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white capitalize" placeholder="First Name" oninput="capitalizeFirstLetter(this)">
-                <input type="text" name="lastnames[]" class="block w-full px-4 py-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white capitalize" placeholder="Last Name" oninput="capitalizeFirstLetter(this)">
+                <input type="text" name="firstnames[]" oninput="filterInput(this)" class="block w-full px-4 py-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white capitalize" placeholder="First Name" oninput="capitalizeFirstLetter(this)">
+                <input type="text" name="lastnames[]" oninput="filterInput(this)" class="block w-full px-4 py-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-white capitalize" placeholder="Last Name" oninput="capitalizeFirstLetter(this)">
                 <button type="button" onclick="removeAuthor(this)" class="p-2 text-white rounded-md">
                     <svg class="w-6 h-6 text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>

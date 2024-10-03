@@ -51,7 +51,7 @@ class AdminController extends Controller
             'gender' => ['required'],
             'department' => ['required'],
             'password' => 'nullable|confirmed|min:8', // Validate password
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg' // Validate photo
         ]);
     
         // Sanitize input
@@ -112,7 +112,7 @@ class AdminController extends Controller
             'email' => 'required|string|email|max:255|unique:admins', // Ensuring email is unique
             'gender' => 'required|string|in:Male,Female',
             'password' => 'required|confirmed|min:8',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
     
         // Handle the photo upload
@@ -141,7 +141,7 @@ class AdminController extends Controller
             'middlename' => ['nullable'],
             'gender' => ['required'],
            // 'email' => ['required'],
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg' // Validate photo
         ]);
     
         // Strip tags to prevent XSS
@@ -178,7 +178,7 @@ class AdminController extends Controller
             'gender' => ['required'],
         //    'email' => ['required', 'email'],
             'password' => 'nullable|confirmed|min:8', // Password is nullable for updates
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg' // Validate photo
         ]);
     
         // Strip tags to prevent XSS
@@ -223,7 +223,7 @@ class AdminController extends Controller
             'email' => 'required|string|email|max:255|unique:admins', // Ensuring email is unique
             'gender' => 'required|string|in:Male,Female',
             'password' => 'required|confirmed|min:8',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
     
         // Handle the photo upload

@@ -35,7 +35,7 @@ public function studentProfile(Student $student, Request $request){
         'middlename' => ['nullable'],
         'gender' => ['required'],
        // 'email' => ['required', 'email'],
-        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate photo
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg' // Validate photo
     ]);
 
     // Sanitize input
@@ -93,7 +93,7 @@ public function studentProfile(Student $student, Request $request){
             'studentnumber' => ['required',Rule::unique('students')],
             'email' => ['required', Rule::unique('students')],
             'password' => 'required|confirmed|min:8',
-            'photo'=> 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo'=> 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
     
         // Handle the photo upload

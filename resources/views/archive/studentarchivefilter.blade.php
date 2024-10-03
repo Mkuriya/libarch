@@ -107,8 +107,7 @@
                                                 {{$item->student_department}}
                                             </td>
                                             
-                                            <td class=" text-sm "> <!-- for viewer botton-->
-                                                <div class="flex justify-center items-center">
+                                            <td class=" px-4 py-4 text-sm text-gray-300 text-center   "> <!-- for viewer botton-->
                                                     <a href="/student/dashboard/archivelist/document/{{$item->id}}">
                                                         <button class="transition-colors duration-200 hover:text-whitebg text-gray-300  focus:outline-none">
                                                             <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -118,63 +117,6 @@
                                                             </svg>
                                                         </button>
                                                     </a>
-                                                    @if(auth()->guard('student')->user()->id == $item->studentid)
-                                                        <button class="modal-open hover:border-red-600 text-white hover:text-whitebg font-bold py-2 px-4 rounded-full">
-                                                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M21.1213 2.70705C19.9497 1.53548 18.0503 1.53547 16.8787 2.70705L15.1989 4.38685L7.29289 12.2928C7.16473 12.421 7.07382 12.5816 7.02986 12.7574L6.02986 16.7574C5.94466 17.0982 6.04451 17.4587 6.29289 17.707C6.54127 17.9554 6.90176 18.0553 7.24254 17.9701L11.2425 16.9701C11.4184 16.9261 11.5789 16.8352 11.7071 16.707L19.5556 8.85857L21.2929 7.12126C22.4645 5.94969 22.4645 4.05019 21.2929 2.87862L21.1213 2.70705ZM18.2929 4.12126C18.6834 3.73074 19.3166 3.73074 19.7071 4.12126L19.8787 4.29283C20.2692 4.68336 20.2692 5.31653 19.8787 5.70705L18.8622 6.72357L17.3068 5.10738L18.2929 4.12126ZM15.8923 6.52185L17.4477 8.13804L10.4888 15.097L8.37437 15.6256L8.90296 13.5112L15.8923 6.52185ZM4 7.99994C4 7.44766 4.44772 6.99994 5 6.99994H10C10.5523 6.99994 11 6.55223 11 5.99994C11 5.44766 10.5523 4.99994 10 4.99994H5C3.34315 4.99994 2 6.34309 2 7.99994V18.9999C2 20.6568 3.34315 21.9999 5 21.9999H16C17.6569 21.9999 19 20.6568 19 18.9999V13.9999C19 13.4477 18.5523 12.9999 18 12.9999C17.4477 12.9999 17 13.4477 17 13.9999V18.9999C17 19.5522 16.5523 19.9999 16 19.9999H5C4.44772 19.9999 4 19.5522 4 18.9999V7.99994Z" fill="#fff"/>
-                                                                </svg>
-                                                        </button>
-                                                        <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
-                                                            <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-70"></div>
-                                                            <div class="modal-container bg-gray-800 text-white w-10/12 md:max-w-4xl mx-auto rounded shadow-lg z-50 overflow-y-auto">
-                                                                <div class="modal-content py-4 text-left px-6">
-                                                                    <div class="flex justify-between items-center pb-3">
-                                                                        <p class="text-2xl font-bold text-white">Edit Details</p>
-                                                                        <div class="modal-close cursor-pointer z-50"></div>
-                                                                    </div>
-                                                                    <div class="p-2">
-                                                                        <form action="/student/dashboard/archivelist/update/{{$item->id}}" method="POST">
-                                                                            @csrf
-                                                                            @method('PUT')
-                                                                                <div class="mb-4">
-                                                                                    <label class="text-gray-200 pl-2" for="lastname">Title</label>
-                                                                                    <input value="{{$item->title}}" name="title" type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">
-                                                                                </div>
-                                                                                <div class="mb-4">
-                                                                                    <label class="text-gray-200 pl-2" >Year</label>
-                                                                                    <input value="{{$item->year}}" disabled type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">
-                                                                                </div>
-                                                                                <div class="mb-4">
-                                                                                    <label class="text-gray-200 pl-2" >Members</label>
-                                                                                    <input value="{{$item->members}}" disabled type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">
-                                                                                </div>
-                                                                                <div class="mb-4">
-                                                                                    <label class="text-gray-200 pl-2" for="lastname">Abstract</label>
-                                                                                    <textarea name="abstract" cols="0" rows="5" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">{{$item->abstract}}</textarea>
-                                                                                </div>
-                                                                                <div class="mb-4">
-                                                                                    <label class="text-gray-200 pl-2" >Description</label>
-                                                                                    <input value="{{$item->description}}" name="description" type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">
-                                                                                </div>
-                                                                                <div class="mb-4">
-                                                                                    <label class="text-gray-200 pl-2" >Citation</label>
-                                                                                    <input value="{{$item->citation}}" disabled type="text" class="block w-full px-4 py-2 mt-2 border rounded-md bg-gray-800 text-gray-300 border-gray-600 focus:border-blue-500 focus:outline-none focus:ring">
-                                                                                </div>
-                                                                                
-                                                                            </div>
-                                                                            <br>
-                                                                            <div class="flex justify-center px-2 py-4">
-                                                                                <button type="submit" class="px-12 py-2 leading-5 text-white transition-colors duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Update</button>
-                                                                                <button type="button" class="modal-close ml-10 px-12 py-2 leading-5 text-white transition-colors duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Close</button>
-    
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
                                             </td>
                                         </tr>
                                     @endif
