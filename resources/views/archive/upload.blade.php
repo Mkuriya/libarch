@@ -81,11 +81,10 @@
 </form>
 </section>
 
-
 <!-- Preview Modal -->
 <div id="previewModalOverlay" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 hidden">
     <!-- Modal structure -->
-    <div class="bg-gray-800 rounded-lg shadow-lg w-11/12 md:w-1/3">
+    <div class="bg-gray-800 rounded-lg shadow-lg w-11/12 md:w-1/3 max-h-screen overflow-y-auto">
         <div class="flex justify-between items-center bg-whitebg text-white text-lg p-4 rounded-t-lg">
             <h5 class="font-bold">Preview Your Research Submission</h5>
             <button id="closePreviewModal" class="text-2xl leading-none">&times;</button>
@@ -99,10 +98,11 @@
             <div><h6 class="font-bold">APA Citation:</h6><p id="preview-citation"></p></div>
         </div>
         <div class="flex justify-center p-4">
-            <button type="button" onclick="submitForm()" class="px-12 py-2 leading-5 text-white transition-colors duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none ">Submit</button>
+            <button type="button" onclick="submitForm()" class="px-12 py-2 leading-5 text-white transition-colors duration-200 transform bg-whitebg rounded-md hover:bg-gray-700 focus:outline-none">Submit</button>
         </div>
     </div>
 </div>
+
 <script>
     // Close the preview modal manually
     document.getElementById('closePreviewModal').addEventListener('click', () => {
